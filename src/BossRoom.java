@@ -1,3 +1,5 @@
+package src;
+
 import java.awt.Graphics;
 import java.util.ArrayList;
 
@@ -18,7 +20,7 @@ public class BossRoom extends Room{
 		setSelectedLayout(999);
 		
 		
-		final int roomwidth = 13, roomheight = 7;
+		//final int roomwidth = 13, roomheight = 7;
 		
 		ArrayList<Enemy> enemy = getEnemies();
 		

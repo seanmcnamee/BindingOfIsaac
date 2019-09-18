@@ -1,3 +1,4 @@
+package src;
 
 import java.awt.Image;
 import java.io.File;

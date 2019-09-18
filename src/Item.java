@@ -1,3 +1,5 @@
+package src;
+
 import java.awt.Image;
 
 public interface Item {

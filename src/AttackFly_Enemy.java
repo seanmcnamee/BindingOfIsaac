@@ -1,4 +1,5 @@
-//import java.awt.Color;
+package src;
+
 import java.awt.Graphics;
 import java.awt.Image;
 import java.io.File;

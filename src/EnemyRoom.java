@@ -1,3 +1,5 @@
+package src;
+
 import java.awt.Graphics;
 
 public class EnemyRoom extends Room{
