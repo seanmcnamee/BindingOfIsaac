@@ -9,6 +9,13 @@
             "name": "Debug (Launch) - Current File",
             "request": "launch",
             "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-App<Binding of Isaac Remake>",
+            "request": "launch",
+            "mainClass": "app.App",
+            "projectName": "Binding of Isaac Remake"
         }
     ]
 }
