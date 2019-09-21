@@ -20,8 +20,8 @@ public class GameValues {
     public final int oneSecondInMillis = 1000;
     public final String NAME = "General SinglePlayer Game Setup";
 
-    public final String mainMenuFile = "bin//pictures//emptyMainMenu.jpg";
-    public final String gameFontFile = "bin/pictures/MainScreenFont.ttf";
+    public final String mainMenuFile = "bin//emptyMainMenu.jpg";
+    public final String gameFontFile = "bin/MainScreenFont.ttf";
 
 
     public GameState gameState = GameState.NOTSTARTED;
