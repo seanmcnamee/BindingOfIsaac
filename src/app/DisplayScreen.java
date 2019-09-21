@@ -11,7 +11,7 @@ import java.awt.event.MouseWheelEvent;
  * Layout of what a display screen should be for the App
  */
 abstract class DisplayScreen {
-    JFrame mainGUI;
+    protected JFrame mainGUI;
 
     public DisplayScreen(JFrame frame) {
         mainGUI = frame;

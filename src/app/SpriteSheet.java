@@ -8,22 +8,19 @@ import javax.imageio.ImageIO;
  * SpriteSheet, deals with all the pictures for the game
  */
 public class SpriteSheet {
-    private BufferedImage image;
+    private BufferedImageLoader imageLoader;
 
     public SpriteSheet(String path) {
-        image = loadImage(path);
-    }
+        imageLoader = new BufferedImageLoader(path);
+	}
+	
+	public SpriteSheet() {
+		imageLoader = null;
+	}
 
-    public BufferedImage loadImage(String path) {
-        BufferedImage img = null;
-		try {
-            img = ImageIO.read(getClass().getResource(path));
-        } catch (IOException e) {
-            System.out.println("Can't find picture at: " + path);
-            e.printStackTrace();
-        }
-		return img;
-    }
+	public void loadSpriteSheet(String path) {
+		imageLoader = new BufferedImageLoader(path);
+	}
     
     /**
 	 * returns an image of designated size and at certain position within the spritesheet.
@@ -43,7 +40,7 @@ public class SpriteSheet {
 		//The top left image is at 0,0 and moves like an array does in rows and collums
 		
 		
-		BufferedImage img = image.getSubimage((col*size),(row*size),size*width,size*height);
+		BufferedImage img = imageLoader.getImage().getSubimage((col*size),(row*size),size*width,size*height);
 		return img;
 	}
 }
