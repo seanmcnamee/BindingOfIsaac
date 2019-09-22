@@ -12,19 +12,25 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.awt.image.BufferedImage;
+
 /**
  * MainScreen of the App
  */
 public class TitleScreen extends DisplayScreen {
 
     private final BufferedImageLoader background;
-    private Font font;
+    private Button btnStart;
+    //private Font font;
 
     public TitleScreen(JFrame frame, GameValues gameValues) {
         super(frame);
         background = new BufferedImageLoader(gameValues.mainMenuFile);
+        SpriteSheet buttons = new SpriteSheet(gameValues.mainMenuButtons);
+        //TODO fix this position and finish up the others
+        btnStart = new Button(buttons.grabImage(0, 0, 1, 1, gameValues.menuButtonSize), 200, 200);
 
-        font = setFont(gameValues);
+        //font = setFont(gameValues);
     }
 
     private Font setFont(GameValues gameValues) {
@@ -44,6 +50,7 @@ public class TitleScreen extends DisplayScreen {
     @Override
     void render(Graphics g) {
         g.drawImage(background.getImage(), 0, 0, mainGUI.getContentPane().getWidth(), mainGUI.getContentPane().getHeight(), null);
+        btnStart.render(g);
         //g.setFont(font);
         //g.drawString("START", mainGUI.getContentPane().getWidth()/2 - 60, (int)(mainGUI.getContentPane().getHeight()*.75));
     }

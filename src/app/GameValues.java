@@ -23,6 +23,9 @@ public class GameValues {
     public final String mainMenuFile = "bin//emptyMainMenu.jpg";
     public final String gameFontFile = "bin/MainScreenFont.ttf";
 
+    public final String mainMenuButtons = "bin/MenuButtonsSpriteSheet.png";
+    public final int menuButtonSize = 160;
+
 
     public GameState gameState = GameState.NOTSTARTED;
     public DisplayScreen currentScreen;

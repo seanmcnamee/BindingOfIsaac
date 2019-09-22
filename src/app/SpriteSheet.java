@@ -1,8 +1,6 @@
 package app;
 
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import javax.imageio.ImageIO;
 
 /**
  * SpriteSheet, deals with all the pictures for the game
