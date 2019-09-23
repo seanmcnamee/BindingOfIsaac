@@ -1,12 +1,13 @@
-package app;
+package app.supportclasses;
 
-enum GameState {
-    NOTSTARTED, RUNNING, WON, LOST;
-}
 /**
  * GameValues for the game
  */
 public class GameValues {
+
+    public enum GameState {
+        NOTSTARTED, RUNNING, WON, LOST;
+    }
 
     /**
      * TODO Figure out exact usage of SCALE
@@ -18,7 +19,7 @@ public class GameValues {
      */
     public final double nanoSecondsPerTick = 1000000000d / 60d;
     public final int oneSecondInMillis = 1000;
-    public final String NAME = "General SinglePlayer Game Setup";
+    public final String NAME = "Binding of Isaac - Sean McNamee";
 
     public final String mainMenuFile = "bin//emptyMainMenu.jpg";
     public final String gameFontFile = "bin/MainScreenFont.ttf";

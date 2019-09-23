@@ -1,4 +1,4 @@
-package app;
+package app.supportclasses;
 
 import java.awt.image.BufferedImage;
 import java.io.File;

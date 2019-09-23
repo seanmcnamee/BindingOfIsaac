@@ -4,6 +4,8 @@ import java.awt.Graphics;
 
 import javax.swing.JFrame;
 
+import app.supportclasses.DisplayScreen;
+
 /**
  * EndScreen
  */
@@ -14,7 +16,7 @@ public class EndScreen extends DisplayScreen {
     }
 
     @Override
-    void render(Graphics g) {
+    public void render(Graphics g) {
 
     }
 

@@ -1,4 +1,4 @@
-package app;
+package app.supportclasses;
 
 import javax.swing.JFrame;
 import java.awt.Graphics;
@@ -10,14 +10,14 @@ import java.awt.event.MouseWheelEvent;
 /**
  * Layout of what a display screen should be for the App
  */
-abstract class DisplayScreen {
+public abstract class DisplayScreen {
     protected JFrame mainGUI;
 
     public DisplayScreen(JFrame frame) {
         mainGUI = frame;
     }
     
-    abstract void render(Graphics g);
+    public abstract void render(Graphics g);
     
     public void keyPressed(KeyEvent e){
         //System.out.println(e.getKeyChar() + " Key Pressed");

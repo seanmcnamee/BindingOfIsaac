@@ -1,4 +1,4 @@
-package app;
+package app.supportclasses;
 
 import java.awt.image.BufferedImage;
 
@@ -42,7 +42,10 @@ public class SpriteSheet {
 		return img;
 	}
 
+	//TODO : Minimize the size of any picture
+/*
 	private BufferedImage removeOutterEdge() {
 		return null;
 	}
+	*/
 }

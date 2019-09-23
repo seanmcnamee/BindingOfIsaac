@@ -2,7 +2,13 @@ package app;
 
 import java.awt.Graphics;
 import javax.swing.JFrame;
-import app.DisplayScreen;
+
+import app.supportclasses.BufferedImageLoader;
+import app.supportclasses.Button;
+import app.supportclasses.DisplayScreen;
+import app.supportclasses.GameValues;
+import app.supportclasses.Input;
+import app.supportclasses.SpriteSheet;
 
 import java.awt.event.MouseEvent;
 
@@ -47,7 +53,7 @@ public class TitleScreen extends DisplayScreen {
 
     //TODO setup transparent background buttons for this menu
     @Override
-    void render(Graphics g) {
+    public void render(Graphics g) {
         g.drawImage(background.getImage(), 0, 0, mainGUI.getContentPane().getWidth(), mainGUI.getContentPane().getHeight(), null);
         btnStart.render(g);
         //g.setFont(font);
