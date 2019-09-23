@@ -12,10 +12,10 @@
         },
         {
             "type": "java",
-            "name": "Debug (Launch)-App<Binding of Isaac Remake>",
+            "name": "Debug (Launch)-App<Binding Of Isaac Remake>",
             "request": "launch",
             "mainClass": "app.App",
-            "projectName": "Binding of Isaac Remake"
+            "projectName": "Binding Of Isaac Remake"
         }
     ]
 }
