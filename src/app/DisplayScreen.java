@@ -19,11 +19,31 @@ abstract class DisplayScreen {
     
     abstract void render(Graphics g);
     
-    public void keyPressed(KeyEvent e){System.out.println(e.getKeyChar() + " Key Pressed");}
-    public void keyReleased(KeyEvent e){System.out.println(e.getKeyChar() + " Key Released");}
-    public void keyTyped(KeyEvent e){System.out.println(e.getKeyChar() + " Key Typed");}
+    public void keyPressed(KeyEvent e){
+        //System.out.println(e.getKeyChar() + " Key Pressed");
+    
+    }
+    public void keyReleased(KeyEvent e){
+        //.out.println(e.getKeyChar() + " Key Released");
+    }
 
-    public void mouseClicked(MouseEvent e){System.out.println("Mouse Clicked");}
-    public void mouseEntered(MouseEvent e){}
-    public void mouseWheelMoved(MouseWheelEvent e){System.out.println("Mouse Wheel Moved");}
+    public void keyTyped(KeyEvent e){
+        //System.out.println(e.getKeyChar() + " Key Typed");
+    }
+
+    public void mouseClicked(MouseEvent e){
+        //System.out.println("Mouse Clicked");
+    }
+
+    public void mouseEntered(MouseEvent e){
+
+    }
+
+    public void mouseWheelMoved(MouseWheelEvent e){
+        //System.out.println("Mouse Wheel Moved");
+    }
+
+    public void mouseMoved(MouseEvent e) {
+        System.out.println("default event");
+    }
 }

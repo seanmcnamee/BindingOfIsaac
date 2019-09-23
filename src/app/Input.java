@@ -30,6 +30,10 @@ public class Input extends MouseInputAdapter implements KeyListener{
         gameValues.currentScreen.mouseEntered(e);
     }
 
+    public void mouseMoved(MouseEvent e) {
+        gameValues.currentScreen.mouseMoved(e);
+    }
+
     public void mouseWheelMoved(MouseWheelEvent e) {
         gameValues.currentScreen.mouseWheelMoved(e);
     }

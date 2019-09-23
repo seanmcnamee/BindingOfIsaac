@@ -41,4 +41,8 @@ public class SpriteSheet {
 		BufferedImage img = imageLoader.getImage().getSubimage((col*size),(row*size),size*width,size*height);
 		return img;
 	}
+
+	private BufferedImage removeOutterEdge() {
+		return null;
+	}
 }

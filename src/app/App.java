@@ -44,8 +44,8 @@ public class App extends Canvas implements Runnable {
         
         //Different Screens setup
 
-        game = new Game(frame);
-        titleScreen = new TitleScreen(frame, gameValues);
+        game = new Game(frame, gameValues);
+        titleScreen = new TitleScreen(frame, gameValues, gameInputs, game);
 
         //Start displaying/updating everything
         gameValues.currentScreen = titleScreen;
@@ -96,6 +96,7 @@ public class App extends Canvas implements Runnable {
         gameInputs = new Input(gameValues);
         addKeyListener(gameInputs);
         addMouseListener(gameInputs);
+        addMouseMotionListener(gameInputs);
         addMouseWheelListener(gameInputs);
     }
 

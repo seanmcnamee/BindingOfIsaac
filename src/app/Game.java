@@ -3,6 +3,7 @@ package app;
 import java.awt.Graphics;
 
 import javax.swing.JFrame;
+import java.awt.event.MouseEvent;
 import app.DisplayScreen;
 
 /**
@@ -10,8 +11,11 @@ import app.DisplayScreen;
  */
 public class Game extends DisplayScreen{
 
-    public Game(JFrame frame) {
+    private final BufferedImageLoader background;
+
+    public Game(JFrame frame, GameValues gameValues) {
         super(frame);
+        background = new BufferedImageLoader(gameValues.gameBackground);
     }
 
 
@@ -20,8 +24,10 @@ public class Game extends DisplayScreen{
     }
 
     void render(Graphics g) {
-
+        g.drawImage(background.getImage(), 0, 0, mainGUI.getContentPane().getWidth(), mainGUI.getContentPane().getHeight(), null);
     }
 
+    public void mouseMoved(MouseEvent e) {
+    }
     
 }

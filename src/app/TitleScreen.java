@@ -1,18 +1,10 @@
 package app;
 
 import java.awt.Graphics;
-
 import javax.swing.JFrame;
 import app.DisplayScreen;
 
-import java.awt.Font;
-import java.awt.FontFormatException;
-import java.io.BufferedInputStream;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-
-import java.awt.image.BufferedImage;
+import java.awt.event.MouseEvent;
 
 /**
  * MainScreen of the App
@@ -21,18 +13,24 @@ public class TitleScreen extends DisplayScreen {
 
     private final BufferedImageLoader background;
     private Button btnStart;
-    //private Font font;
+    private GameValues gameValues;
+    private DisplayScreen game;
+    // private Font font;
 
-    public TitleScreen(JFrame frame, GameValues gameValues) {
+    public TitleScreen(JFrame frame, GameValues gameValues, Input gameInputs, DisplayScreen game) {
         super(frame);
         background = new BufferedImageLoader(gameValues.mainMenuFile);
         SpriteSheet buttons = new SpriteSheet(gameValues.mainMenuButtons);
-        //TODO fix this position and finish up the others
-        btnStart = new Button(buttons.grabImage(0, 0, 1, 1, gameValues.menuButtonSize), 200, 200);
+        // TODO fix this position and finish up the others
+        
+        btnStart = new Button(buttons.grabImage(0, 0, 1, 1, gameValues.menuButtonSize), 200, 200, gameValues);
+        this.gameValues = gameValues;
+        this.game = game;
 
         //font = setFont(gameValues);
     }
 
+    /*
     private Font setFont(GameValues gameValues) {
         Font returningFont = null;
         try {
@@ -45,6 +43,7 @@ public class TitleScreen extends DisplayScreen {
         }
         return returningFont;
     }
+    */
 
     //TODO setup transparent background buttons for this menu
     @Override
@@ -53,6 +52,24 @@ public class TitleScreen extends DisplayScreen {
         btnStart.render(g);
         //g.setFont(font);
         //g.drawString("START", mainGUI.getContentPane().getWidth()/2 - 60, (int)(mainGUI.getContentPane().getHeight()*.75));
+    }
+
+    public void mouseClicked(MouseEvent e){
+        if (btnStart.contains(e.getPoint())) {
+            System.out.println("Starting Game");
+            System.out.println("Setting currentScreen to 'game'");
+            System.out.println("Game: " + game);
+            gameValues.currentScreen = game;
+        }
+        
+    }
+
+    public void mouseMoved(MouseEvent e) {
+        if (!btnStart.isHovering() && btnStart.contains(e.getPoint())) {
+            btnStart.setHovering(true);
+        }   else if (btnStart.isHovering() && !btnStart.contains(e.getPoint())) {
+            btnStart.setHovering(false);
+        }
     }
     
 }
