@@ -12,7 +12,7 @@ public class GameValues {
     /**
      * TODO Figure out exact usage of SCALE
      */
-    public final int SCALE = 4;
+    public final int SCALE = 1;
     /**
      * The numerator the the number of nanoseconds in 1 second
      * The denomiator is the Ticks Per Second
@@ -29,6 +29,7 @@ public class GameValues {
     public final int menuButtonSize = 160;
     public final float darkenValue = .8f;
     public final float lightenValue = 1.26f;
+    public final double startHeightRatio = .7;
 
 
     public GameState gameState = GameState.NOTSTARTED;

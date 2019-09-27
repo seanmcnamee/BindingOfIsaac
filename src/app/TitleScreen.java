@@ -32,7 +32,7 @@ public class TitleScreen extends DisplayScreen {
         SpriteSheet buttons = new SpriteSheet(gameValues.mainMenuButtons);
         // TODO fix this position and finish up the others
         
-        btnStart = new Button(buttons.grabImage(0, 0, 1, 1, gameValues.menuButtonSize), 200, 200, gameValues);
+        btnStart = new Button(buttons.grabImage(0, 0, 1, 1, gameValues.menuButtonSize), frame.getContentPane().getWidth()/2, frame.getContentPane().getHeight()/2, gameValues);
         this.gameValues = gameValues;
         this.game = game;
 
@@ -70,6 +70,7 @@ public class TitleScreen extends DisplayScreen {
             System.out.println("Game: " + game);
             gameValues.currentScreen = game;
         }
+        System.out.println("Mouse clicked at: " +e.getPoint());
         
     }
 

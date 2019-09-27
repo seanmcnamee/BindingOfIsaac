@@ -93,7 +93,7 @@ public class App extends Canvas implements Runnable {
         frame.setVisible(true);
 
         //frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        
+        System.out.println(frame.getContentPane().getWidth() + ", " + frame.getContentPane().getHeight());
     }
 
     /**
@@ -106,6 +106,7 @@ public class App extends Canvas implements Runnable {
         addMouseListener(gameInputs);
         addMouseMotionListener(gameInputs);
         addMouseWheelListener(gameInputs);
+        frame.addComponentListener(gameInputs);
     }
 
     @Override

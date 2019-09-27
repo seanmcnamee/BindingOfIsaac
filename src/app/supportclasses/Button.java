@@ -10,36 +10,41 @@ import java.awt.image.RescaleOp;
 /**
  * Button
  */
-public class Button{
+public class Button {
     /**
      *
      */
     private BufferedImage image;
     private boolean isHovering;
-    private Point buttonLocation, topLeftPos, bottomRightPos;
+    private Point pictureCenterLocation;
     private GameValues gameValues;
 
-    public Button(BufferedImage i, int x, int y, GameValues gameValues) {
-        image = i;
-        buttonLocation = new Point(x, y);
+    /**
+     * This point will be the CENTER of the button (so other things don't have to figure it out)
+     */
+    public Button(BufferedImage i, Point p, GameValues gameValues) {
         isHovering = false;
         this.gameValues = gameValues;
-        calibrateCorners(i);
+        pictureCenterLocation = p;
+        image = shrink(i);
     }
 
-    public Button(BufferedImage i, Point p, GameValues gameValues) {
-        this(i, (int)p.getX(), (int)p.getY(), gameValues);
+    public Button(BufferedImage i, int x, int y, GameValues gameValues) {
+        this(i, new Point(x, y), gameValues);
     }
 
     public void render(Graphics g) {
-        //g.drawImage(image, pos.getX(), pos.getY(), null);
-        g.drawImage(image, (int)buttonLocation.getX(), (int)buttonLocation.getY(), null);
+        double leftMost = pictureCenterLocation.getX()-image.getWidth()/2.0;
+        double topMost = pictureCenterLocation.getY()-image.getHeight()/2.0;
+
+        g.drawImage(image, (int)(leftMost*gameValues.SCALE), (int)(topMost*gameValues.SCALE), image.getWidth()*gameValues.SCALE, image.getHeight()*gameValues.SCALE, null);
     }
 
     /**
-     * Figures out the top left and bottom right most pixels of the image, and uses those for .contains calculations
+     * Creates and returns the smallest image containing all non-transparents pixels
+     * @param image
      */
-    private void calibrateCorners(BufferedImage image) {
+    private BufferedImage shrink(BufferedImage image) {
         int leftMost = -1;
         int rightMost = -1;
         int topMost = -1;
@@ -48,6 +53,7 @@ public class Button{
         int imgWidth = image.getWidth();
         int imgHeight = image.getHeight();
     
+        //Go through array and find corners of smaller inside picture
         for (int y = 0; y < imgHeight; y++) {
           for (int x = 0; x < imgWidth; x++) {
 
@@ -70,11 +76,19 @@ public class Button{
           }
         }
 
-        this.topLeftPos = new Point((int)buttonLocation.getX() + leftMost, (int)buttonLocation.getY() + topMost);
-        this.bottomRightPos = new Point((int)buttonLocation.getX() + rightMost, (int)buttonLocation.getY() + bottomMost);
-        System.out.println(this.topLeftPos + " - " + this.bottomRightPos);
-      }
 
+        //Create new, smaller BufferedImage
+        int width = rightMost-leftMost;
+        int height = bottomMost-topMost;
+        BufferedImage smallerImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                smallerImage.setRGB(x, y, image.getRGB(x+leftMost, y+topMost));
+            }
+        }
+
+        return smallerImage;
+    }
 
     /**
      * 
@@ -83,19 +97,28 @@ public class Button{
      * Uses the left Hand Side test (would work for any convex polygon)
      */
     public boolean contains(Point other) {
-        return leftHandSideTest(topLeftPos.getX(), topLeftPos.getY(), bottomRightPos.getX(), topLeftPos.getY(), other.getX(), other.getY()) &&
-            leftHandSideTest(bottomRightPos.getX(), topLeftPos.getY(), bottomRightPos.getX(), bottomRightPos.getY(), other.getX(), other.getY()) &&
-            leftHandSideTest(bottomRightPos.getX(), bottomRightPos.getY(), topLeftPos.getX(), bottomRightPos.getY(), other.getX(), other.getY()) &&
-            leftHandSideTest(topLeftPos.getX(), bottomRightPos.getY(), topLeftPos.getX(), topLeftPos.getY(), other.getX(), other.getY());
+        
+        double leftMost = pictureCenterLocation.getX()-image.getWidth()/2.0;
+        double topMost = pictureCenterLocation.getY()-image.getHeight()/2.0;
+        double rightMost = pictureCenterLocation.getX()+image.getWidth()/2.0;
+        double bottomMost = pictureCenterLocation.getY()+image.getHeight()/2.0;
+
+        //System.out.println("Collision checking bounds: " + leftMost + ", " + topMost + " to " + rightMost + ", " + bottomMost);
+        return leftHandSideTest(leftMost, topMost, leftMost, bottomMost, other.getX(), other.getY()) &&
+            leftHandSideTest(leftMost, bottomMost, rightMost, bottomMost, other.getX(), other.getY()) &&
+            leftHandSideTest(rightMost, bottomMost, rightMost, topMost, other.getX(), other.getY()) &&
+            leftHandSideTest(rightMost, topMost, leftMost, topMost, other.getX(), other.getY());
         
     }
 
     public boolean leftHandSideTest(double x1, double y1, double x2, double y2, double xTEST, double yTEST) {
         double D = xTEST*(y1-y2) + x1*(y2-yTEST) + x2*(yTEST-y1);
-
-        if (D >= 0) {
+        //System.out.println("Collision checking side: " + x1 + ", " + y1 + " to " + x2 + ", " + y2 + " for: " + xTEST + ", " + yTEST);
+        if (D <= 0) {
+            //System.out.println("On the correct side");
             return true;
         }   else {
+            //System.out.println("Wrong side!");
             return false;
         }
     }

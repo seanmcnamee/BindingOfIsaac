@@ -12,8 +12,10 @@ import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 
-public class Input extends MouseInputAdapter implements KeyListener{
+public class Input extends MouseInputAdapter implements KeyListener, ComponentListener {
 
     // Sends the input to the current screen in use
     GameValues gameValues;
@@ -48,6 +50,26 @@ public class Input extends MouseInputAdapter implements KeyListener{
 
     public void keyTyped(KeyEvent e) {
         gameValues.currentScreen.keyTyped(e);
+    }
+
+    
+    public void componentResized(ComponentEvent e) {
+        
+    }
+
+    
+    public void componentMoved(ComponentEvent e) {
+
+    }
+
+    
+    public void componentShown(ComponentEvent e) {
+
+    }
+
+    //TODO possibly add pause game feature
+    public void componentHidden(ComponentEvent e) {
+
     }
 
 
