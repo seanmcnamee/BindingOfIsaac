@@ -68,7 +68,7 @@ public class SpriteSheet {
           for (int x = 0; x < imgWidth; x++) {
 
             int pixel = image.getRGB(x, y);
-            if (((pixel >> 24) & 0xff) >= 0) {
+            if (((pixel >> 24) & 0xff) > 0) {
                 if (leftMost == -1 || leftMost > x) {
                     leftMost = x;
                 }
@@ -76,7 +76,7 @@ public class SpriteSheet {
                     rightMost = x;
                 }
 
-                if (topMost == -1 || leftMost > y) {
+                if (topMost == -1 || topMost > y) {
                     topMost = y;
                 }
                 if (bottomMost < y) {

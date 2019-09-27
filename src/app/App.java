@@ -13,6 +13,7 @@ import java.awt.Canvas;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Toolkit;
+import java.awt.Color;
 import java.awt.image.BufferStrategy;
 import java.awt.BorderLayout;
 
@@ -59,6 +60,7 @@ public class App extends Canvas implements Runnable {
         gameValues.currentScreen = titleScreen;
         gameValues.gameState = GameState.RUNNING;
         new Thread(this).start();
+        frame.setVisible(true);
     }
 
     /**
@@ -90,10 +92,10 @@ public class App extends Canvas implements Runnable {
 		frame.setLocationRelativeTo(null);
 
 		frame.setLocation((int)(screenSize.getWidth() - frame.getWidth())/2, (int)(screenSize.getHeight() - frame.getHeight())/2);
-        frame.setVisible(true);
+        
 
         //frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        System.out.println(frame.getContentPane().getWidth() + ", " + frame.getContentPane().getHeight());
+        System.out.println("frame size: " + frame.getContentPane().getWidth() + ", " + frame.getContentPane().getHeight());
     }
 
     /**
@@ -101,7 +103,7 @@ public class App extends Canvas implements Runnable {
      */
     private void inputSetup(){
         requestFocus();
-        gameInputs = new Input(gameValues);
+        gameInputs = new Input(gameValues, frame);
         addKeyListener(gameInputs);
         addMouseListener(gameInputs);
         addMouseMotionListener(gameInputs);
@@ -169,6 +171,8 @@ public class App extends Canvas implements Runnable {
         Graphics g = bs.getDrawGraphics();
         
         //Print whatever has to be to the screen
+        g.setColor(Color.black);
+        g.fillRect(0, 0, frame.getContentPane().getWidth(), frame.getContentPane().getHeight());
         gameValues.currentScreen.render(g);
 
         //Closes the graphics and shows the screen

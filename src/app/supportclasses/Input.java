@@ -1,14 +1,17 @@
 package app.supportclasses;
 
+
+
 //import java.awt.event.ActionEvent;
 //import java.awt.event.KeyAdapter;
 //import java.awt.event.MouseWheelEvent;
 //import java.beans.PropertyChangeListener;
 
+import javax.swing.JFrame;
 
 import javax.swing.event.MouseInputAdapter;
-import java.awt.event.KeyListener;
 
+import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
@@ -19,9 +22,11 @@ public class Input extends MouseInputAdapter implements KeyListener, ComponentLi
 
     // Sends the input to the current screen in use
     GameValues gameValues;
+    JFrame frame;
 
-    public Input(GameValues gameValues) {
+    public Input(GameValues gameValues, JFrame frame) {
         this.gameValues = gameValues;
+        this.frame = frame;
     }
 
     public void mouseClicked(MouseEvent e) {
@@ -56,11 +61,11 @@ public class Input extends MouseInputAdapter implements KeyListener, ComponentLi
      * Just set the SCALE to the proper fucking number
      */
     public void componentResized(ComponentEvent e) {
-        double scaleX = e.getComponent().getSize().getWidth()/gameValues.WIDTH_SCALE_1;
-        double scaleY = e.getComponent().getSize().getHeight()/gameValues.HEIGHT_SCALE_1;
-        //System.out.println("X Scale: " + scaleX + ", Y Scale: " + scaleY);
+        double scaleX = 1.0*frame.getContentPane().getWidth()/gameValues.WIDTH_SCALE_1;
+        double scaleY = 1.0*frame.getContentPane().getHeight()/gameValues.HEIGHT_SCALE_1;
+        //System.out.println("Resized frame to: " + frame.getContentPane().getWidth() + ", " + frame.getContentPane().getHeight());
+        //System.out.println("\tX Scale: " + scaleX + ", Y Scale: " + scaleY);
         gameValues.gameScale = Math.min(scaleX, scaleY);
-        
     }
 
     

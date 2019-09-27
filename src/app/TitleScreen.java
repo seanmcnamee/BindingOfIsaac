@@ -21,7 +21,7 @@ import java.awt.event.MouseEvent;
 public class TitleScreen extends DisplayScreen {
 
     private final BufferedImageLoader background;
-    private Button btnStart, btnCredits, btnExit;
+    private Button btnStart, btnCredits, btnExit, btnStats, btnOptions, btnCollection;
     private GameValues gameValues;
     private DisplayScreen game;
     // private Font font;
@@ -35,7 +35,10 @@ public class TitleScreen extends DisplayScreen {
         btnStart = new Button(buttons.shrink(buttons.grabImage(0, 0, 1, 1, gameValues.MENU_BUTTON_SIZE)), (int)(gameValues.START_BUTTON_X*gameValues.WIDTH_SCALE_1), (int)(gameValues.START_BUTTON_Y*gameValues.HEIGHT_SCALE_1), gameValues);
         btnCredits = new Button(buttons.shrink(buttons.grabImage(1, 0, 1, 1, gameValues.MENU_BUTTON_SIZE)), (int)(gameValues.CREDIT_BUTTON_X*gameValues.WIDTH_SCALE_1), (int)(gameValues.CREDIT_BUTTON_Y*gameValues.HEIGHT_SCALE_1), gameValues);
         btnExit = new Button(buttons.shrink(buttons.grabImage(2, 0, 1, 1, gameValues.MENU_BUTTON_SIZE)), (int)(gameValues.EXIT_BUTTON_X*gameValues.WIDTH_SCALE_1), (int)(gameValues.EXIT_BUTTON_Y*gameValues.HEIGHT_SCALE_1), gameValues);
-        
+        btnStats = new Button(buttons.shrink(buttons.grabImage(0, 1, 1, 1, gameValues.MENU_BUTTON_SIZE)), (int)(gameValues.STATS_BUTTON_X*gameValues.WIDTH_SCALE_1), (int)(gameValues.STATS_BUTTON_Y*gameValues.HEIGHT_SCALE_1), gameValues);
+        btnOptions = new Button(buttons.shrink(buttons.grabImage(1, 1, 1, 1, gameValues.MENU_BUTTON_SIZE)), (int)(gameValues.OPTIONS_BUTTON_X*gameValues.WIDTH_SCALE_1), (int)(gameValues.OPTIONS_BUTTON_Y*gameValues.HEIGHT_SCALE_1), gameValues);
+        btnCollection = new Button(buttons.shrink(buttons.grabImage(2, 1, 1, 1, gameValues.MENU_BUTTON_SIZE)), (int)(gameValues.COLLECTION_BUTTON_X*gameValues.WIDTH_SCALE_1), (int)(gameValues.COLLECTION_BUTTON_Y*gameValues.HEIGHT_SCALE_1), gameValues);
+ 
         
         this.gameValues = gameValues;
         this.game = game;
@@ -65,6 +68,10 @@ public class TitleScreen extends DisplayScreen {
         btnStart.render(g);
         btnCredits.render(g);
         btnExit.render(g);
+        btnStats.render(g);
+        btnOptions.render(g);
+        btnCollection.render(g);
+
         //g.setFont(font);
         //g.drawString("START", mainGUI.getContentPane().getWidth()/2 - 60, (int)(mainGUI.getContentPane().getHeight()*.75));
     }
@@ -81,18 +88,37 @@ public class TitleScreen extends DisplayScreen {
     }
 
     public void mouseMoved(MouseEvent e) {
+        //Set hovering effect for the following buttons...
+        //btnStart
         if (!btnStart.isHovering() && btnStart.contains(e.getPoint())) {
             btnStart.setHovering(true);
         }   else if (btnStart.isHovering() && !btnStart.contains(e.getPoint())) {
             btnStart.setHovering(false);
-        } else if (!btnCredits.isHovering() && btnCredits.contains(e.getPoint())) {
+        //btnCredits
+        }   else if (!btnCredits.isHovering() && btnCredits.contains(e.getPoint())) {
             btnCredits.setHovering(true);
         }   else if (btnCredits.isHovering() && !btnCredits.contains(e.getPoint())) {
             btnCredits.setHovering(false);
-        } else if (!btnExit.isHovering() && btnExit.contains(e.getPoint())) {
+        //btnExit
+        }   else if (!btnExit.isHovering() && btnExit.contains(e.getPoint())) {
             btnExit.setHovering(true);
         }   else if (btnExit.isHovering() && !btnExit.contains(e.getPoint())) {
             btnExit.setHovering(false);
+        //btnStats
+        }   else if (!btnStats.isHovering() && btnStats.contains(e.getPoint())) {
+            btnStats.setHovering(true);
+        }   else if (btnStats.isHovering() && !btnStats.contains(e.getPoint())) {
+            btnStats.setHovering(false);
+        //btnOptions
+        }   else if (!btnOptions.isHovering() && btnOptions.contains(e.getPoint())) {
+            btnOptions.setHovering(true);
+        }   else if (btnOptions.isHovering() && !btnOptions.contains(e.getPoint())) {
+            btnOptions.setHovering(false);
+        //btnCollection
+        }   else if (!btnCollection.isHovering() && btnCollection.contains(e.getPoint())) {
+            btnCollection.setHovering(true);
+        }   else if (btnCollection.isHovering() && !btnCollection.contains(e.getPoint())) {
+            btnCollection.setHovering(false);
         }
         
     }
