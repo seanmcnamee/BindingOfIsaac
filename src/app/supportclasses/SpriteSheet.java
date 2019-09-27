@@ -31,21 +31,73 @@ public class SpriteSheet {
 	 */
 	public BufferedImage grabImage(int col, int row, int width, int height, int size)
 	{
-		//square is the size of each side of a 'box' in the spritesheet
-		//for example, a 4x4 spritesheet with square 8 would be 32pixels x 32pixels
-		//So square should technically be the smallest size of a picture you use in your game,
-		//But other things should be multiples of that size.
-		//The top left image is at 0,0 and moves like an array does in rows and collums
+		/**
+		 * 'size' is the size of a single box in the spreadsheet. Each box in the spreadsheet is
+		 * seperated by a 1 thick line (unless its the same image).
+		 * So square should technically be the smallest size of a picture you use in your game,
+		 * But other things should be multiples of that size.
+		 * The top left image is at 0,0 and moves like an array does in rows and collums
+		 */
+
+		//Location
+		int x = col*(size+1);
+		int y = row*(size+1);
+		//Size
+		int xSize = width*(size+1)-1;
+		int ySize = height*(size+1)-1;
 		
-		
-		BufferedImage img = imageLoader.getImage().getSubimage((col*size),(row*size),size*width,size*height);
+		BufferedImage img = imageLoader.getImage().getSubimage(x, y, xSize, ySize);
 		return img;
 	}
 
-	//TODO : Minimize the size of any picture
-/*
-	private BufferedImage removeOutterEdge() {
-		return null;
-	}
-	*/
+	/**
+     * Creates and returns the smallest image containing all non-transparents pixels
+     * @param image
+     */
+    public BufferedImage shrink(BufferedImage image) {
+        int leftMost = -1;
+        int rightMost = -1;
+        int topMost = -1;
+        int bottomMost = -1;
+
+        int imgWidth = image.getWidth();
+        int imgHeight = image.getHeight();
+    
+        //Go through array and find corners of smaller inside picture
+        for (int y = 0; y < imgHeight; y++) {
+          for (int x = 0; x < imgWidth; x++) {
+
+            int pixel = image.getRGB(x, y);
+            if (((pixel >> 24) & 0xff) >= 0) {
+                if (leftMost == -1 || leftMost > x) {
+                    leftMost = x;
+                }
+                if (rightMost < x) {
+                    rightMost = x;
+                }
+
+                if (topMost == -1 || leftMost > y) {
+                    topMost = y;
+                }
+                if (bottomMost < y) {
+                    bottomMost = y;
+                }
+            }
+          }
+        }
+
+
+        //Create new, smaller BufferedImage
+        int width = rightMost-leftMost;
+        int height = bottomMost-topMost;
+        BufferedImage smallerImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                smallerImage.setRGB(x, y, image.getRGB(x+leftMost, y+topMost));
+            }
+        }
+
+        return smallerImage;
+    }
+
 }

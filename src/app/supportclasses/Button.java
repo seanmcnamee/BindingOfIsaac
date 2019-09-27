@@ -26,7 +26,7 @@ public class Button {
         isHovering = false;
         this.gameValues = gameValues;
         pictureCenterLocation = p;
-        image = shrink(i);
+        image = i;
     }
 
     public Button(BufferedImage i, int x, int y, GameValues gameValues) {
@@ -38,56 +38,6 @@ public class Button {
         double topMost = pictureCenterLocation.getY()-image.getHeight()/2.0;
 
         g.drawImage(image, (int)(leftMost*gameValues.gameScale), (int)(topMost*gameValues.gameScale), (int)(image.getWidth()*gameValues.gameScale), (int)(image.getHeight()*gameValues.gameScale), null);
-    }
-
-    /**
-     * Creates and returns the smallest image containing all non-transparents pixels
-     * @param image
-     */
-    private BufferedImage shrink(BufferedImage image) {
-        int leftMost = -1;
-        int rightMost = -1;
-        int topMost = -1;
-        int bottomMost = -1;
-
-        int imgWidth = image.getWidth();
-        int imgHeight = image.getHeight();
-    
-        //Go through array and find corners of smaller inside picture
-        for (int y = 0; y < imgHeight; y++) {
-          for (int x = 0; x < imgWidth; x++) {
-
-            int pixel = image.getRGB(x, y);
-            if (((pixel >> 24) & 0xff) != 0) {
-                if (leftMost == -1 || leftMost > x) {
-                    leftMost = x;
-                }
-                if (rightMost < x) {
-                    rightMost = x;
-                }
-
-                if (topMost == -1 || leftMost > y) {
-                    topMost = y;
-                }
-                if (bottomMost < y) {
-                    bottomMost = y;
-                }
-            }
-          }
-        }
-
-
-        //Create new, smaller BufferedImage
-        int width = rightMost-leftMost;
-        int height = bottomMost-topMost;
-        BufferedImage smallerImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                smallerImage.setRGB(x, y, image.getRGB(x+leftMost, y+topMost));
-            }
-        }
-
-        return smallerImage;
     }
 
     /**

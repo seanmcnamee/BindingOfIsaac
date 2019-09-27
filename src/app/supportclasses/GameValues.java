@@ -29,11 +29,15 @@ public class GameValues {
     public final String GAME_BACKGROUND_FILE = "bin/background.png";
 
     public final String MAIN_MENU_BUTTONS = "bin/MenuButtonsSpriteSheet.png";
-    public final int MENU_BUTTON_SIZE = 160;
+    public final int MENU_BUTTON_SIZE = 170;
     public final float DARKEN_VALUE = .8f;
     public final float LIGHTEN_VALUE = 1.26f;
-    public final double START_BUTTON_Y = .7;
+    public final double START_BUTTON_Y = .8;
     public final double START_BUTTON_X = .5;
+    public final double CREDIT_BUTTON_Y = .4;
+    public final double CREDIT_BUTTON_X = .1;
+    public final double EXIT_BUTTON_Y = .4;
+    public final double EXIT_BUTTON_X = .82;
 
 
     public GameState gameState = GameState.NOTSTARTED;
