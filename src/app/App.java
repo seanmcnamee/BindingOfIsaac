@@ -72,9 +72,9 @@ public class App extends Canvas implements Runnable {
         System.out.println(screenSize.getWidth() + " x " + screenSize.getHeight() + " : Monitor Size");
 		//System.out.println(screenSize.getWidth() / constants.SCALE + ", " + screenSize.getHeight() / constants.SCALE + " :: Yuh");
 
-		setMinimumSize(new Dimension((int)screenSize.getWidth()/2, (int)screenSize.getHeight()/2));
+		setMinimumSize(new Dimension((int)gameValues.WIDTH_SCALE_1, (int)gameValues.HEIGHT_SCALE_1));
 		setMaximumSize(new Dimension((int)screenSize.getWidth(), (int)screenSize.getHeight()));
-		setPreferredSize(new Dimension((int)screenSize.getWidth()/2, (int)screenSize.getHeight()/2));
+		setPreferredSize(new Dimension((int)gameValues.WIDTH_SCALE_1, (int)gameValues.HEIGHT_SCALE_1));
 
 		// Create the GUI itself
 		frame = new JFrame(gameValues.NAME);

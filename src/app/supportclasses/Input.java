@@ -52,8 +52,14 @@ public class Input extends MouseInputAdapter implements KeyListener, ComponentLi
         gameValues.currentScreen.keyTyped(e);
     }
 
-    
+    /**
+     * Just set the SCALE to the proper fucking number
+     */
     public void componentResized(ComponentEvent e) {
+        double scaleX = e.getComponent().getSize().getWidth()/gameValues.WIDTH_SCALE_1;
+        double scaleY = e.getComponent().getSize().getHeight()/gameValues.HEIGHT_SCALE_1;
+        //System.out.println("X Scale: " + scaleX + ", Y Scale: " + scaleY);
+        gameValues.gameScale = Math.min(scaleX, scaleY);
         
     }
 

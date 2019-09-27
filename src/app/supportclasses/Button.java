@@ -37,7 +37,7 @@ public class Button {
         double leftMost = pictureCenterLocation.getX()-image.getWidth()/2.0;
         double topMost = pictureCenterLocation.getY()-image.getHeight()/2.0;
 
-        g.drawImage(image, (int)(leftMost*gameValues.SCALE), (int)(topMost*gameValues.SCALE), image.getWidth()*gameValues.SCALE, image.getHeight()*gameValues.SCALE, null);
+        g.drawImage(image, (int)(leftMost*gameValues.gameScale), (int)(topMost*gameValues.gameScale), (int)(image.getWidth()*gameValues.gameScale), (int)(image.getHeight()*gameValues.gameScale), null);
     }
 
     /**
@@ -98,10 +98,10 @@ public class Button {
      */
     public boolean contains(Point other) {
         
-        double leftMost = pictureCenterLocation.getX()-image.getWidth()/2.0;
-        double topMost = pictureCenterLocation.getY()-image.getHeight()/2.0;
-        double rightMost = pictureCenterLocation.getX()+image.getWidth()/2.0;
-        double bottomMost = pictureCenterLocation.getY()+image.getHeight()/2.0;
+        double leftMost = gameValues.gameScale*(pictureCenterLocation.getX()-image.getWidth()/2.0);
+        double topMost = gameValues.gameScale*(pictureCenterLocation.getY()-image.getHeight()/2.0);
+        double rightMost = gameValues.gameScale*(pictureCenterLocation.getX()+image.getWidth()/2.0);
+        double bottomMost = gameValues.gameScale*(pictureCenterLocation.getY()+image.getHeight()/2.0);
 
         //System.out.println("Collision checking bounds: " + leftMost + ", " + topMost + " to " + rightMost + ", " + bottomMost);
         return leftHandSideTest(leftMost, topMost, leftMost, bottomMost, other.getX(), other.getY()) &&

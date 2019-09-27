@@ -12,9 +12,9 @@ public class GameValues {
     /**
      * TODO Figure out exact usage of SCALE
      */
-    public final int SCALE = 1;
-    public final int WIDTH_SCALE_1 = 300;
-    public final int HEIGHT_SCALE_1 = WIDTH_SCALE_1 / 12 * 9;
+    public double gameScale = 1;
+    public final int WIDTH_SCALE_1 = 960;//300;
+    public final int HEIGHT_SCALE_1 = 540;//WIDTH_SCALE_1 / 12 * 9;
     
     /**
      * The numerator the the number of nanoseconds in 1 second
@@ -33,6 +33,7 @@ public class GameValues {
     public final float DARKEN_VALUE = .8f;
     public final float LIGHTEN_VALUE = 1.26f;
     public final double START_BUTTON_Y = .7;
+    public final double START_BUTTON_X = .5;
 
 
     public GameState gameState = GameState.NOTSTARTED;

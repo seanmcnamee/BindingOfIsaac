@@ -32,7 +32,7 @@ public class TitleScreen extends DisplayScreen {
         SpriteSheet buttons = new SpriteSheet(gameValues.MAIN_MENU_BUTTONS);
         // TODO fix this position and finish up the others
         
-        btnStart = new Button(buttons.grabImage(0, 0, 1, 1, gameValues.MENU_BUTTON_SIZE), frame.getContentPane().getWidth()/2, frame.getContentPane().getHeight()/2, gameValues);
+        btnStart = new Button(buttons.grabImage(0, 0, 1, 1, gameValues.MENU_BUTTON_SIZE), (int)(gameValues.START_BUTTON_X*gameValues.WIDTH_SCALE_1), (int)(gameValues.START_BUTTON_Y*gameValues.HEIGHT_SCALE_1), gameValues);
         this.gameValues = gameValues;
         this.game = game;
 
@@ -57,7 +57,7 @@ public class TitleScreen extends DisplayScreen {
     //TODO setup transparent background buttons for this menu
     @Override
     public void render(Graphics g) {
-        g.drawImage(background.getImage(), 0, 0, mainGUI.getContentPane().getWidth(), mainGUI.getContentPane().getHeight(), null);
+        g.drawImage(background.getImage(), 0, 0, (int)(gameValues.WIDTH_SCALE_1*gameValues.gameScale), (int)(gameValues.HEIGHT_SCALE_1*gameValues.gameScale), null);
         btnStart.render(g);
         //g.setFont(font);
         //g.drawString("START", mainGUI.getContentPane().getWidth()/2 - 60, (int)(mainGUI.getContentPane().getHeight()*.75));
@@ -75,11 +75,14 @@ public class TitleScreen extends DisplayScreen {
     }
 
     public void mouseMoved(MouseEvent e) {
-        if (!btnStart.isHovering() && btnStart.contains(e.getPoint())) {
-            btnStart.setHovering(true);
-        }   else if (btnStart.isHovering() && !btnStart.contains(e.getPoint())) {
-            btnStart.setHovering(false);
+        if (e != null) {
+            if (!btnStart.isHovering() && btnStart.contains(e.getPoint())) {
+                btnStart.setHovering(true);
+            }   else if (btnStart.isHovering() && !btnStart.contains(e.getPoint())) {
+                btnStart.setHovering(false);
+            }
         }
+        
     }
     
 }
