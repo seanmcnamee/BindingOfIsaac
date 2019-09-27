@@ -18,7 +18,7 @@ public class Game extends DisplayScreen{
 
     public Game(JFrame frame, GameValues gameValues) {
         super(frame);
-        background = new BufferedImageLoader(gameValues.gameBackground);
+        background = new BufferedImageLoader(gameValues.GAME_BACKGROUND_FILE);
     }
 
 

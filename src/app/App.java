@@ -134,7 +134,7 @@ public class App extends Canvas implements Runnable {
                 previousNano = currentNano;
 
                 //Each tick updates the game logic
-                if (totalNano >= gameValues.nanoSecondsPerTick) {
+                if (totalNano >= gameValues.NANO_SECONDS_PER_TICK) {
                     totalNano = 0;
                     gameValues.ticksPerSeconds++;
                     ((Game)game).tick();
@@ -147,7 +147,7 @@ public class App extends Canvas implements Runnable {
             
             //Once a second, show the fps and tps of application loop
             long currentMillis = System.currentTimeMillis();
-            if (currentMillis - previousMillis >= gameValues.oneSecondInMillis) {
+            if (currentMillis - previousMillis >= gameValues.ONE_SEC_IN_MILLIS) {
                 System.out.println("FPS: " + gameValues.framesPerSecond + ", TPS: " + gameValues.ticksPerSeconds);
                 previousMillis = currentMillis;
                 gameValues.framesPerSecond = gameValues.ticksPerSeconds = 0;

@@ -13,23 +13,26 @@ public class GameValues {
      * TODO Figure out exact usage of SCALE
      */
     public final int SCALE = 1;
+    public final int WIDTH_SCALE_1 = 300;
+    public final int HEIGHT_SCALE_1 = WIDTH_SCALE_1 / 12 * 9;
+    
     /**
      * The numerator the the number of nanoseconds in 1 second
      * The denomiator is the Ticks Per Second
      */
-    public final double nanoSecondsPerTick = 1000000000d / 60d;
-    public final int oneSecondInMillis = 1000;
+    public final double NANO_SECONDS_PER_TICK = 1000000000d / 60d;
+    public final int ONE_SEC_IN_MILLIS = 1000;
     public final String NAME = "Binding of Isaac - Sean McNamee";
 
-    public final String mainMenuFile = "bin//emptyMainMenu.jpg";
-    public final String gameFontFile = "bin/MainScreenFont.ttf";
-    public final String gameBackground = "bin/background.png";
+    public final String MAIN_MENU_FILE = "bin//emptyMainMenu.jpg";
+    public final String GAME_FONT_FILE = "bin/MainScreenFont.ttf";
+    public final String GAME_BACKGROUND_FILE = "bin/background.png";
 
-    public final String mainMenuButtons = "bin/MenuButtonsSpriteSheet.png";
-    public final int menuButtonSize = 160;
-    public final float darkenValue = .8f;
-    public final float lightenValue = 1.26f;
-    public final double startHeightRatio = .7;
+    public final String MAIN_MENU_BUTTONS = "bin/MenuButtonsSpriteSheet.png";
+    public final int MENU_BUTTON_SIZE = 160;
+    public final float DARKEN_VALUE = .8f;
+    public final float LIGHTEN_VALUE = 1.26f;
+    public final double START_BUTTON_Y = .7;
 
 
     public GameState gameState = GameState.NOTSTARTED;
@@ -37,7 +40,6 @@ public class GameValues {
 
     public int ticksPerSeconds = 0;
     public int framesPerSecond = 0;
-    //public final int WIDTH = 300;
-    //public final int HEIGHT = WIDTH / 12 * 9;
+    
 
 }

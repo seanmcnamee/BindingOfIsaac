@@ -28,11 +28,11 @@ public class TitleScreen extends DisplayScreen {
 
     public TitleScreen(JFrame frame, GameValues gameValues, Input gameInputs, DisplayScreen game) {
         super(frame);
-        background = new BufferedImageLoader(gameValues.mainMenuFile);
-        SpriteSheet buttons = new SpriteSheet(gameValues.mainMenuButtons);
+        background = new BufferedImageLoader(gameValues.MAIN_MENU_FILE);
+        SpriteSheet buttons = new SpriteSheet(gameValues.MAIN_MENU_BUTTONS);
         // TODO fix this position and finish up the others
         
-        btnStart = new Button(buttons.grabImage(0, 0, 1, 1, gameValues.menuButtonSize), frame.getContentPane().getWidth()/2, frame.getContentPane().getHeight()/2, gameValues);
+        btnStart = new Button(buttons.grabImage(0, 0, 1, 1, gameValues.MENU_BUTTON_SIZE), frame.getContentPane().getWidth()/2, frame.getContentPane().getHeight()/2, gameValues);
         this.gameValues = gameValues;
         this.game = game;
 
