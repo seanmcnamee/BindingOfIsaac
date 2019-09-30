@@ -82,6 +82,8 @@ public class TitleScreen extends DisplayScreen {
             System.out.println("Setting currentScreen to 'game'");
             System.out.println("Game: " + game);
             gameValues.currentScreen = game;
+        }   else if (btnExit.contains(e.getPoint())) {
+            gameValues.gameState = GameValues.GameState.QUIT;
         }
         System.out.println("Mouse clicked at: " +e.getPoint());
         

@@ -6,7 +6,7 @@ package app.supportclasses;
 public class GameValues {
 
     public enum GameState {
-        NOTSTARTED, RUNNING, WON, LOST;
+        NOTSTARTED, RUNNING, WON, LOST, QUIT;
     }
 
     //Overall Application Values
