@@ -1,3 +1,5 @@
+//Erin Mohr is cute!!
+
 import java.awt.Graphics;
 import java.util.ArrayList;
 
