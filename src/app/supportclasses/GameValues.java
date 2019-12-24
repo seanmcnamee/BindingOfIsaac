@@ -46,6 +46,8 @@ public class GameValues {
     public final double COLLECTION_BUTTON_Y = .96;
     public final double COLLECTION_BUTTON_X = .64;
 
-
+    //Game Values
+    public final double GAME_BAR_HEIGHT = .2;
+    public final double GAME_BAR_WIDTH = 1;
 
 }
