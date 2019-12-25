@@ -27,12 +27,12 @@ public class GameValues {
     public DisplayScreen currentScreen;
 
     
-    public final String GAME_FONT_FILE = "bin/MainScreenFont.ttf";
-    public final String GAME_BACKGROUND_FILE = "bin/background.png";
+    public final String GAME_FONT_FILE = "res/MainScreenFont.ttf";
+    public final String GAME_BACKGROUND_FILE = "res/background.png";
 
     //TitleScreen values
-    public final String MAIN_MENU_FILE = "bin//emptyMainMenu.jpg";
-    public final String MAIN_MENU_BUTTONS = "bin/MenuButtonsSpriteSheet.png";
+    public final String MAIN_MENU_FILE = "res//emptyMainMenu.jpg";
+    public final String MAIN_MENU_BUTTONS = "res/MenuButtonsSpriteSheet.png";
     public final int MENU_BUTTON_SIZE = 170;
     public final float DARKEN_VALUE = .8f;
     public final float LIGHTEN_VALUE = 1.26f;
@@ -52,7 +52,7 @@ public class GameValues {
     //Game Values
     public final double GAME_BAR_HEIGHT = .2;
     public final double GAME_BAR_WIDTH = 1;
-    public final String ISSAC_FILE = "bin//Isaac_Walking.gif";
+    public final String ISSAC_FILE = "res//Isaac_Walking.gif";
     public CharacterStats.Character chosenCharacter = CharacterStats.Character.Issac;
     public int moveUp = KeyEvent.VK_W;
     public int moveDown = KeyEvent.VK_S;
