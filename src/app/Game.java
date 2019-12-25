@@ -4,10 +4,10 @@ import java.awt.Graphics;
 
 import javax.swing.JFrame;
 import java.awt.event.MouseEvent;
+import java.awt.event.KeyEvent;
 
 import app.game.GameBar;
 import app.game.GameField;
-import app.supportclasses.BufferedImageLoader;
 import app.supportclasses.DisplayScreen;
 import app.supportclasses.GameValues;
 
@@ -29,7 +29,7 @@ public class Game extends DisplayScreen{
 
 
     public void tick() {
-
+        gameField.tick();
     }
 
     public void render(Graphics g) {
@@ -38,6 +38,19 @@ public class Game extends DisplayScreen{
     }
 
     public void mouseMoved(MouseEvent e) {
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e){
+        gameField.keyPressed(e);
+        //System.out.println(e.getKeyChar() + " Key Pressed");
+    
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e){
+        gameField.keyReleased(e);
+        //.out.println(e.getKeyChar() + " Key Released");
     }
     
 }

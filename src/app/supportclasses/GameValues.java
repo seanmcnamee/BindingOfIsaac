@@ -1,5 +1,8 @@
 package app.supportclasses;
 
+import app.game.gamefield.elements.mobiles.stats.CharacterStats;
+import java.awt.event.KeyEvent;
+
 /**
  * GameValues for the game
  */
@@ -50,5 +53,18 @@ public class GameValues {
     public final double GAME_BAR_HEIGHT = .2;
     public final double GAME_BAR_WIDTH = 1;
     public final String ISSAC_FILE = "bin//Isaac_Walking.gif";
+    public CharacterStats.Character chosenCharacter = CharacterStats.Character.Issac;
+    public int moveUp = KeyEvent.VK_W;
+    public int moveDown = KeyEvent.VK_S;
+    public int moveLeft = KeyEvent.VK_A;
+    public int moveRight = KeyEvent.VK_D;
+    public double fieldXStart = 0;
+    public double fieldYStart = 0;
+    public double fieldXSize = 0;
+    public double fieldYSize = 0;
+    public final int XSpaces = 14;
+    public final int YSpaces = 8;
+    public final double wallSpaceY = .1;
+
 
 }

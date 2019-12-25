@@ -19,7 +19,7 @@ public class CharacterStats extends LivingStats{
 
         switch(character) {
             case Issac:
-                this.maxSpeed = 2;
+                this.maxSpeed = 6;
                 this.maxHealth = 6;
                 this.image = new BufferedImageLoader(gameValues.ISSAC_FILE).getImage();
                 break;

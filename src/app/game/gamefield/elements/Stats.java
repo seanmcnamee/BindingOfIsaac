@@ -8,9 +8,13 @@ import app.supportclasses.GameValues;
  */
 public abstract class Stats {
     protected BufferedImage image;
-    protected GameValues gameValues;
+    public GameValues gameValues;
 
     public Stats(GameValues gameValues) {
         this.gameValues = gameValues;
+    }
+
+    public GameValues getGameValues() {
+        return gameValues;
     }
 }

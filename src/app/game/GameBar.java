@@ -9,8 +9,8 @@ import app.supportclasses.GameValues;
  * GameBar
  */
 public class GameBar {
-    GameValues gameValues;
-    GameField gameField;
+    private GameValues gameValues;
+    private GameField gameField;
 
     public GameBar(GameValues gameValues, GameField gameField) {
         this.gameValues = gameValues;
