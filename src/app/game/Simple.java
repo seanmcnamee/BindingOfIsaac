@@ -1,21 +1,20 @@
-package app.gameclasses;
+package app.game;
 
-import app.gameclasses.renderingclasses.Drawable;
+import java.awt.Graphics;
+
+import app.game.gamefield.elements.rendering.Drawable;
+
 /**
  * Simple
  */
-public class Simple extends Drawable{
+public class Simple extends Drawable {
 
     private int x, y;
 
-    public Simple(int x, int y){
+    public Simple(int x, int y) {
         super();
         this.x = x;
         this.y = y;
-    }
-
-    public void render() {
-        System.out.println(y);
     }
 
     @Override
@@ -23,11 +22,16 @@ public class Simple extends Drawable{
         return this.y;
     }
 
-    @Override
     public Simple setPriority(int... y) {
         System.out.println("Setting priority");
         this.y = y[0];
         return this;
+    }
+
+    @Override
+    public void render(Graphics g) {
+        // TODO Auto-generated method stub
+        System.out.println(y);
     }
 
 }

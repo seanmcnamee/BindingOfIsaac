@@ -1,4 +1,4 @@
-package app.gameclasses;
+package app.game;
 
 import java.awt.Graphics;
 
@@ -10,6 +10,7 @@ import app.supportclasses.GameValues;
 public class GameField {
     private final BufferedImageLoader defaultBackground;
     GameValues gameValues;
+    
 
     public GameField(GameValues gameValues) {
         this.defaultBackground = new BufferedImageLoader(gameValues.GAME_BACKGROUND_FILE);

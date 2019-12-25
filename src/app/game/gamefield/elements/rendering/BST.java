@@ -1,6 +1,6 @@
-package app.gameclasses.renderingclasses;
+package app.game.gamefield.elements.rendering;
 
-import app.gameclasses.renderingclasses.Drawable;;
+import app.game.gamefield.elements.rendering.Drawable;;
 
 /**
  * BST

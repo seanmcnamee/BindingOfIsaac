@@ -49,5 +49,6 @@ public class GameValues {
     //Game Values
     public final double GAME_BAR_HEIGHT = .2;
     public final double GAME_BAR_WIDTH = 1;
+    public final String ISSAC_FILE = "bin//Isaac_Walking.gif";
 
 }

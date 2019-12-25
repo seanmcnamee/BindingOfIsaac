@@ -1,5 +1,9 @@
-package app.gameclasses.renderingclasses;
+package app.game.gamefield.elements.rendering;
 
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+
+import app.game.gamefield.elements.Stats;
 /**
  * BTNode
  */
@@ -7,6 +11,7 @@ public abstract class Drawable {
     //Class variables
     private Drawable parent, leftChild, rightChild;
     private ParentDir parentDir;
+    protected Stats stats;
 
     public enum ParentDir {
         left, right, none;
@@ -22,7 +27,9 @@ public abstract class Drawable {
     //Priority Number
     public abstract int getPriority();
 
-    public abstract Drawable setPriority(int... data);
+    public abstract void render(Graphics g);
+
+    //public abstract Drawable setPriority(int... data);
     
     //Getters
     public Drawable getLeft() {

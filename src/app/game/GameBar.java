@@ -1,4 +1,4 @@
-package app.gameclasses;
+package app.game;
 
 import java.awt.Graphics;
 import java.awt.Color;
@@ -10,9 +10,11 @@ import app.supportclasses.GameValues;
  */
 public class GameBar {
     GameValues gameValues;
+    GameField gameField;
 
-    public GameBar(GameValues gameValues) {
+    public GameBar(GameValues gameValues, GameField gameField) {
         this.gameValues = gameValues;
+        this.gameField = gameField;
     }
 
     public void render(Graphics g) {
