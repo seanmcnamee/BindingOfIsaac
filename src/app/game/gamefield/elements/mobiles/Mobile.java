@@ -43,6 +43,7 @@ public abstract class Mobile extends Drawable{
     protected void updateVelocity() {
         final double acceleration = 6.0/60.0;//How long should it take to accelerate to full? 1/2 a second... so it should double in a second
         final double friction = 2.0/60.0;
+        final double changeWhenFull = .1;
         //final double staticFriction = .01;
 
         double tempXPercent, tempYPercent;
@@ -72,13 +73,13 @@ public abstract class Mobile extends Drawable{
         }
         */
 
-        if (Math.sqrt((Math.pow(tempXPercent, 2) + Math.pow(tempYPercent, 2))) <= 1) {
+        if (Math.sqrt((Math.pow(tempXPercent, 2) + Math.pow(tempYPercent, 2))) <= 1+changeWhenFull) {
             velocityPercent.x = tempXPercent;
             velocityPercent.y = tempYPercent;
         }   else {
             //Lower both?
-            velocityPercent.x *=.99;
-            velocityPercent.y *=.99;
+            velocityPercent.x *=(1-changeWhenFull);
+            velocityPercent.y *=(1-changeWhenFull);
         }
 
         System.out.println("Velocity... x: " + velocityPercent.getX() + ", y: " + velocityPercent.getY());
