@@ -61,7 +61,7 @@ public class Button {
         
     }
 
-    public boolean leftHandSideTest(double x1, double y1, double x2, double y2, double xTEST, double yTEST) {
+    public static boolean leftHandSideTest(double x1, double y1, double x2, double y2, double xTEST, double yTEST) {
         double D = xTEST*(y1-y2) + x1*(y2-yTEST) + x2*(yTEST-y1);
         //System.out.println("Collision checking side: " + x1 + ", " + y1 + " to " + x2 + ", " + y2 + " for: " + xTEST + ", " + yTEST);
         if (D <= 0) {

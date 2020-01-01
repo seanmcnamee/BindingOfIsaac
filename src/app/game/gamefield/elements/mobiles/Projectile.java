@@ -1,18 +1,24 @@
-package app.game.gamefield.elements.mobiles.stats;
+package app.game.gamefield.elements.mobiles;
 
 import app.supportclasses.GameValues;
+
 /**
- * ProjectileStats
+ * Projectile
  */
-public class ProjectileStats extends MobileStats {
+public abstract class Projectile extends Mobile {
     private int range;
     private double traveled;
 
-    public enum Projectile {
+    public enum Projectiles {
         Tear;
     }
 
-    //TODO ability to check when near end of range
+    public Projectile(GameValues gameValues, double x, double y) {
+        super(gameValues, x, y);
+        this.traveled = 0;
+    }
+
+    //TODO ability to check when near end of range (full a bullet to start dropping)
     public boolean endOfRange() {
         return traveled >= range;
     }
@@ -23,8 +29,7 @@ public class ProjectileStats extends MobileStats {
 
 
     //TODO make sure the range number matches up to a block distance (units is blocks)
-    public ProjectileStats(GameValues gameValues, Projectile p) {
-        super(gameValues);
+    public void setProjectileStats(Projectiles p) {
         switch(p) {
             case Tear:
                 this.maxSpeed = 5;
@@ -35,7 +40,6 @@ public class ProjectileStats extends MobileStats {
                 this.maxSpeed = this.range = 0;
                 break;
         }
-        this.traveled = 0;
     }
 
     

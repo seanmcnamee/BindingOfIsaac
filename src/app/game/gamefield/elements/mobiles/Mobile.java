@@ -1,7 +1,7 @@
 package app.game.gamefield.elements.mobiles;
 
-import app.game.gamefield.elements.mobiles.stats.MobileStats;
 import app.game.gamefield.elements.rendering.Drawable;
+import app.supportclasses.GameValues;
 
 import java.awt.geom.Point2D;
 import java.awt.Graphics;
@@ -11,16 +11,16 @@ import java.awt.Point;
  * Entity
  */
 public abstract class Mobile extends Drawable{
-    protected MobileStats stats;
-
-    protected double x, y;
+    protected int maxSpeed;
     protected Point2D.Double velocityPercent;
     protected Point accelerationPercent;
 
-    public Mobile(double x, double y) {
-        super();
-        this.x = x;
-        this.y = y;
+    public Mobile(GameValues gameValues, double x, double y) {
+        this(gameValues, new Point2D.Double(x, y));
+    }
+
+    public Mobile(GameValues gameValues, Point2D.Double location) {
+        super(gameValues, location);
         velocityPercent = new Point2D.Double();
         accelerationPercent = new Point();
     }
@@ -37,7 +37,6 @@ public abstract class Mobile extends Drawable{
         accelerationPercent.x = (int)Math.signum(xAcc);//(xAcc==0)? 0:(xAcc/Math.abs(xAcc));
         accelerationPercent.y = (int)Math.signum(yAcc);//(yAcc==0)? 0:(yAcc/Math.abs(yAcc));
         System.out.println("Accelerated... x: " + accelerationPercent.x + ", y: " + accelerationPercent.y);
-        updateVelocity();
     }
 
     protected void updateVelocity() {
@@ -86,33 +85,33 @@ public abstract class Mobile extends Drawable{
     }
 
     protected void move() {
-        double tempX, tempY;
-        tempX = x;
-        tempY = y;
+        Point2D.Double tempLocation = new Point2D.Double(location.getX(), location.getY());
 
-        tempX += velocityPercent.x*stats.getMaxSpeed()/60;
-        tempY += velocityPercent.y*stats.getMaxSpeed()/60;
+        double maxSpeedPerTick = maxSpeed/60.0;
+
+        tempLocation.x += velocityPercent.x*maxSpeedPerTick;
+        tempLocation.y += velocityPercent.y*maxSpeedPerTick;
 
         //TODO add collision check
         //(possibly a method that everything that extends has to make? -abstract method?)
-
-        x = tempX;
-        y = tempY;
-        
+        if (!isColliding(tempLocation)) {
+            location = tempLocation;
+        }
     }
 
-    public void render(Graphics g) {
-        //TODO add wall space accountability
-        double wallPixels = stats.gameValues.fieldYSize*.05;
-        double singleSquareX = (stats.gameValues.fieldXSize-2*wallPixels)/stats.gameValues.XSpaces;
-        double singleSquareY = (stats.gameValues.fieldYSize-2*wallPixels)/stats.gameValues.YSpaces;
-        g.fillRect((int)(stats.gameValues.fieldXStart+this.x*singleSquareX+wallPixels), (int)(stats.gameValues.fieldYStart+this.y*singleSquareY+wallPixels), (int)(singleSquareX), (int)(singleSquareY));
-    }
+    //Needs to know what to check that its colliding with. Should either be in the above move method or when things are being rendered.
+    protected abstract boolean isColliding(Point2D.Double possibleLocation);
 
+
+    public int getMaxSpeed() {
+        return maxSpeed;
+    }
+    //TODO possibly add mass for more realizstic collisions
+    
     public abstract void tick();
 
     @Override
     public int getPriority() {
-        return (int)(this.y*10.0);
+        return (int)(this.location.getY()*10.0);
     }
 }

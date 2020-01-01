@@ -38,12 +38,15 @@ public abstract class Room {
         
         g.drawImage(defaultBackground, (int)gameValues.fieldXStart, (int)gameValues.fieldYStart, (int)gameValues.fieldXSize, (int)gameValues.fieldYSize, null);
 
+        /*
         BST tempHeap = new BST();
         while(elements.getRoot()!=null) {
-            Drawable temp = elements.deQueue();
+            Drawable temp = (Drawable)elements.deQueue();
             temp.render(g); //TODO add the size of the gameField as parameters
             tempHeap.add(temp.resetConnections());
         }
         elements = tempHeap;
+        */
+        Drawable.renderAll(elements, g);
     }
 }

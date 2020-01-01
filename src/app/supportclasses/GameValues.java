@@ -1,6 +1,6 @@
 package app.supportclasses;
 
-import app.game.gamefield.elements.mobiles.stats.CharacterStats;
+import app.game.gamefield.elements.mobiles.Character;
 import java.awt.event.KeyEvent;
 
 /**
@@ -53,11 +53,11 @@ public class GameValues {
     public final double GAME_BAR_HEIGHT = .2;
     public final double GAME_BAR_WIDTH = 1;
     public final String ISSAC_FILE = "res//Isaac_Walking.gif";
-    public CharacterStats.Character chosenCharacter = CharacterStats.Character.Issac;
-    public int moveUp = KeyEvent.VK_W;
-    public int moveDown = KeyEvent.VK_S;
-    public int moveLeft = KeyEvent.VK_A;
-    public int moveRight = KeyEvent.VK_D;
+    public Character.Characters chosenCharacter = Character.Characters.Issac;
+    public int moveUpKey = KeyEvent.VK_W;
+    public int moveDownKey = KeyEvent.VK_S;
+    public int moveLeftKey = KeyEvent.VK_A;
+    public int moveRightKey = KeyEvent.VK_D;
     public double fieldXStart = 0;
     public double fieldYStart = 0;
     public double fieldXSize = 0;

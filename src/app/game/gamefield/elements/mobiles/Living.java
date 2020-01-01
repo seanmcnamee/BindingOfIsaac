@@ -1,15 +1,15 @@
-package app.game.gamefield.elements.mobiles.stats;
+package app.game.gamefield.elements.mobiles;
 
 import app.supportclasses.GameValues;
 
 /**
- * LivingStats
+ * Living
  */
-public abstract class LivingStats extends MobileStats {
+public abstract class Living extends Mobile {
     protected int maxHealth, health; // A full heart is 2. A half heart is 1
 
-    public LivingStats(GameValues gameValues) {
-        super(gameValues);
+    public Living(GameValues gameValues, double x, double y) {
+        super(gameValues, x, y);
     }
 
     public boolean damage(int damage) {
@@ -24,4 +24,5 @@ public abstract class LivingStats extends MobileStats {
     protected void setFullHealth() {
         this.health = this.maxHealth;
     }
+    
 }

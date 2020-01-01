@@ -1,12 +1,12 @@
 package app.game.gamefield.elements.rendering;
 
-import app.game.gamefield.elements.rendering.Drawable;;
+import app.game.gamefield.elements.rendering.Node;
 
 /**
  * BST
  */
 public class BST {
-    private Drawable root;
+    private Node root;
     private int nodeCount;
 
     public BST() {
@@ -14,32 +14,32 @@ public class BST {
         this.nodeCount = 0;
     }
 
-    public BST(Drawable root) {
+    public BST(Node root) {
         this.root = root;
         this.nodeCount = 1;
     }
 
-    public Drawable getRoot() {
+    public Node getRoot() {
         return root;
     }
 
-    public void add(Drawable newNode) {
+    public void add(Node newNode) {
         addIterative(newNode);
     }
 
-    public Drawable deQueue() {
+    public Node deQueue() {
         this.nodeCount--;
         return bubbleDown(root);
     }
 
-    public void updatePriority(Drawable node) {
-        Drawable largerChild = node.choosePriorityChild();
+    public void updatePriority(Node node) {
+        Node largerChild = node.choosePriorityChild();
         if (largerChild != null && largerChild.getPriority()>node.getPriority()) {
             //Bubble Down...
             switchParentAndChild(largerChild);
             updatePriority(node);
         }   else {
-            Drawable parent = node.getParent();
+            Node parent = node.getParent();
             if (parent != null && node.getPriority()>parent.getPriority()) {
                 //Bubble Up...
                 switchParentAndChild(node);
@@ -49,16 +49,16 @@ public class BST {
         //Done
     }
 
-    private void bubbleUp(Drawable node) {
-        Drawable parent = node.getParent();
+    private void bubbleUp(Node node) {
+        Node parent = node.getParent();
         if (parent != null && node.getPriority() > parent.getPriority()) {
             switchParentAndChild(node);
             bubbleUp(node); 
         }
     }
 
-    public Drawable bubbleDown(Drawable node) {
-        Drawable nextChild = node.choosePriorityChild();
+    public Node bubbleDown(Node node) {
+        Node nextChild = node.choosePriorityChild();
         if (nextChild==null) {
             //Remove from queue
             if (root!=node) {
@@ -80,16 +80,16 @@ public class BST {
      * May switch the tree around but it doesn't matter.
      * @param node
      */
-    private void switchParentAndChild(Drawable node) {
+    private void switchParentAndChild(Node node) {
         //System.out.println("Pushing up " + node + " - " + node.getPriority());
         //System.out.println("Node: " + node.getPriority() + ", parent: " + node.getParent() + ", relation: " + node.getParentDir());
-        Drawable parent = node.getParent();
-        Drawable parentParent = parent.getParent();
-        Drawable parentLeft = parent.getLeft();
-        Drawable parentRight = parent.getRight();
+        Node parent = node.getParent();
+        Node parentParent = parent.getParent();
+        Node parentLeft = parent.getLeft();
+        Node parentRight = parent.getRight();
         
-        Drawable.ParentDir PPtoP = parent.getParentDir();
-        Drawable.ParentDir PtoNode = node.getParentDir();
+        Node.ParentDir PPtoP = parent.getParentDir();
+        Node.ParentDir PtoNode = node.getParentDir();
 
 
         //int PPtoP = findRelation(parentParent, parent);
@@ -107,10 +107,10 @@ public class BST {
         parent.setRightChild(node.getRight());
 
         //Link Node to parent and parent's old child
-        if (PtoNode==Drawable.ParentDir.right) {
+        if (PtoNode==Node.ParentDir.right) {
             node.setRightChild(parent);
             node.setLeftChild(parentLeft);
-        } else if (PtoNode==Drawable.ParentDir.left) {
+        } else if (PtoNode==Node.ParentDir.left) {
             node.setLeftChild(parent);
             node.setRightChild(parentRight);
         } else {
@@ -119,7 +119,7 @@ public class BST {
         }
 
         //Link PP to C (or the root if needed)
-        if (PPtoP==Drawable.ParentDir.none) {
+        if (PPtoP==Node.ParentDir.none) {
             this.root = node;
             node.resetParent();
         }   else {
@@ -127,9 +127,9 @@ public class BST {
         }
     }
 
-    private void addIterative(Drawable newNode) {
+    private void addIterative(Node newNode) {
         //System.out.println("Adding node: " + newNode.getPriority());
-        Drawable current = root;
+        Node current = root;
 
         //For root node insert
         if (root == null) {
@@ -176,7 +176,7 @@ public class BST {
         bubbleUp(newNode);
     }
     
-    public void preOrder(Drawable node) {
+    public void preOrder(Node node) {
         if (node != null) {
             System.out.print(node.getPriority()+"_"+node.getParentDir()+" ");
             preOrder(node.getLeft());
@@ -184,7 +184,7 @@ public class BST {
         }
     }
 
-    public void inOrder(Drawable node) {
+    public void inOrder(Node node) {
         if (node != null) {
             inOrder(node.getLeft());
             System.out.print(node.getPriority()+"_"+node.getParentDir()+" ");
@@ -192,7 +192,7 @@ public class BST {
         }
     }
 
-    public void postOrder(Drawable node) {
+    public void postOrder(Node node) {
         if (node != null) {
             postOrder(node.getLeft());
             postOrder(node.getRight());

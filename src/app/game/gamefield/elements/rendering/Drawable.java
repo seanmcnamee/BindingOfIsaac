@@ -1,106 +1,39 @@
 package app.game.gamefield.elements.rendering;
 
+import app.supportclasses.GameValues;
+
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-
-import app.game.gamefield.elements.Stats;
+import java.awt.geom.Point2D;
 /**
  * BTNode
  */
-public abstract class Drawable {
-    //Class variables
-    private Drawable parent, leftChild, rightChild;
-    private ParentDir parentDir;
-    protected Stats stats;
+public abstract class Drawable extends Node{
+    protected Point2D.Double location;
+    protected BufferedImage image;
+    protected GameValues gameValues;
 
-    public enum ParentDir {
-        left, right, none;
+    public Drawable(GameValues gameValues, Point2D.Double location) {
+        super();
+        this.gameValues = gameValues;
+        this.location = location;
     }
 
-    //Constructors
-    public Drawable(){
-        this.parent = null;
-        this.parentDir = ParentDir.none;
-        this.leftChild = this.rightChild = null;
+    public void render(Graphics g) {
+        //TODO add wall space accountability
+        double wallPixels = gameValues.fieldYSize*.05;
+        double singleSquareX = (gameValues.fieldXSize-2*wallPixels)/gameValues.XSpaces;
+        double singleSquareY = (gameValues.fieldYSize-2*wallPixels)/gameValues.YSpaces;
+        g.fillRect((int)(gameValues.fieldXStart+this.location.getX()*singleSquareX+wallPixels), (int)(gameValues.fieldYStart+this.location.getY()*singleSquareY+wallPixels), (int)(singleSquareX), (int)(singleSquareY));
     }
 
-    //Priority Number
-    public abstract int getPriority();
-
-    public abstract void render(Graphics g);
-
-    //public abstract Drawable setPriority(int... data);
-    
-    //Getters
-    public Drawable getLeft() {
-        return this.leftChild;
-    }
-
-    public Drawable getRight() {
-        return this.rightChild;
-    }
-
-    public Drawable getParent() {
-        return this.parent;
-    }
-
-    public void setLeftChild(Drawable leftChild) {
-        this.leftChild = leftChild;
-        if (this.leftChild!= null) {
-            this.leftChild.parent = this;
-            //System.out.println("Left parent direction for " + leftChild.getPriority());
-            this.leftChild.parentDir = ParentDir.left;
+    public static void renderAll(BST elements, Graphics g) {
+        BST tempHeap = new BST();
+        while(elements.getRoot()!=null) {
+            Drawable temp = (Drawable)elements.deQueue();
+            temp.render(g);
+            tempHeap.add(temp.resetConnections());
         }
+        elements = tempHeap;
     }
-
-    public void setRightChild(Drawable rightChild) {
-        this.rightChild = rightChild;
-        if (this.rightChild!= null) {
-            this.rightChild.parent = this;
-            //System.out.println("Right parent direction for " + rightChild.getPriority());
-            this.rightChild.parentDir = ParentDir.right;
-        }
-    }
-
-    public void setChild(Drawable node, ParentDir dir) {
-        if (dir==ParentDir.left) {
-            setLeftChild(node);
-        }   else {
-            setRightChild(node);
-        }
-    }
-
-    public void resetParent() {
-        parent = null;
-        //System.out.println("Resetting parent direction for " + getPriority());
-        this.parentDir = ParentDir.none;
-    }
-
-    public ParentDir getParentDir() {
-        return this.parentDir;
-    }
-
-    public Drawable choosePriorityChild() {
-        if (leftChild==null && rightChild==null) {
-            return null;
-        }   else if (leftChild==null) {
-            return rightChild;
-        }   else if (rightChild==null) {
-            return leftChild;
-        }   else {
-            if (leftChild.getPriority()>rightChild.getPriority()) {
-                return leftChild;
-            }   else {
-                return rightChild;
-            }
-        }
-    }
-    
-    public Drawable resetConnections() {
-        this.parent = null;
-        this.parentDir = ParentDir.none;
-        this.leftChild = this.rightChild = null;
-        return this;
-    }
-    
 }
