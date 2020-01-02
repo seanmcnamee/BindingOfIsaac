@@ -6,7 +6,7 @@ import java.awt.event.KeyEvent;
 import app.game.gamefield.rooms.Room;
 import app.game.gamefield.rooms.SpawnRoom;
 import app.supportclasses.GameValues;
-import app.game.gamefield.elements.mobiles.Player;
+import app.game.gamefield.elements.mobiles.players.Player;
 /**
  * GameField
  */
@@ -34,6 +34,9 @@ public class GameField {
         //this.gameValues.fieldYStart = gameValues.HEIGHT_SCALE_1*gameValues.gameScale*gameValues.GAME_BAR_HEIGHT;
         this.gameValues.fieldXSize = gameValues.WIDTH_SCALE_1*(gameValues.gameScale);
         this.gameValues.fieldYSize = gameValues.HEIGHT_SCALE_1*gameValues.gameScale*(1-gameValues.GAME_BAR_HEIGHT);
+
+        gameValues.singleSquareX = (gameValues.fieldXSize)/gameValues.XSpaces;
+        gameValues.singleSquareY = (gameValues.fieldYSize)/gameValues.YSpaces;
 
         double excessWidth = gameValues.frameWidth-(gameValues.WIDTH_SCALE_1*gameValues.gameScale);
         double excessHeight = gameValues.frameHeight-(gameValues.HEIGHT_SCALE_1*gameValues.gameScale);

@@ -9,7 +9,7 @@ import java.awt.geom.Point2D;
 
 import app.game.GameBar;
 import app.game.GameField;
-import app.game.gamefield.elements.mobiles.Player;
+import app.game.gamefield.elements.mobiles.players.Player;
 import app.supportclasses.DisplayScreen;
 import app.supportclasses.GameValues;
 

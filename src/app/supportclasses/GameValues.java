@@ -1,6 +1,6 @@
 package app.supportclasses;
 
-import app.game.gamefield.elements.mobiles.Player;
+import app.game.gamefield.elements.mobiles.players.Player;
 import java.awt.event.KeyEvent;
 
 /**
@@ -54,16 +54,17 @@ public class GameValues {
     //Game Values
     public final double GAME_BAR_HEIGHT = .2;
     public final double GAME_BAR_WIDTH = 1;
-    public final String ISSAC_FILE = "res//Isaac_Walking.gif";
+    public final String ISSAC_FILE = "res//isaac_spritesheet.png";
     public final String GAME_BACKGROUND_FILE = "res//background.png";
     public final String STARTING_BACKGROUND_FILE = "res//tutorialbackground.png";
     public final String SPRITE_SHEET = "res//MainSpriteSheet.png";
+    public final int PLAYER_SHEET_BOX_SIZE = 64;
     public final int SPRITE_SHEET_BOX_SIZE = 20;
     public final int XSpaces = 14;
     public final int YSpaces = 8;
     public final double wallSpaceY = .1;
 
-    public Player.Characters chosenCharacter = Player.Characters.Issac;
+    public Player.Characters chosenCharacter = Player.Characters.Isaac;
     public int moveUpKey = KeyEvent.VK_W;
     public int moveDownKey = KeyEvent.VK_S;
     public int moveLeftKey = KeyEvent.VK_A;
@@ -72,6 +73,8 @@ public class GameValues {
     public double fieldYStart = 0;
     public double fieldXSize = 0;
     public double fieldYSize = 0;
+    public double singleSquareX = 0;
+    public double singleSquareY = 0;
     public double barXStart = 0;
     public double barYStart = 0;
     public double barXSize = 0;

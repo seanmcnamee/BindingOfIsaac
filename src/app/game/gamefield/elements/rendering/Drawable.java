@@ -9,7 +9,7 @@ import java.awt.geom.Point2D;
 /**
  * BTNode
  */
-public abstract class Drawable extends Node{
+public class Drawable extends Node{
     protected Point2D.Double location;
     protected BufferedImage image;
     protected Point2D.Double sizeInBlocks;
@@ -23,18 +23,17 @@ public abstract class Drawable extends Node{
 
     public void render(Graphics g) {
         //TODO add wall space accountability
-        double wallPixels = gameValues.fieldYSize*.05;
-        double singleSquareX = (gameValues.fieldXSize-2*wallPixels)/gameValues.XSpaces;
-        double singleSquareY = (gameValues.fieldYSize-2*wallPixels)/gameValues.YSpaces;
+        //double wallPixels = gameValues.fieldYSize*.05;
         
-        double xZero = wallPixels+gameValues.fieldXStart+singleSquareX/2.0;
-        double yZero = wallPixels+gameValues.fieldYStart+singleSquareY/2.0;
+        //TODO fix this adjustment when walls are added
+        double xZero = gameValues.fieldXStart+(gameValues.singleSquareX*.5);
+        double yZero = gameValues.fieldYStart+(gameValues.singleSquareY*.5);
 
-        double pixelXLocation = xZero+(this.location.getX()*singleSquareX);
-        double pixelYLocation = yZero+(this.location.getY()*singleSquareY);
+        double pixelXLocation = xZero+(this.location.getX()*gameValues.singleSquareX);
+        double pixelYLocation = yZero+(this.location.getY()*gameValues.singleSquareY);
 
-        double pixelXSize = singleSquareX*sizeInBlocks.getX();
-        double pixelYSize = singleSquareY*sizeInBlocks.getY();
+        double pixelXSize = gameValues.singleSquareX*sizeInBlocks.getX();
+        double pixelYSize = gameValues.singleSquareY*sizeInBlocks.getY();
         //gameValues.fieldYStart+this.location.getY()*singleSquareY+wallPixels
         //double leftSide = gameValues.fieldXStart+(this.location.getX()*singleSquareX)+wallPixels;
 
