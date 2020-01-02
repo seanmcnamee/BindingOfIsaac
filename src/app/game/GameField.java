@@ -3,10 +3,8 @@ package app.game;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 
-import app.game.gamefield.elements.rendering.Drawable;
 import app.game.gamefield.rooms.Room;
 import app.game.gamefield.rooms.SpawnRoom;
-import app.supportclasses.BufferedImageLoader;
 import app.supportclasses.GameValues;
 import app.game.gamefield.elements.mobiles.Player;
 /**

@@ -24,7 +24,7 @@ public class Player extends Mobile {
     public Player(GameValues gameValues, Characters c, Point2D.Double location) {
         super(gameValues, location);
         money = bombs = keys = 0;
-        sizeInBlocks = new Point2D.Double(1, 1);
+        sizeInBlocks = new Point2D.Double(1.25, 1.25);
         setCharacterStats(c);
         setFullHealth();
     }
@@ -57,7 +57,7 @@ public class Player extends Mobile {
     }
 
     public void keyPressed(KeyEvent e) {
-        System.out.println("Key Pressed");
+        //System.out.println("Key Pressed");
         if (e.getKeyCode() == gameValues.moveUpKey) {
             this.moveUp = true;
         } else if (e.getKeyCode() == gameValues.moveDownKey) {

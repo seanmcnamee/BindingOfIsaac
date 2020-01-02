@@ -6,7 +6,10 @@ import java.util.ArrayList;
 import app.game.gamefield.elements.mobiles.Mobile;
 import app.game.gamefield.elements.rendering.BST;
 import app.game.gamefield.elements.rendering.Drawable;
+import app.supportclasses.BufferedImageLoader;
 import app.supportclasses.GameValues;
+import app.supportclasses.SpriteSheet;
+
 import java.awt.image.BufferedImage;
 import java.awt.geom.Point2D;
 
@@ -14,19 +17,57 @@ import java.awt.geom.Point2D;
  * Room
  */
 public abstract class Room {
-    private BST elements; // Drawables
-    private ArrayList<Mobile> movables;
+    protected BST elements; // Drawables
+    protected ArrayList<Mobile> movables;
 
-    private final BufferedImage defaultBackground; // Background
+    //TODO add actual objects as the walls for a room, not just a background...
+    private BufferedImage background; // Background
+    private BufferedImage roomIcon;
+    private boolean explored;
     GameValues gameValues;
 
-    public Room(GameValues gameValues, Drawable player, BufferedImage image) {
+    public enum Rooms {
+        Spawn, Regular, Arcade, Shop, Treasure, Boss, Secret;
+    }
+
+    public Room(GameValues gameValues, Drawable player, Rooms roomType) {
         this.gameValues = gameValues;
         this.elements = new BST();
         this.movables = new ArrayList<Mobile>();
+        this.explored = false;
+        setPictures(roomType);
+
         this.elements.add(player);
         this.movables.add((Mobile)player);
-        this.defaultBackground = image;
+    }
+
+    private void setPictures(Rooms room) {
+        SpriteSheet spriteSheet = new SpriteSheet(gameValues.SPRITE_SHEET);
+        this.roomIcon = null;
+        this.roomIcon = spriteSheet.shrink(spriteSheet.grabImage(1, 1, 1, 1, gameValues.SPRITE_SHEET_BOX_SIZE));
+
+        
+        //TODO go through these backgrounds and icons
+        switch(room) {
+            case Spawn:
+                this.background = new BufferedImageLoader(gameValues.STARTING_BACKGROUND_FILE).getImage();
+                break;
+            case Regular:
+
+            case Arcade:
+
+            case Shop:
+
+            case Treasure:
+
+            case Boss:
+
+            case Secret:
+
+            default:
+                this.background = new BufferedImageLoader(gameValues.GAME_BACKGROUND_FILE).getImage();
+                break;
+        }
     }
 
     public void tick() {
@@ -36,7 +77,7 @@ public abstract class Room {
     }
 
     public void render(Graphics g) {
-        g.drawImage(defaultBackground, (int)gameValues.fieldXStart, (int)gameValues.fieldYStart, (int)gameValues.fieldXSize, (int)gameValues.fieldYSize, null);
+        g.drawImage(background, (int)gameValues.fieldXStart, (int)gameValues.fieldYStart, (int)gameValues.fieldXSize, (int)gameValues.fieldYSize, null);
 
         BST tempHeap = new BST();
         while(elements.getRoot()!=null) {

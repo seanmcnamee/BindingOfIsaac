@@ -21,6 +21,7 @@ public class Degradable extends Destructible {
         super(gameValues, location);
         setDegradingImages(degradable);
         setFullHealth();
+        updateImage();
     }
 
     public void setDegradingImages(Degradables degradable) {
@@ -37,11 +38,13 @@ public class Degradable extends Destructible {
                 break;
             case Rock:
                 this.maxHealth = 1;
+                this.sizeInBlocks = new Point2D.Double(1, 1);
                 images = new BufferedImage[maxHealth];
                 images[0] = spriteSheet.shrink(spriteSheet.grabImage(14, 4, 2, 2, gameValues.SPRITE_SHEET_BOX_SIZE));
                 break;
             default: //default
                 this.maxHealth = 1;
+                this.sizeInBlocks = new Point2D.Double(1, 1);
                 images = new BufferedImage[maxHealth];
                 images[0] = spriteSheet.shrink(spriteSheet.grabImage(2, 6, 2, 2, gameValues.SPRITE_SHEET_BOX_SIZE));
         }

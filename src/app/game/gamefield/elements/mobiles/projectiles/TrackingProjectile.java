@@ -1,4 +1,4 @@
-package app.game.gamefield.elements.mobiles.projectile;
+package app.game.gamefield.elements.mobiles.projectiles;
 
 import java.awt.geom.Point2D;
 

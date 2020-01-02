@@ -30,11 +30,11 @@ public class GameValues {
     public GameState gameState = GameState.NOTSTARTED;
     public DisplayScreen currentScreen;
 
-    public final String GAME_FONT_FILE = "res/MainScreenFont.ttf";
+    public final String GAME_FONT_FILE = "res//MainScreenFont.ttf";
 
     //TitleScreen values
     public final String MAIN_MENU_FILE = "res//emptyMainMenu.jpg";
-    public final String MAIN_MENU_BUTTONS = "res/MenuButtonsSpriteSheet.png";
+    public final String MAIN_MENU_BUTTONS = "res//MenuButtonsSpriteSheet.png";
     public final int MENU_BUTTON_SIZE = 170;
     public final float DARKEN_VALUE = .8f;
     public final float LIGHTEN_VALUE = 1.26f;
@@ -55,8 +55,9 @@ public class GameValues {
     public final double GAME_BAR_HEIGHT = .2;
     public final double GAME_BAR_WIDTH = 1;
     public final String ISSAC_FILE = "res//Isaac_Walking.gif";
-    public final String GAME_BACKGROUND_FILE = "res/background.png";
-    public final String SPRITE_SHEET = "res/MainSpriteSheet.png";
+    public final String GAME_BACKGROUND_FILE = "res//background.png";
+    public final String STARTING_BACKGROUND_FILE = "res//tutorialbackground.png";
+    public final String SPRITE_SHEET = "res//MainSpriteSheet.png";
     public final int SPRITE_SHEET_BOX_SIZE = 20;
     public final int XSpaces = 14;
     public final int YSpaces = 8;

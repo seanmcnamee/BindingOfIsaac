@@ -43,7 +43,7 @@ public abstract class Drawable extends Node{
 
     @Override
     public int getPriority() {
-        return (int)(this.location.getY()*10.0);
+        return (int)(-this.location.getY()*10.0);
     }
 
     public boolean contains(Point2D.Double testingLocation, Drawable other) {

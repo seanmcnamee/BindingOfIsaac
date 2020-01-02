@@ -1,4 +1,4 @@
-package app.game.gamefield.elements.mobiles.projectile;
+package app.game.gamefield.elements.mobiles.projectiles;
 
 import app.game.gamefield.elements.mobiles.Mobile;
 import app.game.gamefield.elements.rendering.Drawable;
