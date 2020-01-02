@@ -2,6 +2,7 @@ package app.game.gamefield.elements.mobiles;
 
 import app.supportclasses.GameValues;
 
+import java.awt.geom.Point2D;
 /**
  * Enemy
  */
@@ -11,8 +12,8 @@ public abstract class Enemy extends Living {
         Fly;
     }
 
-    public Enemy(GameValues gameValues, double x, double y) {
-        super(gameValues, x, y);
+    public Enemy(GameValues gameValues, Point2D.Double location) {
+        super(gameValues, location);
         
     }
 

@@ -1,7 +1,10 @@
 package app.game.gamefield.elements.mobiles;
 
+import app.game.gamefield.elements.rendering.Drawable;
+import app.game.gamefield.rooms.Room;
 import app.supportclasses.GameValues;
 
+import java.awt.geom.Point2D;
 /**
  * Projectile
  */
@@ -13,8 +16,8 @@ public abstract class Projectile extends Mobile {
         Tear;
     }
 
-    public Projectile(GameValues gameValues, double x, double y) {
-        super(gameValues, x, y);
+    public Projectile(GameValues gameValues, Point2D.Double location) {
+        super(gameValues, location);
         this.traveled = 0;
     }
 
@@ -40,6 +43,26 @@ public abstract class Projectile extends Mobile {
                 this.maxSpeed = this.range = 0;
                 break;
         }
+    }
+
+    @Override
+    public void tick(Room room) {
+        //Maybe for future types, acclerate
+        updateVelocity();
+        testCollisionAndMove(room);
+        incrementTraveled(getTickDistance());
+        if (endOfRange()) {
+            room.destroyElement(this);
+        }
+    }
+
+    private double getTickDistance() {
+        return Math.sqrt(Math.pow(velocityPercent.getX()*maxSpeed, 2) + Math.pow(velocityPercent.getY()*maxSpeed, 2));
+    }
+
+    @Override
+    protected void onCollision(Point2D.Double newLocation, Drawable collidingElement, Room room) {
+        //TODO write block
     }
 
     

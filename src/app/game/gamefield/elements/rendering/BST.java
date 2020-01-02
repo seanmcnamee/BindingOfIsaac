@@ -1,6 +1,7 @@
 package app.game.gamefield.elements.rendering;
 
 import app.game.gamefield.elements.rendering.Node;
+import java.awt.geom.Point2D;
 
 /**
  * BST
@@ -199,6 +200,5 @@ public class BST {
             System.out.print(node.getPriority()+"_"+node.getParentDir()+" ");
         }
     }
-
 
 }

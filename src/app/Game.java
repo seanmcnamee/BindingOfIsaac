@@ -5,9 +5,11 @@ import java.awt.Graphics;
 import javax.swing.JFrame;
 import java.awt.event.MouseEvent;
 import java.awt.event.KeyEvent;
+import java.awt.geom.Point2D;
 
 import app.game.GameBar;
 import app.game.GameField;
+import app.game.gamefield.elements.mobiles.Player;
 import app.supportclasses.DisplayScreen;
 import app.supportclasses.GameValues;
 
@@ -23,7 +25,8 @@ public class Game extends DisplayScreen{
     public Game(JFrame frame, GameValues gameValues) {
         super(frame);
         this.gameValues = gameValues;
-        gameField = new GameField(gameValues);
+        Player player = new Player(gameValues, gameValues.chosenCharacter, new Point2D.Double(0, 0));
+        gameField = new GameField(gameValues, player);
         gameBar = new GameBar(gameValues, gameField);
     }
 

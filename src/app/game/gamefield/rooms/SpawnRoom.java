@@ -11,6 +11,7 @@ public class SpawnRoom extends Room {
     
     public SpawnRoom(GameValues gameValues, Drawable player) {
         super(gameValues, player, new BufferedImageLoader(gameValues.GAME_BACKGROUND_FILE).getImage());
+        
     }
 
     

@@ -1,6 +1,6 @@
 package app.supportclasses;
 
-import app.game.gamefield.elements.mobiles.Character;
+import app.game.gamefield.elements.mobiles.Player;
 import java.awt.event.KeyEvent;
 
 /**
@@ -14,10 +14,14 @@ public class GameValues {
 
     //Overall Application Values
     public double gameScale = 1;
+    public double frameWidth = 790;
+    public double frameHeight = 590;
     public final int WIDTH_SCALE_1 = 790;//960;//300;
     public final int HEIGHT_SCALE_1 = 590;//WIDTH_SCALE_1 / 12 * 9;
+    
 
-    public final double NANO_SECONDS_PER_TICK = 1000000000d / 60d; // (NanoSeconds/1 seconds) * (1 second/nanoseconds in 1 tick)
+    public final double goalTicksPerSecond = 60.0;
+    public final double NANO_SECONDS_PER_TICK = 1000000000d / goalTicksPerSecond; // (NanoSeconds/1 seconds) * (1 second/nanoseconds in 1 tick)
     public final int ONE_SEC_IN_MILLIS = 1000;
     public int ticksPerSeconds = 0;
     public int framesPerSecond = 0;
@@ -26,9 +30,7 @@ public class GameValues {
     public GameState gameState = GameState.NOTSTARTED;
     public DisplayScreen currentScreen;
 
-    
     public final String GAME_FONT_FILE = "res/MainScreenFont.ttf";
-    public final String GAME_BACKGROUND_FILE = "res/background.png";
 
     //TitleScreen values
     public final String MAIN_MENU_FILE = "res//emptyMainMenu.jpg";
@@ -53,7 +55,14 @@ public class GameValues {
     public final double GAME_BAR_HEIGHT = .2;
     public final double GAME_BAR_WIDTH = 1;
     public final String ISSAC_FILE = "res//Isaac_Walking.gif";
-    public Character.Characters chosenCharacter = Character.Characters.Issac;
+    public final String GAME_BACKGROUND_FILE = "res/background.png";
+    public final String SPRITE_SHEET = "res/MainSpriteSheet.png";
+    public final int SPRITE_SHEET_BOX_SIZE = 20;
+    public final int XSpaces = 14;
+    public final int YSpaces = 8;
+    public final double wallSpaceY = .1;
+
+    public Player.Characters chosenCharacter = Player.Characters.Issac;
     public int moveUpKey = KeyEvent.VK_W;
     public int moveDownKey = KeyEvent.VK_S;
     public int moveLeftKey = KeyEvent.VK_A;
@@ -62,9 +71,15 @@ public class GameValues {
     public double fieldYStart = 0;
     public double fieldXSize = 0;
     public double fieldYSize = 0;
-    public final int XSpaces = 14;
-    public final int YSpaces = 8;
-    public final double wallSpaceY = .1;
+    public double barXStart = 0;
+    public double barYStart = 0;
+    public double barXSize = 0;
+    public double barYSize = 0;
+    public double friction = 6.0; //In blocks per second
+    public final double iceAccelerationChange = 1.0/6.0;
+    public final double sludgeAccelerationChange = 1.0/3.0;
+    
+    
 
 
 }

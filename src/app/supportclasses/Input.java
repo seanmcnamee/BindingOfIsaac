@@ -66,6 +66,8 @@ public class Input extends MouseInputAdapter implements KeyListener, ComponentLi
         //System.out.println("Resized frame to: " + frame.getContentPane().getWidth() + ", " + frame.getContentPane().getHeight());
         //System.out.println("\tX Scale: " + scaleX + ", Y Scale: " + scaleY);
         gameValues.gameScale = Math.min(scaleX, scaleY);
+        gameValues.frameWidth = frame.getContentPane().getWidth();
+        gameValues.frameHeight = frame.getContentPane().getHeight();
     }
 
     

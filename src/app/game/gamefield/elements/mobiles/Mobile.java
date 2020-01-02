@@ -1,23 +1,26 @@
 package app.game.gamefield.elements.mobiles;
 
+import app.game.gamefield.elements.rendering.BST;
 import app.game.gamefield.elements.rendering.Drawable;
+import app.game.gamefield.rooms.Room;
 import app.supportclasses.GameValues;
 
 import java.awt.geom.Point2D;
-import java.awt.Graphics;
 import java.awt.Point;
 
 /**
  * Entity
  */
 public abstract class Mobile extends Drawable{
-    protected int maxSpeed;
+    protected double maxSpeed;
+    protected double accelerationRate; //In blocks per second
     protected Point2D.Double velocityPercent;
     protected Point accelerationPercent;
 
+    /*
     public Mobile(GameValues gameValues, double x, double y) {
         this(gameValues, new Point2D.Double(x, y));
-    }
+    }*/
 
     public Mobile(GameValues gameValues, Point2D.Double location) {
         super(gameValues, location);
@@ -34,16 +37,15 @@ public abstract class Mobile extends Drawable{
     }
 
     public void accelerate(int yAcc, int xAcc) {
-        accelerationPercent.x = (int)Math.signum(xAcc);//(xAcc==0)? 0:(xAcc/Math.abs(xAcc));
-        accelerationPercent.y = (int)Math.signum(yAcc);//(yAcc==0)? 0:(yAcc/Math.abs(yAcc));
-        System.out.println("Accelerated... x: " + accelerationPercent.x + ", y: " + accelerationPercent.y);
+        accelerationPercent.x = (int)Math.signum(xAcc);
+        accelerationPercent.y = (int)Math.signum(yAcc);
+        //System.out.println("Accelerated... x: " + accelerationPercent.x + ", y: " + accelerationPercent.y);
     }
 
     protected void updateVelocity() {
-        final double acceleration = 6.0/60.0;//How long should it take to accelerate to full? 1/2 a second... so it should double in a second
-        final double friction = 2.0/60.0;
+        final double acceleration = accelerationRate/gameValues.goalTicksPerSecond;
+        final double friction = gameValues.friction/gameValues.goalTicksPerSecond;
         final double changeWhenFull = .1;
-        //final double staticFriction = .01;
 
         double tempXPercent, tempYPercent;
         tempXPercent = velocityPercent.x;
@@ -60,18 +62,6 @@ public abstract class Mobile extends Drawable{
             tempYPercent = 0;
         }
 
-        //TODO when adding a second direction, let that one's power become equal to the current
-
-        //Allow for friction to stop motion...
-        /*
-        if (accelerationPercent.getX()==0 && Math.signum(tempXPercent)!=Math.signum(velocityPercent.getX())) {
-            tempXPercent = 0;
-        }
-        if (accelerationPercent.getY()==0 && Math.signum(tempYPercent)!=Math.signum(velocityPercent.getY())) {
-            tempYPercent = 0;
-        }
-        */
-
         if (Math.sqrt((Math.pow(tempXPercent, 2) + Math.pow(tempYPercent, 2))) <= 1+changeWhenFull) {
             velocityPercent.x = tempXPercent;
             velocityPercent.y = tempYPercent;
@@ -81,10 +71,10 @@ public abstract class Mobile extends Drawable{
             velocityPercent.y *=(1-changeWhenFull);
         }
 
-        System.out.println("Velocity... x: " + velocityPercent.getX() + ", y: " + velocityPercent.getY());
+        //System.out.println("Velocity... x: " + velocityPercent.getX() + ", y: " + velocityPercent.getY());
     }
 
-    protected void move() {
+    protected void testCollisionAndMove(Room room) {
         Point2D.Double tempLocation = new Point2D.Double(location.getX(), location.getY());
 
         double maxSpeedPerTick = maxSpeed/60.0;
@@ -92,26 +82,22 @@ public abstract class Mobile extends Drawable{
         tempLocation.x += velocityPercent.x*maxSpeedPerTick;
         tempLocation.y += velocityPercent.y*maxSpeedPerTick;
 
-        //TODO add collision check
-        //(possibly a method that everything that extends has to make? -abstract method?)
-        if (!isColliding(tempLocation)) {
-            location = tempLocation;
+        //TODO test recursive version
+        Drawable collidingElement = room.checkCollisions(this, tempLocation);
+        if (collidingElement!=null) {
+            onCollision(tempLocation, collidingElement, room);
         }
+
+        location = tempLocation;
     }
 
-    //Needs to know what to check that its colliding with. Should either be in the above move method or when things are being rendered.
-    protected abstract boolean isColliding(Point2D.Double possibleLocation);
+    //TODO possibly add mass for more realizstic collisions
+    //TODO add collision recoil (bounceback) if mass is added
+    protected abstract void onCollision(Point2D.Double newLocation, Drawable collidingElement, Room r);
 
-
-    public int getMaxSpeed() {
+    public double getMaxSpeed() {
         return maxSpeed;
     }
-    //TODO possibly add mass for more realizstic collisions
-    
-    public abstract void tick();
 
-    @Override
-    public int getPriority() {
-        return (int)(this.location.getY()*10.0);
-    }
+    public abstract void tick(Room r);
 }

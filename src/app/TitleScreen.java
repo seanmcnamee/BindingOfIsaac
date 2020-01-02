@@ -78,6 +78,7 @@ public class TitleScreen extends DisplayScreen {
 
     public void mouseClicked(MouseEvent e){
         if (btnStart.contains(e.getPoint())) {
+            //TODO possibly create the game here so that settings chosen are applied game here.
             System.out.println("Starting Game");
             System.out.println("Setting currentScreen to 'game'");
             System.out.println("Game: " + game);

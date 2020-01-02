@@ -19,12 +19,16 @@ public class GameBar {
 
     public void render(Graphics g) {
         //Use these values to figure out everyting else
-        double xStart = gameValues.WIDTH_SCALE_1*(gameValues.gameScale-gameValues.GAME_BAR_WIDTH)*.5;
-        double yStart = 0;
-        double xSize = gameValues.WIDTH_SCALE_1*gameValues.gameScale*gameValues.GAME_BAR_WIDTH;
-        double ySize = gameValues.HEIGHT_SCALE_1*gameValues.gameScale*gameValues.GAME_BAR_HEIGHT;
+        this.gameValues.barXSize = gameValues.WIDTH_SCALE_1*gameValues.gameScale*gameValues.GAME_BAR_WIDTH;
+        this.gameValues.barYSize = gameValues.HEIGHT_SCALE_1*gameValues.gameScale*gameValues.GAME_BAR_HEIGHT;
+
+        double excessWidth = gameValues.frameWidth-(gameValues.WIDTH_SCALE_1*gameValues.gameScale);
+        double excessHeight = gameValues.frameHeight-(gameValues.HEIGHT_SCALE_1*gameValues.gameScale);
+        this.gameValues.barXStart = excessWidth/2.0;//gameValues.WIDTH_SCALE_1*(gameValues.gameScale-gameValues.GAME_BAR_WIDTH)*.5;
+        this.gameValues.barYStart = excessHeight/2.0;
+        
         
         g.setColor(Color.gray);
-        g.fillRect((int)xStart, (int)yStart, (int)xSize, (int)ySize);
+        g.fillRect((int)gameValues.barXStart, (int)gameValues.barYStart, (int)gameValues.barXSize, (int)gameValues.barYSize);
     }
 }

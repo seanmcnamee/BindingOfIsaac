@@ -3,13 +3,18 @@ package app.game.gamefield.elements.mobiles;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Point2D.Double;
 
+import app.game.gamefield.elements.rendering.Drawable;
+import app.game.gamefield.rooms.Room;
 import app.supportclasses.BufferedImageLoader;
 import app.supportclasses.GameValues;
+
+import java.awt.geom.Point2D;
+import java.awt.Point;
 
 /**
  * Character
  */
-public class Character extends Living {
+public class Player extends Living {
     private boolean moveUp, moveDown, moveLeft, moveRight;
     private int money, bombs, keys;
 
@@ -17,16 +22,18 @@ public class Character extends Living {
         Issac;
     }
 
-    public Character(GameValues gameValues, Characters c, double xStart, double yStart) {
-        super(gameValues, xStart, yStart);
+    public Player(GameValues gameValues, Characters c, Point2D.Double location) {
+        super(gameValues, location);
         money = bombs = keys = 0;
+        sizeInBlocks = new Point(1, 1);
         setCharacterStats(c);
     }
 
     private void setCharacterStats(Characters character) {
         switch (character) {
         case Issac:
-            this.maxSpeed = 6;
+            this.accelerationRate = 12.0;
+            this.maxSpeed = 6.0;
             this.maxHealth = 6;
             this.image = new BufferedImageLoader(gameValues.ISSAC_FILE).getImage();
             break;
@@ -36,11 +43,18 @@ public class Character extends Living {
         setFullHealth();
     }
 
-    public void tick() {
+    @Override
+    public void tick(Room r) {
         accelerate(moveUp, moveDown, moveLeft, moveRight);
         updateVelocity();
-        move();
-        System.out.println("Position: " + location.getX() + ", " + location.getY());
+        testCollisionAndMove(r);
+        //System.out.println("Position: " + location.getX() + ", " + location.getY());
+    }
+
+    @Override
+    protected void onCollision(Double newLocation, Drawable collidingElement, Room room) {
+        // TODO Auto-generated method stub
+
     }
 
     public void keyPressed(KeyEvent e) {
@@ -67,11 +81,4 @@ public class Character extends Living {
             this.moveRight = false;
         }
     }
-
-    @Override
-    protected boolean isColliding(Double possibleLocation) {
-        // TODO Auto-generated method stub
-        return false;
-    }
-    
 }
