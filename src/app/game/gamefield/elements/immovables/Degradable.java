@@ -1,7 +1,8 @@
 package app.game.gamefield.elements.immovables;
 
-import java.awt.geom.Point2D.Double;
+import java.awt.geom.Point2D;
 
+import app.game.gamefield.elements.Destructible;
 import app.supportclasses.GameValues;
 import app.supportclasses.SpriteSheet;
 import java.awt.image.BufferedImage;
@@ -9,16 +10,17 @@ import java.awt.image.BufferedImage;
 /**
  * Degradable
  */
-public class Degradable extends Immovable {
+public class Degradable extends Destructible {
     private BufferedImage[] images;
 
     public enum Degradables {
-        Poop;
+        Poop, Rock;
     }
 
-    public Degradable(GameValues gameValues, Degradables degradable, Double location) {
-        super(gameValues, Immovable.Objects.Degradable, location);
+    public Degradable(GameValues gameValues, Degradables degradable, Point2D.Double location) {
+        super(gameValues, location);
         setDegradingImages(degradable);
+        setFullHealth();
     }
 
     public void setDegradingImages(Degradables degradable) {
@@ -27,16 +29,29 @@ public class Degradable extends Immovable {
         switch(degradable) {
             case Poop:
                 this.maxHealth = 3;
+                this.sizeInBlocks = new Point2D.Double(1, 1);
                 images = new BufferedImage[maxHealth];
                 images[0] = spriteSheet.shrink(spriteSheet.grabImage(6, 4, 2, 2, gameValues.SPRITE_SHEET_BOX_SIZE));
                 images[1] = spriteSheet.shrink(spriteSheet.grabImage(8, 4, 2, 2, gameValues.SPRITE_SHEET_BOX_SIZE));
                 images[2] = spriteSheet.shrink(spriteSheet.grabImage(10, 4, 2, 2, gameValues.SPRITE_SHEET_BOX_SIZE));
+                break;
+            case Rock:
+                this.maxHealth = 1;
+                images = new BufferedImage[maxHealth];
+                images[0] = spriteSheet.shrink(spriteSheet.grabImage(14, 4, 2, 2, gameValues.SPRITE_SHEET_BOX_SIZE));
+                break;
             default: //default
                 this.maxHealth = 1;
                 images = new BufferedImage[maxHealth];
                 images[0] = spriteSheet.shrink(spriteSheet.grabImage(2, 6, 2, 2, gameValues.SPRITE_SHEET_BOX_SIZE));
         }
-        setFullHealth();
+    }
+
+    @Override
+    public boolean damage(int damage) {
+        super.damage(damage);
+        updateImage();
+        return isDead();
     }
 
     private void updateImage() {

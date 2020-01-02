@@ -1,14 +1,16 @@
-package app.game.gamefield.elements.mobiles;
+package app.game.gamefield.elements.mobiles.projectile;
 
+import app.game.gamefield.elements.mobiles.Mobile;
 import app.game.gamefield.elements.rendering.Drawable;
 import app.game.gamefield.rooms.Room;
 import app.supportclasses.GameValues;
+import app.supportclasses.SpriteSheet;
 
 import java.awt.geom.Point2D;
 /**
  * Projectile
  */
-public abstract class Projectile extends Mobile {
+public class Projectile extends Mobile {
     private int range;
     private double traveled;
 
@@ -16,9 +18,29 @@ public abstract class Projectile extends Mobile {
         Tear;
     }
 
-    public Projectile(GameValues gameValues, Point2D.Double location) {
+    public Projectile(GameValues gameValues, Projectiles p, Point2D.Double location) {
         super(gameValues, location);
+        setProjectileStats(p);
+        setFullHealth();
         this.traveled = 0;
+    }
+
+    //TODO make sure the range number matches up to a block distance (units is blocks)
+    public void setProjectileStats(Projectiles p) {
+        SpriteSheet spriteSheet = new SpriteSheet(gameValues.SPRITE_SHEET);
+
+        switch(p) {
+            case Tear:
+                this.sizeInBlocks = new Point2D.Double(.5, .5);
+                this.maxSpeed = 5;
+                this.range = 5;
+                this.maxHealth = 1;
+                this.image = spriteSheet.shrink(spriteSheet.grabImage(14, 2, 2, 2, gameValues.SPRITE_SHEET_BOX_SIZE));
+                break;
+            default:
+                this.maxSpeed = this.range = 0;
+                break;
+        }
     }
 
     //TODO ability to check when near end of range (full a bullet to start dropping)
@@ -28,21 +50,6 @@ public abstract class Projectile extends Mobile {
 
     public void incrementTraveled(double distance) {
         traveled+=distance;
-    }
-
-
-    //TODO make sure the range number matches up to a block distance (units is blocks)
-    public void setProjectileStats(Projectiles p) {
-        switch(p) {
-            case Tear:
-                this.maxSpeed = 5;
-                this.range = 5;
-                this.image = null;//TODO Add this image
-                break;
-            default:
-                this.maxSpeed = this.range = 0;
-                break;
-        }
     }
 
     @Override

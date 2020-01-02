@@ -9,12 +9,11 @@ import app.supportclasses.BufferedImageLoader;
 import app.supportclasses.GameValues;
 
 import java.awt.geom.Point2D;
-import java.awt.Point;
 
 /**
  * Character
  */
-public class Player extends Living {
+public class Player extends Mobile {
     private boolean moveUp, moveDown, moveLeft, moveRight;
     private int money, bombs, keys;
 
@@ -25,8 +24,9 @@ public class Player extends Living {
     public Player(GameValues gameValues, Characters c, Point2D.Double location) {
         super(gameValues, location);
         money = bombs = keys = 0;
-        sizeInBlocks = new Point(1, 1);
+        sizeInBlocks = new Point2D.Double(1, 1);
         setCharacterStats(c);
+        setFullHealth();
     }
 
     private void setCharacterStats(Characters character) {
@@ -40,7 +40,6 @@ public class Player extends Living {
         default:
             break;
         }
-        setFullHealth();
     }
 
     @Override

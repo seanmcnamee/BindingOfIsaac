@@ -1,6 +1,6 @@
 package app.game.gamefield.elements.mobiles;
 
-import app.game.gamefield.elements.rendering.BST;
+import app.game.gamefield.elements.Destructible;
 import app.game.gamefield.elements.rendering.Drawable;
 import app.game.gamefield.rooms.Room;
 import app.supportclasses.GameValues;
@@ -11,7 +11,7 @@ import java.awt.Point;
 /**
  * Entity
  */
-public abstract class Mobile extends Drawable{
+public abstract class Mobile extends Destructible{
     protected double maxSpeed;
     protected double accelerationRate; //In blocks per second
     protected Point2D.Double velocityPercent;

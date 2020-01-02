@@ -1,12 +1,13 @@
-package app.game.gamefield.elements.mobiles;
+package app.game.gamefield.elements.mobiles.enemies;
 
+import app.game.gamefield.elements.mobiles.Mobile;
 import app.supportclasses.GameValues;
 
 import java.awt.geom.Point2D;
 /**
  * Enemy
  */
-public abstract class Enemy extends Living {
+public abstract class Enemy extends Mobile {
 
     public enum Enemies {
         Fly;

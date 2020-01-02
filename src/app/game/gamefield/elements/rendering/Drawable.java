@@ -6,14 +6,13 @@ import app.supportclasses.GameValues;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.awt.geom.Point2D;
-import java.awt.Point;
 /**
  * BTNode
  */
 public abstract class Drawable extends Node{
     protected Point2D.Double location;
     protected BufferedImage image;
-    protected Point sizeInBlocks;
+    protected Point2D.Double sizeInBlocks;
     protected GameValues gameValues;
 
     public Drawable(GameValues gameValues, Point2D.Double location) {

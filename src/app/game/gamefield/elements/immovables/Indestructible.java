@@ -1,20 +1,21 @@
 package app.game.gamefield.elements.immovables;
 
-import java.awt.geom.Point2D.Double;
+import java.awt.geom.Point2D;
 
+import app.game.gamefield.elements.rendering.Drawable;
 import app.supportclasses.GameValues;
 
 /**
  * Indestructible
  */
-public class Indestructible extends Immovable {
+public class Indestructible extends Drawable {
 
     public enum Indestructibles {
         Door;
     }
 
-    public Indestructible(GameValues gameValues, Objects object, Double location) {
-        super(gameValues,  location);
+    public Indestructible(GameValues gameValues, Indestructibles object, Point2D.Double location) {
+        super(gameValues, location);
         // TODO Auto-generated constructor stub
     }
 
