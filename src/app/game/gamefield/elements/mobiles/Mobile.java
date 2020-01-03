@@ -16,6 +16,7 @@ public abstract class Mobile extends Destructible{
     protected double accelerationRate; //In blocks per second
     protected Point2D.Double velocityPercent;
     protected Point accelerationPercent;
+    protected boolean colliding = false;
 
     /*
     public Mobile(GameValues gameValues, double x, double y) {
@@ -85,15 +86,17 @@ public abstract class Mobile extends Destructible{
         //TODO test recursive version
         Drawable collidingElement = room.checkCollisions(this, tempLocation);
         if (collidingElement!=null) {
-            onCollision(tempLocation, collidingElement, room);
+            location = onCollision(tempLocation, collidingElement, room);
+        }   else {
+            location = tempLocation;
         }
 
-        location = tempLocation;
+        
     }
 
     //TODO possibly add mass for more realizstic collisions
     //TODO add collision recoil (bounceback) if mass is added
-    protected abstract void onCollision(Point2D.Double newLocation, Drawable collidingElement, Room r);
+    protected abstract Point2D.Double onCollision(Point2D.Double newLocation, Drawable collidingElement, Room r);
 
     public double getMaxSpeed() {
         return maxSpeed;

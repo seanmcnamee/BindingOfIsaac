@@ -19,7 +19,6 @@ public class GameValues {
     public final int WIDTH_SCALE_1 = 790;//960;//300;
     public final int HEIGHT_SCALE_1 = 590;//WIDTH_SCALE_1 / 12 * 9;
     
-
     public final double goalTicksPerSecond = 60.0;
     public final double NANO_SECONDS_PER_TICK = 1000000000d / goalTicksPerSecond; // (NanoSeconds/1 seconds) * (1 second/nanoseconds in 1 tick)
     public final int ONE_SEC_IN_MILLIS = 1000;
@@ -27,10 +26,9 @@ public class GameValues {
     public int framesPerSecond = 0;
 
     public final String NAME = "Binding of Isaac - Sean McNamee";
+    public final String GAME_FONT_FILE = "res//MainScreenFont.ttf";
     public GameState gameState = GameState.NOTSTARTED;
     public DisplayScreen currentScreen;
-
-    public final String GAME_FONT_FILE = "res//MainScreenFont.ttf";
 
     //TitleScreen values
     public final String MAIN_MENU_FILE = "res//emptyMainMenu.jpg";
@@ -51,34 +49,57 @@ public class GameValues {
     public final double COLLECTION_BUTTON_Y = .96;
     public final double COLLECTION_BUTTON_X = .64;
 
-    //Game Values
-    public final double GAME_BAR_HEIGHT = .2;
-    public final double GAME_BAR_WIDTH = 1;
-    public final String ISSAC_FILE = "res//isaac_spritesheet.png";
+    /////Game Values
+    //GameField
     public final String GAME_BACKGROUND_FILE = "res//background.png";
     public final String STARTING_BACKGROUND_FILE = "res//tutorialbackground.png";
-    public final String SPRITE_SHEET = "res//MainSpriteSheet.png";
+    public final int FIELD_X_SPACES = 14;
+    public final int FIELD_Y_SPACES = 8;
+    public final double WALL_THICKNESS = .1;
+    public double fieldXStart = 0;//For entire field display
+    public double fieldYStart = 0;
+    public double fieldXSize = 0;
+    public double fieldYSize = 0;
+    public double fieldXZero = 0;//For in game location representation //TODO allow change fopr screen scrolling (large room)
+    public double fieldYZero = 0;
+    public double singleSquareX = 0;
+    public double singleSquareY = 0;
+    
+    //GameBar
+    public final double GAME_BAR_HEIGHT = .2;
+    public final double GAME_BAR_WIDTH = 1;
+    public double barXStart = 0;
+    public double barYStart = 0;
+    public double barXSize = 0;
+    public double barYSize = 0;
+    
+    //Player
+    public final String ISSAC_FILE = "res//isaac_spritesheet.png";
     public final int PLAYER_SHEET_BOX_SIZE = 64;
-    public final int SPRITE_SHEET_BOX_SIZE = 20;
-    public final int XSpaces = 14;
-    public final int YSpaces = 8;
-    public final double wallSpaceY = .1;
+    public final double HEAD_X_SIZE_PERCENT = 1;
+    public final double HEAD_Y_SIZE_PERCENT = .65;
+    public final double LEGS_X_SIZE_PERCENT = .6;
+    public final double LEGS_Y_SIZE_PERCENT = 1-HEAD_Y_SIZE_PERCENT;
+
+    public final double HEAD_X_OFFSET_PERCENT = 0;
+    public final double HEAD_LEG_PERCENT_OVERLAPPING = .12;
+    public final double HEAD_LEG_Y_OFFSET_PERCENT = (HEAD_Y_SIZE_PERCENT+(LEGS_Y_SIZE_PERCENT-HEAD_Y_SIZE_PERCENT)/2.0-HEAD_LEG_PERCENT_OVERLAPPING)/2.0;
+    public final double LEGS_X_OFFSET_PERCENT = 0;
 
     public Player.Characters chosenCharacter = Player.Characters.Isaac;
     public int moveUpKey = KeyEvent.VK_W;
     public int moveDownKey = KeyEvent.VK_S;
     public int moveLeftKey = KeyEvent.VK_A;
     public int moveRightKey = KeyEvent.VK_D;
-    public double fieldXStart = 0;
-    public double fieldYStart = 0;
-    public double fieldXSize = 0;
-    public double fieldYSize = 0;
-    public double singleSquareX = 0;
-    public double singleSquareY = 0;
-    public double barXStart = 0;
-    public double barYStart = 0;
-    public double barXSize = 0;
-    public double barYSize = 0;
+
+    //Others
+    public final String SPRITE_SHEET = "res//MainSpriteSheet.png";
+    public final int SPRITE_SHEET_BOX_SIZE = 20;
+
+    //Animation
+    public final int TICKS_PER_PICTURE_STEP = 3;
+
+    //General Movement
     public double friction = 6.0; //In blocks per second
     public final double iceAccelerationChange = 1.0/6.0;
     public final double sludgeAccelerationChange = 1.0/3.0;

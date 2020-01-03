@@ -6,11 +6,13 @@ import java.awt.image.BufferedImage;
  */
 public class InterchangeableImage {
     private BufferedImage[] images;
+    private HitBox hitbox;
     public int currentImageIndex = 0;
 
-    public InterchangeableImage(int size) {
+    public InterchangeableImage(int size, HitBox hitbox) {
         images = new BufferedImage[size];
         this.currentImageIndex = 0;
+        this.hitbox = hitbox;
     }
 
     public void setImage(int index, BufferedImage image) {
@@ -25,7 +27,7 @@ public class InterchangeableImage {
         }
     }
 
-    private boolean goodIndex(int index) {
+    protected boolean goodIndex(int index) {
         if (index < this.images.length && index >= 0) {
             return true;
         }   else {
@@ -39,5 +41,9 @@ public class InterchangeableImage {
 
     public BufferedImage getCurrentImage() {
         return images[currentImageIndex];
+    }
+
+    public HitBox getHitBox() { 
+        return this.hitbox;
     }
 }

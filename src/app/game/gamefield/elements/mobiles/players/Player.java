@@ -1,16 +1,21 @@
 package app.game.gamefield.elements.mobiles.players;
 
+import app.game.gamefield.elements.immovables.Degradable;
 import app.game.gamefield.elements.mobiles.Mobile;
 import app.game.gamefield.elements.rendering.Drawable;
+import app.game.gamefield.elements.rendering.HitBox;
 import app.game.gamefield.elements.rendering.InterchangeableImage;
+import app.game.gamefield.elements.rendering.LoopingPictures;
 import app.game.gamefield.rooms.Room;
 import app.supportclasses.GameValues;
 import app.supportclasses.SpriteSheet;
 
 import java.awt.geom.Point2D;
+import java.awt.Point;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Point2D.Double;
+import java.awt.image.BufferedImage;
 
 /**
  * Character
@@ -18,7 +23,9 @@ import java.awt.geom.Point2D.Double;
 public class Player extends Mobile {
     private boolean moveUp, moveDown, moveLeft, moveRight;
     private int money, bombs, keys;
-    protected InterchangeableImage legs, head;
+    protected InterchangeableImage head;
+    protected LoopingPictures legs;
+    private boolean isPrintingHead;
 
     public enum Characters {
         Isaac;
@@ -57,18 +64,84 @@ public class Player extends Mobile {
         updateVelocity();
         // head.setCurrentImageIndex(6);
         setImagesBasedOnVelocity();
+        updateLoopingPictures();
         testCollisionAndMove(r);
         // System.out.println("Position: " + location.getX() + ", " + location.getY());
     }
 
     @Override
-    protected void onCollision(Double newLocation, Drawable collidingElement, Room room) {
+    protected Point2D.Double onCollision(Double newLocation, Drawable collidingElement, Room room) {
         // TODO Auto-generated method stub
+        System.out.println("Colliding");
+        
+        if (collidingElement.getClass() == Degradable.class) {
+            Point2D.Double onlyY = new Point2D.Double(newLocation.getX(), location.getY());
+            Drawable onlyYCollision = room.checkCollisions(this, onlyY);
+            if (onlyYCollision==null) {
+                this.velocityPercent.y = 0;
+                return onlyY;
+            }
 
+            Point2D.Double onlyX = new Point2D.Double(location.getX(), newLocation.getY());
+            Drawable onlyXCollision = room.checkCollisions(this, onlyX);
+            if (onlyXCollision==null) {
+                this.velocityPercent.x = 0;
+                return onlyX;
+            }
+
+            
+        }
+        
+        //Default is stop motion and remain still.
+        this.velocityPercent.x = this.velocityPercent.y = 0;
+        return this.location;
+        //this.velocityPercent
     }
 
     @Override
     public void render(Graphics g) {
+        final Point2D.Double currentLocation = this.location;
+        final Point2D.Double currentSizeInBlocks = this.sizeInBlocks;
+
+        isPrintingHead = false;
+        super.render(g);
+
+        isPrintingHead = true;
+        super.render(g);
+
+        this.location = currentLocation;
+        this.sizeInBlocks = currentSizeInBlocks;
+    }
+
+    @Override
+    protected Point2D.Double getLocation() {
+        if (isPrintingHead) {
+            return head.getHitBox().getCenterOfHitBox(location, sizeInBlocks);
+        }   else {
+            return legs.getHitBox().getCenterOfHitBox(location, sizeInBlocks);
+        }
+    }
+
+    @Override
+    protected Point2D.Double getSizeInBlocks() {
+        if (isPrintingHead) {
+            return head.getHitBox().getHitBoxSize(sizeInBlocks);
+        }   else {
+            return legs.getHitBox().getHitBoxSize(sizeInBlocks);
+        }
+    }
+
+    @Override
+    public BufferedImage getImage() {
+        if (isPrintingHead) {
+            return head.getCurrentImage();
+        }   else {
+            return legs.getCurrentImage();
+        }
+    }
+
+    //@Override //TODO clean this shit up
+    public void render(Graphics g, int a) {
         final Point2D.Double currentLocation = this.location;
         final Point2D.Double currentSizeInBlocks = this.sizeInBlocks;
 
@@ -77,11 +150,9 @@ public class Player extends Mobile {
         final double yOffset = currentSizeInBlocks.getY() * .27; // TODO make it based off the other
         final double bodyXShrinkage = currentSizeInBlocks.getX() * .4;
 
-        // Body is below (more Y)
-        this.location = new Point2D.Double(currentLocation.getX() + bodyXShrinkage / 2.0,
-                currentLocation.getY() + yOffset);
-        this.sizeInBlocks = new Point2D.Double(currentSizeInBlocks.getX() - bodyXShrinkage,
-                currentSizeInBlocks.getY() * bodyYPercent);
+        // Legs are below (more Y)
+        this.location = new Point2D.Double(currentLocation.getX() + bodyXShrinkage / 2.0, currentLocation.getY() + yOffset);
+        this.sizeInBlocks = new Point2D.Double(currentSizeInBlocks.getX() - bodyXShrinkage, currentSizeInBlocks.getY() * bodyYPercent);
         this.image = legs.getCurrentImage();
         super.render(g);
 
@@ -102,19 +173,27 @@ public class Player extends Mobile {
             if (Math.abs(xVel)==max) {
                 if (xVel > 0) {
                     head.setCurrentImageIndex(2);
+                    legs.setCurrentImageIndex(10);
                 }   else if(xVel < 0) {
                     head.setCurrentImageIndex(6);
+                    legs.setCurrentImageIndex(20);
                 }   else {
+                    legs.setCurrentImageIndex(30);
                     head.setCurrentImageIndex(0);
                 }
             }   else {
+                legs.setCurrentImageIndex(2); //TODO maybe start on a varying part of the cycle for up/down
                 if (yVel >= 0) {
                     head.setCurrentImageIndex(0);
                 }   else if(yVel < 0) {
                     head.setCurrentImageIndex(4);
                 }
             }
-        
+    }
+
+    private void updateLoopingPictures() {
+        legs.tick();
+        this.image = legs.getCurrentImage();
     }
 
     public void keyPressed(KeyEvent e) {
@@ -142,12 +221,25 @@ public class Player extends Mobile {
         }
     }
 
+    @Override
+    protected HitBox getHitBox() {
+        return legs.getHitBox();
+    }
+
     private void loadLegs(SpriteSheet spriteSheet) {
         final int frontBackLegs = 10;
         final int rightLegs = 10;
         final int leftLegs = 10;
         final int totalLegs = frontBackLegs + rightLegs + leftLegs;
-        this.legs = new InterchangeableImage(totalLegs);
+        Point[] ranges = {
+            new Point(0, frontBackLegs-1), 
+            new Point(frontBackLegs, rightLegs+frontBackLegs-1),
+            new Point(frontBackLegs+rightLegs, frontBackLegs+rightLegs+leftLegs-1),
+            new Point(totalLegs, totalLegs)
+        };
+
+        HitBox legHitBox = new HitBox(gameValues.LEGS_X_SIZE_PERCENT, gameValues.LEGS_Y_SIZE_PERCENT, gameValues.LEGS_X_OFFSET_PERCENT, gameValues.HEAD_LEG_Y_OFFSET_PERCENT);
+        this.legs = new LoopingPictures(totalLegs+1, legHitBox, gameValues.TICKS_PER_PICTURE_STEP, ranges);
 
         final int maxInRow = 8;
         final int startingSpot = 6;
@@ -163,6 +255,23 @@ public class Player extends Mobile {
                                 (spot - leftLegs) / maxInRow, 1, 1, gameValues.PLAYER_SHEET_BOX_SIZE))));
             }
         }
+
+        this.legs.setImage(totalLegs, spriteSheet.shrink(spriteSheet.grabImage(0, 1, 1, 1, gameValues.PLAYER_SHEET_BOX_SIZE)));
+        this.legs.setCurrentImageIndex(totalLegs);
+
+
+        //Print corners
+        System.out.println("Player corners");
+        System.out.println("Center: " + location);
+        System.out.println("Size: " + sizeInBlocks);
+        System.out.println("TL: " + (location.getX()-sizeInBlocks.getX()/2.0) + ", " + (location.getY()-sizeInBlocks.getY()/2.0));
+        System.out.println("BR: " + (location.getX()+sizeInBlocks.getX()/2.0) + ", " + (location.getY()+sizeInBlocks.getY()/2.0));
+
+        System.out.println("Leg corners");
+        System.out.println("Center: " + legs.getHitBox().getCenterOfHitBox(location, sizeInBlocks));
+        System.out.println("Size: " + legs.getHitBox().getHitBoxSize(sizeInBlocks));
+        System.out.println("TL: " + (legs.getHitBox().getLeftOfHitBox(location.getX(), sizeInBlocks.getX()) + ", " + (legs.getHitBox().getTopOfHitBox(location.getY(), sizeInBlocks.getY()))));
+        System.out.println("BR: " + (legs.getHitBox().getRightOfHitBox(location.getX(), sizeInBlocks.getX()) + ", " + (legs.getHitBox().getBottomOfHitBox(location.getY(), sizeInBlocks.getY()))));
     }
 
     private void loadHeads(SpriteSheet spriteSheet) {
@@ -171,7 +280,8 @@ public class Player extends Mobile {
         final int leftHead = 2;
         final int backHead = 2;
         final int totalHead = frontHead + rightHead + leftHead + backHead;
-        this.head = new InterchangeableImage(totalHead);
+        HitBox headHitBox = new HitBox(gameValues.HEAD_X_SIZE_PERCENT, gameValues.HEAD_Y_SIZE_PERCENT, gameValues.HEAD_X_OFFSET_PERCENT, -gameValues.HEAD_LEG_Y_OFFSET_PERCENT);
+        this.head = new InterchangeableImage(totalHead, headHitBox);
 
         final int startingSpot = 0;
         final int endingSpot = 5;

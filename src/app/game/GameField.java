@@ -35,13 +35,16 @@ public class GameField {
         this.gameValues.fieldXSize = gameValues.WIDTH_SCALE_1*(gameValues.gameScale);
         this.gameValues.fieldYSize = gameValues.HEIGHT_SCALE_1*gameValues.gameScale*(1-gameValues.GAME_BAR_HEIGHT);
 
-        gameValues.singleSquareX = (gameValues.fieldXSize)/gameValues.XSpaces;
-        gameValues.singleSquareY = (gameValues.fieldYSize)/gameValues.YSpaces;
+        gameValues.singleSquareX = (gameValues.fieldXSize)/gameValues.FIELD_X_SPACES;
+        gameValues.singleSquareY = (gameValues.fieldYSize)/gameValues.FIELD_Y_SPACES;
 
         double excessWidth = gameValues.frameWidth-(gameValues.WIDTH_SCALE_1*gameValues.gameScale);
         double excessHeight = gameValues.frameHeight-(gameValues.HEIGHT_SCALE_1*gameValues.gameScale);
         this.gameValues.fieldXStart = excessWidth/2.0;//gameValues.WIDTH_SCALE_1*(gameValues.gameScale-gameValues.GAME_BAR_WIDTH)*.5;
         this.gameValues.fieldYStart = gameValues.barYSize + excessHeight/2.0;
+
+        this.gameValues.fieldXZero = gameValues.fieldXStart+(gameValues.singleSquareX*.5);
+        this.gameValues.fieldYZero = gameValues.fieldYStart+(gameValues.singleSquareY*.5);
 
         room.render(g); //TODO make this through the map class
     }
