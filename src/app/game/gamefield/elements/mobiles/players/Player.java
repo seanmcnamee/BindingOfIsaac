@@ -34,7 +34,7 @@ public class Player extends Mobile {
     public Player(GameValues gameValues, Characters c, Point2D.Double location) {
         super(gameValues, location);
         money = bombs = keys = 0;
-        sizeInBlocks = new Point2D.Double(1, 1.25);
+        sizeInBlocks = new Point2D.Double(.9, 1);
         setCharacterStats(c);
         setFullHealth();
     }
@@ -71,25 +71,9 @@ public class Player extends Mobile {
 
     @Override
     protected Point2D.Double onCollision(Double newLocation, Drawable collidingElement, Room room) {
-        // TODO Auto-generated method stub
-        System.out.println("Colliding");
         
         if (collidingElement.getClass() == Degradable.class) {
-            Point2D.Double onlyY = new Point2D.Double(newLocation.getX(), location.getY());
-            Drawable onlyYCollision = room.checkCollisions(this, onlyY);
-            if (onlyYCollision==null) {
-                this.velocityPercent.y = 0;
-                return onlyY;
-            }
-
-            Point2D.Double onlyX = new Point2D.Double(location.getX(), newLocation.getY());
-            Drawable onlyXCollision = room.checkCollisions(this, onlyX);
-            if (onlyXCollision==null) {
-                this.velocityPercent.x = 0;
-                return onlyX;
-            }
-
-            
+            return degradableCollision(newLocation, collidingElement, room);
         }
         
         //Default is stop motion and remain still.
@@ -98,23 +82,46 @@ public class Player extends Mobile {
         //this.velocityPercent
     }
 
+    private Point2D.Double degradableCollision(Double newLocation, Drawable collidingElement, Room room) {
+        Point2D.Double onlyY = new Point2D.Double(newLocation.getX(), location.getY());
+        Drawable onlyYCollision = room.checkCollisions(this, onlyY);
+        if (onlyYCollision==null) {
+            this.velocityPercent.y = 0;
+            return onlyY;
+        }
+
+        Point2D.Double onlyX = new Point2D.Double(location.getX(), newLocation.getY());
+        Drawable onlyXCollision = room.checkCollisions(this, onlyX);
+        if (onlyXCollision==null) {
+            this.velocityPercent.x = 0;
+            return onlyX;
+        }
+
+        this.velocityPercent.x = this.velocityPercent.y = 0;
+        return this.location;
+    }
+
     @Override
     public void render(Graphics g) {
-        final Point2D.Double currentLocation = this.location;
-        final Point2D.Double currentSizeInBlocks = this.sizeInBlocks;
-
         isPrintingHead = false;
         super.render(g);
 
         isPrintingHead = true;
         super.render(g);
-
-        this.location = currentLocation;
-        this.sizeInBlocks = currentSizeInBlocks;
     }
 
     @Override
     protected Point2D.Double getLocation() {
+        return getHitBoxLocation();
+    }
+
+    @Override
+    protected Point2D.Double getSizeInBlocks() {
+        return getHitBoxSizeInBlocks();
+    }
+
+    @Override
+    protected Point2D.Double getHitBoxLocation() {
         if (isPrintingHead) {
             return head.getHitBox().getCenterOfHitBox(location, sizeInBlocks);
         }   else {
@@ -123,7 +130,7 @@ public class Player extends Mobile {
     }
 
     @Override
-    protected Point2D.Double getSizeInBlocks() {
+    protected Point2D.Double getHitBoxSizeInBlocks() {
         if (isPrintingHead) {
             return head.getHitBox().getHitBoxSize(sizeInBlocks);
         }   else {
@@ -138,32 +145,6 @@ public class Player extends Mobile {
         }   else {
             return legs.getCurrentImage();
         }
-    }
-
-    //@Override //TODO clean this shit up
-    public void render(Graphics g, int a) {
-        final Point2D.Double currentLocation = this.location;
-        final Point2D.Double currentSizeInBlocks = this.sizeInBlocks;
-
-        final double headYPercent = .65;
-        final double bodyYPercent = 1 - headYPercent;
-        final double yOffset = currentSizeInBlocks.getY() * .27; // TODO make it based off the other
-        final double bodyXShrinkage = currentSizeInBlocks.getX() * .4;
-
-        // Legs are below (more Y)
-        this.location = new Point2D.Double(currentLocation.getX() + bodyXShrinkage / 2.0, currentLocation.getY() + yOffset);
-        this.sizeInBlocks = new Point2D.Double(currentSizeInBlocks.getX() - bodyXShrinkage, currentSizeInBlocks.getY() * bodyYPercent);
-        this.image = legs.getCurrentImage();
-        super.render(g);
-
-        // Head is above (less Y)
-        this.location = new Point2D.Double(currentLocation.getX(), currentLocation.getY() - yOffset);
-        this.sizeInBlocks = new Point2D.Double(currentSizeInBlocks.getX(), currentSizeInBlocks.getY() * headYPercent);
-        this.image = head.getCurrentImage();
-        super.render(g);
-
-        this.location = currentLocation;
-        this.sizeInBlocks = currentSizeInBlocks;
     }
 
     private void setImagesBasedOnVelocity() {
@@ -238,7 +219,7 @@ public class Player extends Mobile {
             new Point(totalLegs, totalLegs)
         };
 
-        HitBox legHitBox = new HitBox(gameValues.LEGS_X_SIZE_PERCENT, gameValues.LEGS_Y_SIZE_PERCENT, gameValues.LEGS_X_OFFSET_PERCENT, gameValues.HEAD_LEG_Y_OFFSET_PERCENT);
+        HitBox legHitBox = new HitBox(gameValues.LEGS_X_SIZE_PERCENT, gameValues.LEGS_Y_SIZE_PERCENT, gameValues.LEGS_X_OFFSET_PERCENT, gameValues.LEGS_Y_OFFSET_PERCENT);
         this.legs = new LoopingPictures(totalLegs+1, legHitBox, gameValues.TICKS_PER_PICTURE_STEP, ranges);
 
         final int maxInRow = 8;
@@ -280,7 +261,7 @@ public class Player extends Mobile {
         final int leftHead = 2;
         final int backHead = 2;
         final int totalHead = frontHead + rightHead + leftHead + backHead;
-        HitBox headHitBox = new HitBox(gameValues.HEAD_X_SIZE_PERCENT, gameValues.HEAD_Y_SIZE_PERCENT, gameValues.HEAD_X_OFFSET_PERCENT, -gameValues.HEAD_LEG_Y_OFFSET_PERCENT);
+        HitBox headHitBox = new HitBox(gameValues.HEAD_X_SIZE_PERCENT, gameValues.HEAD_Y_SIZE_PERCENT, gameValues.HEAD_X_OFFSET_PERCENT, gameValues.HEAD_Y_OFFSET_PERCENT);
         this.head = new InterchangeableImage(totalHead, headHitBox);
 
         final int startingSpot = 0;

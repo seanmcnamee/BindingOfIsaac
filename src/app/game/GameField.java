@@ -35,16 +35,20 @@ public class GameField {
         this.gameValues.fieldXSize = gameValues.WIDTH_SCALE_1*(gameValues.gameScale);
         this.gameValues.fieldYSize = gameValues.HEIGHT_SCALE_1*gameValues.gameScale*(1-gameValues.GAME_BAR_HEIGHT);
 
-        gameValues.singleSquareX = (gameValues.fieldXSize)/gameValues.FIELD_X_SPACES;
-        gameValues.singleSquareY = (gameValues.fieldYSize)/gameValues.FIELD_Y_SPACES;
+        gameValues.singleSquareX = (gameValues.fieldXSize)/(gameValues.FIELD_X_SPACES+gameValues.WALL_THICKNESS*2);// - gameValues.WALL_THICKNESS*2;
+        gameValues.singleSquareY = (gameValues.fieldYSize)/(gameValues.FIELD_Y_SPACES+gameValues.WALL_THICKNESS*2);// - gameValues.WALL_THICKNESS*2;
+
 
         double excessWidth = gameValues.frameWidth-(gameValues.WIDTH_SCALE_1*gameValues.gameScale);
         double excessHeight = gameValues.frameHeight-(gameValues.HEIGHT_SCALE_1*gameValues.gameScale);
         this.gameValues.fieldXStart = excessWidth/2.0;//gameValues.WIDTH_SCALE_1*(gameValues.gameScale-gameValues.GAME_BAR_WIDTH)*.5;
         this.gameValues.fieldYStart = gameValues.barYSize + excessHeight/2.0;
 
-        this.gameValues.fieldXZero = gameValues.fieldXStart+(gameValues.singleSquareX*.5);
-        this.gameValues.fieldYZero = gameValues.fieldYStart+(gameValues.singleSquareY*.5);
+        //TODO add wall space accountability
+        //TODO fix this adjustment when walls are added
+        final double halfABlock = .5;
+        this.gameValues.fieldXZero = gameValues.fieldXStart+(gameValues.singleSquareX*(gameValues.WALL_THICKNESS+halfABlock));
+        this.gameValues.fieldYZero = gameValues.fieldYStart+(gameValues.singleSquareY*(gameValues.WALL_THICKNESS+halfABlock));
 
         room.render(g); //TODO make this through the map class
     }

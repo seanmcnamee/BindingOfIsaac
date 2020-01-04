@@ -19,7 +19,7 @@ public class HitBox {
     }
 
     public double getLeftOfHitBox(double xPos, double xSizeInBlocks) {
-        return xPos-xSizeInBlocks*(percentSize.getX()/2.0 + percentOffset.getX());
+        return xPos-xSizeInBlocks*(percentSize.getX()/2.0 - percentOffset.getX());
     }
 
     public double getRightOfHitBox(double xPos, double xSizeInBlocks) {
@@ -27,7 +27,7 @@ public class HitBox {
     }
 
     public double getTopOfHitBox(double yPos, double ySizeInBlocks) {
-        return yPos-ySizeInBlocks*(percentSize.getY()/2.0 + percentOffset.getY());
+        return yPos-ySizeInBlocks*(percentSize.getY()/2.0 - percentOffset.getY());
     }
 
     public double getBottomOfHitBox(double yPos, double ySizeInBlocks) {

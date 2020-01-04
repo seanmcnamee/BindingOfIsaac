@@ -53,9 +53,9 @@ public class GameValues {
     //GameField
     public final String GAME_BACKGROUND_FILE = "res//background.png";
     public final String STARTING_BACKGROUND_FILE = "res//tutorialbackground.png";
-    public final int FIELD_X_SPACES = 14;
-    public final int FIELD_Y_SPACES = 8;
-    public final double WALL_THICKNESS = .1;
+    public final int FIELD_X_SPACES = 13;
+    public final int FIELD_Y_SPACES = 7;
+    public final double WALL_THICKNESS = .5;
     public double fieldXStart = 0;//For entire field display
     public double fieldYStart = 0;
     public double fieldXSize = 0;
@@ -76,14 +76,17 @@ public class GameValues {
     //Player
     public final String ISSAC_FILE = "res//isaac_spritesheet.png";
     public final int PLAYER_SHEET_BOX_SIZE = 64;
+    public final double HEAD_LEG_PERCENT_OVERLAPPING = .17;
+    private final double tempHeadYPercent = .65;
+    private final double tempLegsYPercent = 1-tempHeadYPercent;
+    public final double HEAD_Y_SIZE_PERCENT = tempHeadYPercent + HEAD_LEG_PERCENT_OVERLAPPING/2.0;
+    public final double LEGS_Y_SIZE_PERCENT = tempLegsYPercent + HEAD_LEG_PERCENT_OVERLAPPING/2.0;
     public final double HEAD_X_SIZE_PERCENT = 1;
-    public final double HEAD_Y_SIZE_PERCENT = .65;
     public final double LEGS_X_SIZE_PERCENT = .6;
-    public final double LEGS_Y_SIZE_PERCENT = 1-HEAD_Y_SIZE_PERCENT;
 
+    public final double HEAD_Y_OFFSET_PERCENT = -(1-HEAD_Y_SIZE_PERCENT)/2.0;
+    public final double LEGS_Y_OFFSET_PERCENT = (1-LEGS_Y_SIZE_PERCENT)/2.0;
     public final double HEAD_X_OFFSET_PERCENT = 0;
-    public final double HEAD_LEG_PERCENT_OVERLAPPING = .12;
-    public final double HEAD_LEG_Y_OFFSET_PERCENT = (HEAD_Y_SIZE_PERCENT+(LEGS_Y_SIZE_PERCENT-HEAD_Y_SIZE_PERCENT)/2.0-HEAD_LEG_PERCENT_OVERLAPPING)/2.0;
     public final double LEGS_X_OFFSET_PERCENT = 0;
 
     public Player.Characters chosenCharacter = Player.Characters.Isaac;
@@ -95,6 +98,8 @@ public class GameValues {
     //Others
     public final String SPRITE_SHEET = "res//MainSpriteSheet.png";
     public final int SPRITE_SHEET_BOX_SIZE = 20;
+
+    public final double DEGRADABLE_Y_HITBOX = .5;
 
     //Animation
     public final int TICKS_PER_PICTURE_STEP = 3;

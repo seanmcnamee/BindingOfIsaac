@@ -40,8 +40,8 @@ public class Degradable extends Destructible {
                 break;
             case Rock:
                 this.maxHealth = 1;
-                this.sizeInBlocks = new Point2D.Double(1, 1);
-                images = new InterchangeableImage(maxHealth, new HitBox());
+                this.sizeInBlocks = new Point2D.Double(1, 1.1);
+                images = new InterchangeableImage(maxHealth, new HitBox(1, gameValues.DEGRADABLE_Y_HITBOX, 0, (1-gameValues.DEGRADABLE_Y_HITBOX)/2.0));
                 images.setImage(0, spriteSheet.shrink(spriteSheet.grabImage(14, 4, 2, 2, gameValues.SPRITE_SHEET_BOX_SIZE)));
                 break;
             default: //default

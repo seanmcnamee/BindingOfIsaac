@@ -25,7 +25,7 @@ public class Game extends DisplayScreen{
     public Game(JFrame frame, GameValues gameValues) {
         super(frame);
         this.gameValues = gameValues;
-        Player player = new Player(gameValues, gameValues.chosenCharacter, new Point2D.Double(gameValues.FIELD_X_SPACES/2.0, gameValues.FIELD_Y_SPACES/2.0));
+        Player player = new Player(gameValues, gameValues.chosenCharacter, new Point2D.Double(gameValues.FIELD_X_SPACES/2.0, gameValues.FIELD_Y_SPACES));
         gameField = new GameField(gameValues, player);
         gameBar = new GameBar(gameValues, gameField);
     }

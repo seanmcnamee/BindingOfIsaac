@@ -18,11 +18,24 @@ public class SpawnRoom extends Room {
     }
 
     private void createRoomImmovables(GameValues gameValues) {
-        for (int i = 0; i < gameValues.FIELD_X_SPACES/2; i++) {
-            Drawable rock = new Degradable(gameValues, Degradables.Rock, new Point2D.Double(i+2, 2));
+        
+        Drawable r = new Degradable(gameValues, Degradables.Rock, new Point2D.Double(0, 0));
+        elements.add(r);
+        
+        for (int i = 0; i < gameValues.FIELD_X_SPACES; i++) {
+            Drawable rock = new Degradable(gameValues, Degradables.Rock, new Point2D.Double(i, 2));
             elements.add(rock);
         }
-        
+/*
+        for (int i = 0; i < gameValues.FIELD_X_SPACES/2; i++) {
+            Drawable rock = new Degradable(gameValues, Degradables.Rock, new Point2D.Double(i+2, 4));
+            elements.add(rock);
+        }
+        for (int i = 0; i < gameValues.FIELD_X_SPACES/2; i++) {
+            Drawable rock = new Degradable(gameValues, Degradables.Rock, new Point2D.Double(i+2, 1));
+            elements.add(rock);
+        }
+        */
     }
     
 }

@@ -68,8 +68,9 @@ public class Projectile extends Mobile {
     }
 
     @Override
-    protected void onCollision(Point2D.Double newLocation, Drawable collidingElement, Room room) {
+    protected Point2D.Double onCollision(Point2D.Double newLocation, Drawable collidingElement, Room room) {
         //TODO write block
+        return location;
     }
 
     
