@@ -66,7 +66,9 @@ public class GameValues {
     public double singleSquareY = 0;
     
     //GameBar
-    public final double GAME_BAR_HEIGHT = .2;
+    public final String GENERAL_GAMEBAR_SPRITE_SHEET = "res//GeneralGameBarShpriteSheet.png";
+    public final int GENERAL_GAMEBAR_PICTURE_SIZE = 64;
+    public final double GAME_BAR_HEIGHT = .15;
     public final double GAME_BAR_WIDTH = 1;
     public double barXStart = 0;
     public double barYStart = 0;
