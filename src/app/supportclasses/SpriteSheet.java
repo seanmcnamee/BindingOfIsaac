@@ -118,4 +118,22 @@ public class SpriteSheet {
         return flippedImage;
     }
 
+    public BufferedImage flipTopBottom(BufferedImage image) {
+        int imgWidth = image.getWidth();
+        int imgHeight = image.getHeight();
+        
+        BufferedImage flippedImage = new BufferedImage(imgWidth, imgHeight, BufferedImage.TYPE_INT_ARGB);
+        System.out.println("Image: " + imgWidth + ", " + imgHeight);
+
+        //Go through array and flip pixels
+        for (int y = 0; y < imgHeight; y++) {
+            for (int x = 0; x < imgWidth; x++) {
+                int oldRGB = image.getRGB(x, imgHeight-y-1);
+                flippedImage.setRGB(x, y, oldRGB);
+            }
+        }
+
+        return flippedImage;
+    }
+
 }

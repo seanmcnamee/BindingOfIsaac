@@ -53,9 +53,11 @@ public class GameValues {
     //GameField
     public final String GAME_BACKGROUND_FILE = "res//background.png";
     public final String STARTING_BACKGROUND_FILE = "res//tutorialbackground.png";
+    public final String GAME_WALL_SPRITESHEET = "res//Walls.png";
+    public final int WALL_SPRITESHEET_SIZE = 700;
     public final int FIELD_X_SPACES = 13;
     public final int FIELD_Y_SPACES = 7;
-    public final double WALL_THICKNESS = .5;
+    public final double WALL_THICKNESS = 1;
     public double fieldXStart = 0;//For entire field display
     public double fieldYStart = 0;
     public double fieldXSize = 0;

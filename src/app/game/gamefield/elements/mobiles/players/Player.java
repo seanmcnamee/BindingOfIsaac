@@ -1,6 +1,7 @@
 package app.game.gamefield.elements.mobiles.players;
 
 import app.game.gamefield.elements.immovables.Degradable;
+import app.game.gamefield.elements.immovables.walls.Wall;
 import app.game.gamefield.elements.mobiles.Mobile;
 import app.game.gamefield.elements.rendering.Drawable;
 import app.game.gamefield.elements.rendering.HitBox;
@@ -72,8 +73,8 @@ public class Player extends Mobile {
     @Override
     protected Point2D.Double onCollision(Double newLocation, Drawable collidingElement, Room room) {
         
-        if (collidingElement.getClass() == Degradable.class) {
-            return degradableCollision(newLocation, collidingElement, room);
+        if (collidingElement.getClass() == Degradable.class || collidingElement.getClass() == Wall.class) {
+            return regularCollision(newLocation, collidingElement, room);
         }
         
         //Default is stop motion and remain still.
@@ -82,7 +83,7 @@ public class Player extends Mobile {
         //this.velocityPercent
     }
 
-    private Point2D.Double degradableCollision(Double newLocation, Drawable collidingElement, Room room) {
+    private Point2D.Double regularCollision(Double newLocation, Drawable collidingElement, Room room) {
         Point2D.Double onlyY = new Point2D.Double(newLocation.getX(), location.getY());
         Drawable onlyYCollision = room.checkCollisions(this, onlyY);
         if (onlyYCollision==null) {
@@ -239,20 +240,6 @@ public class Player extends Mobile {
 
         this.legs.setImage(totalLegs, spriteSheet.shrink(spriteSheet.grabImage(0, 1, 1, 1, gameValues.PLAYER_SHEET_BOX_SIZE)));
         this.legs.setCurrentImageIndex(totalLegs);
-
-
-        //Print corners
-        System.out.println("Player corners");
-        System.out.println("Center: " + location);
-        System.out.println("Size: " + sizeInBlocks);
-        System.out.println("TL: " + (location.getX()-sizeInBlocks.getX()/2.0) + ", " + (location.getY()-sizeInBlocks.getY()/2.0));
-        System.out.println("BR: " + (location.getX()+sizeInBlocks.getX()/2.0) + ", " + (location.getY()+sizeInBlocks.getY()/2.0));
-
-        System.out.println("Leg corners");
-        System.out.println("Center: " + legs.getHitBox().getCenterOfHitBox(location, sizeInBlocks));
-        System.out.println("Size: " + legs.getHitBox().getHitBoxSize(sizeInBlocks));
-        System.out.println("TL: " + (legs.getHitBox().getLeftOfHitBox(location.getX(), sizeInBlocks.getX()) + ", " + (legs.getHitBox().getTopOfHitBox(location.getY(), sizeInBlocks.getY()))));
-        System.out.println("BR: " + (legs.getHitBox().getRightOfHitBox(location.getX(), sizeInBlocks.getX()) + ", " + (legs.getHitBox().getBottomOfHitBox(location.getY(), sizeInBlocks.getY()))));
     }
 
     private void loadHeads(SpriteSheet spriteSheet) {

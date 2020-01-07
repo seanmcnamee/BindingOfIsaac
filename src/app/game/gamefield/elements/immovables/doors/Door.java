@@ -13,7 +13,7 @@ public class Door extends Indestructible {
     boolean open;
 
     public Door(GameValues gameValues, Room.Rooms door, Double location) {
-        super(gameValues, Indestructible.Indestructibles.Door, location);
+        super(gameValues, location);
         // TODO Auto-generated constructor stub
     }
 

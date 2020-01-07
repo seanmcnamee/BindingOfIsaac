@@ -3,6 +3,7 @@ package app.game.gamefield.rooms;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
+import app.game.gamefield.elements.immovables.walls.Wall;
 import app.game.gamefield.elements.mobiles.Mobile;
 import app.game.gamefield.elements.rendering.BST;
 import app.game.gamefield.elements.rendering.Drawable;
@@ -36,6 +37,7 @@ public abstract class Room {
         this.movables = new ArrayList<Mobile>();
         this.explored = false;
         setPictures(roomType);
+        createWalls();
 
         this.elements.add(player);
         this.movables.add((Mobile)player);
@@ -78,7 +80,10 @@ public abstract class Room {
 
     public void render(Graphics g) {
         g.drawImage(background, (int)gameValues.fieldXStart, (int)gameValues.fieldYStart, (int)gameValues.fieldXSize, (int)gameValues.fieldYSize, null);
+        renderElements(g);
+    }
 
+    private void renderElements(Graphics g) {
         BST tempHeap = new BST();
         while(elements.getRoot()!=null) {
             Drawable temp = (Drawable)elements.deQueue();
@@ -123,6 +128,20 @@ public abstract class Room {
             movables.remove(element);
         }
         elements.bubbleDown(element);
+    }
+
+    private void createWalls() {
+        Drawable wallTop, wallBottom, wallLeft, wallRight;
+        wallTop = new Wall(gameValues, Wall.WallType.Top);
+        wallBottom = new Wall(gameValues, Wall.WallType.Bottom);
+        wallLeft = new Wall(gameValues, Wall.WallType.Left);
+        wallRight = new Wall(gameValues, Wall.WallType.Right);
+
+        this.elements.add(wallTop);
+        this.elements.add(wallBottom);
+        this.elements.add(wallLeft);
+        this.elements.add(wallRight);
+
     }
 
 }
