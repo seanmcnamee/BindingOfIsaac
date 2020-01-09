@@ -31,13 +31,13 @@ public class GameBar {
     private void loadImages() {
         SpriteSheet generalPictures = new SpriteSheet(gameValues.GENERAL_GAMEBAR_SPRITE_SHEET);
         this.fullHearts = generalPictures.shrink(generalPictures.grabImage(2,
-                        0, 1, 1, gameValues.GENERAL_GAMEBAR_PICTURE_SIZE));
+                        0, 1, 1, gameValues.GENERAL_GAMEBAR_SPRITE_SHEET_BOX_SIZE));
         this.coins = generalPictures.shrink(generalPictures.grabImage(0,
-                        1, 1, 1, gameValues.GENERAL_GAMEBAR_PICTURE_SIZE));
+                        1, 1, 1, gameValues.GENERAL_GAMEBAR_SPRITE_SHEET_BOX_SIZE));
         this.bombs = generalPictures.shrink(generalPictures.grabImage(1,
-                        1, 1, 1, gameValues.GENERAL_GAMEBAR_PICTURE_SIZE));
+                        1, 1, 1, gameValues.GENERAL_GAMEBAR_SPRITE_SHEET_BOX_SIZE));
         this.keys = generalPictures.shrink(generalPictures.grabImage(2,
-                        1, 1, 1, gameValues.GENERAL_GAMEBAR_PICTURE_SIZE));
+                        1, 1, 1, gameValues.GENERAL_GAMEBAR_SPRITE_SHEET_BOX_SIZE));
     }
 
     public void render(Graphics g) {

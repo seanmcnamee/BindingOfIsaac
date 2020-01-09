@@ -43,7 +43,7 @@ public class Player extends Mobile {
     private void setCharacterStats(Characters character) {
         switch (character) {
         case Isaac:
-            this.accelerationRate = 12.0;
+            this.accelerationRate = 10.0;
             this.maxSpeed = 6.0;
             this.maxHealth = 6;
             loadImages(gameValues.ISSAC_FILE);
@@ -85,14 +85,14 @@ public class Player extends Mobile {
 
     private Point2D.Double regularCollision(Double newLocation, Drawable collidingElement, Room room) {
         Point2D.Double onlyY = new Point2D.Double(newLocation.getX(), location.getY());
-        Drawable onlyYCollision = room.checkCollisions(this, onlyY);
+        Drawable onlyYCollision = room.recursiveCollisionCheck(this, onlyY);
         if (onlyYCollision==null) {
             this.velocityPercent.y = 0;
             return onlyY;
         }
 
         Point2D.Double onlyX = new Point2D.Double(location.getX(), newLocation.getY());
-        Drawable onlyXCollision = room.checkCollisions(this, onlyX);
+        Drawable onlyXCollision = room.recursiveCollisionCheck(this, onlyX);
         if (onlyXCollision==null) {
             this.velocityPercent.x = 0;
             return onlyX;

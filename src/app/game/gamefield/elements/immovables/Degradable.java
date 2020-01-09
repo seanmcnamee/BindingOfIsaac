@@ -26,7 +26,7 @@ public class Degradable extends Destructible {
     }
 
     public void setDegradingImages(Degradables degradable) {
-        SpriteSheet spriteSheet = new SpriteSheet(gameValues.SPRITE_SHEET);
+        SpriteSheet spriteSheet = new SpriteSheet(gameValues.DEGRADABLES_SPRITE_SHEET);
         
         System.out.println("Creating degradable: " + degradable);
         switch(degradable) {
@@ -34,21 +34,21 @@ public class Degradable extends Destructible {
                 this.maxHealth = 3;
                 this.sizeInBlocks = new Point2D.Double(1, 1);
                 images = new InterchangeableImage(maxHealth, new HitBox());
-                images.setImage(0, spriteSheet.shrink(spriteSheet.grabImage(6, 4, 2, 2, gameValues.SPRITE_SHEET_BOX_SIZE)));
-                images.setImage(1, spriteSheet.shrink(spriteSheet.grabImage(8, 4, 2, 2, gameValues.SPRITE_SHEET_BOX_SIZE)));
-                images.setImage(2, spriteSheet.shrink(spriteSheet.grabImage(10, 4, 2, 2, gameValues.SPRITE_SHEET_BOX_SIZE)));
+                images.setImage(0, spriteSheet.shrink(spriteSheet.grabImage(3, 0, 1, 1, gameValues.DEGRADABLES_SPRITE_SHEET_BOX_SIZE)));
+                images.setImage(1, spriteSheet.shrink(spriteSheet.grabImage(4, 0, 1, 1, gameValues.DEGRADABLES_SPRITE_SHEET_BOX_SIZE)));
+                images.setImage(2, spriteSheet.shrink(spriteSheet.grabImage(5, 0, 1, 1, gameValues.DEGRADABLES_SPRITE_SHEET_BOX_SIZE)));
                 break;
             case Rock:
                 this.maxHealth = 1;
                 this.sizeInBlocks = new Point2D.Double(1, 1.1);
                 images = new InterchangeableImage(maxHealth, new HitBox(1, gameValues.DEGRADABLE_Y_HITBOX, 0, (1-gameValues.DEGRADABLE_Y_HITBOX)/2.0));
-                images.setImage(0, spriteSheet.shrink(spriteSheet.grabImage(14, 4, 2, 2, gameValues.SPRITE_SHEET_BOX_SIZE)));
+                images.setImage(0, spriteSheet.shrink(spriteSheet.grabImage(7, 0, 1, 1, gameValues.DEGRADABLES_SPRITE_SHEET_BOX_SIZE)));
                 break;
             default: //default
                 this.maxHealth = 1;
                 this.sizeInBlocks = new Point2D.Double(1, 1);
                 images = new InterchangeableImage(maxHealth, new HitBox());
-                images.setImage(0, spriteSheet.shrink(spriteSheet.grabImage(2, 6, 2, 2, gameValues.SPRITE_SHEET_BOX_SIZE)));
+                images.setImage(0, spriteSheet.shrink(spriteSheet.grabImage(0, 0, 1, 1, gameValues.DEGRADABLES_SPRITE_SHEET_BOX_SIZE)));
         }
         this.hitbox = images.getHitBox();
     }

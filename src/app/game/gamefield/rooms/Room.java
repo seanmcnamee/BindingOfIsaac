@@ -44,30 +44,42 @@ public abstract class Room {
     }
 
     private void setPictures(Rooms room) {
-        SpriteSheet spriteSheet = new SpriteSheet(gameValues.SPRITE_SHEET);
+        SpriteSheet icons = new SpriteSheet(gameValues.ICON_SPRITE_SHEET);
         this.roomIcon = null;
-        this.roomIcon = spriteSheet.shrink(spriteSheet.grabImage(1, 1, 1, 1, gameValues.SPRITE_SHEET_BOX_SIZE));
+        
 
         
-        //TODO go through these backgrounds and icons
+        //TODO go through these backgrounds
         switch(room) {
             case Spawn:
                 this.background = new BufferedImageLoader(gameValues.STARTING_BACKGROUND_FILE).getImage();
+                this.roomIcon = icons.shrink(icons.grabImage(2, 1, 1, 1, gameValues.ICON_SPRITE_SHEET_BOX_SIZE));
                 break;
             case Regular:
-
-            case Arcade:
-
-            case Shop:
-
-            case Treasure:
-
-            case Boss:
-
-            case Secret:
-
-            default:
                 this.background = new BufferedImageLoader(gameValues.GAME_BACKGROUND_FILE).getImage();
+                this.roomIcon = icons.shrink(icons.grabImage(1, 1, 1, 1, gameValues.ICON_SPRITE_SHEET_BOX_SIZE));
+                break;
+            //case Arcade: //TODO add arcade room as well
+                //this.roomIcon = spriteSheet.shrink(spriteSheet.grabImage(1, 1, 1, 1, gameValues.ICON_SPRITE_SHEET_BOX_SIZE));
+            case Shop:
+                this.background = new BufferedImageLoader(gameValues.GAME_BACKGROUND_FILE).getImage();
+                this.roomIcon = icons.shrink(icons.grabImage(1, 0, 1, 1, gameValues.ICON_SPRITE_SHEET_BOX_SIZE));
+                break;
+            case Treasure:
+                this.background = new BufferedImageLoader(gameValues.GAME_BACKGROUND_FILE).getImage();
+                this.roomIcon = icons.shrink(icons.grabImage(0, 0, 1, 1, gameValues.ICON_SPRITE_SHEET_BOX_SIZE));
+                break;
+            case Boss:
+                this.background = new BufferedImageLoader(gameValues.GAME_BACKGROUND_FILE).getImage();    
+                this.roomIcon = icons.shrink(icons.grabImage(2, 0, 1, 1, gameValues.ICON_SPRITE_SHEET_BOX_SIZE));
+                break;
+            case Secret:
+                this.background = new BufferedImageLoader(gameValues.GAME_BACKGROUND_FILE).getImage();    
+                this.roomIcon = icons.shrink(icons.grabImage(0, 1, 1, 1, gameValues.ICON_SPRITE_SHEET_BOX_SIZE));
+                break;
+            default:
+            this.background = new BufferedImageLoader(gameValues.GAME_BACKGROUND_FILE).getImage();
+                this.roomIcon = icons.shrink(icons.grabImage(1, 1, 1, 1, gameValues.ICON_SPRITE_SHEET_BOX_SIZE));
                 break;
         }
     }
@@ -93,6 +105,7 @@ public abstract class Room {
         elements = tempHeap;
     }
 
+    /*
     public Drawable checkCollisions(Drawable main, Point2D.Double testLocation) {
         Drawable foundItem = null;
         BST tempHeap = new BST();
@@ -105,6 +118,14 @@ public abstract class Room {
         }
         elements = tempHeap;
         return foundItem;
+    }
+    */
+
+    /**
+     * Recursively actually works better than removing and creating a new Priority Queue
+     */
+    public Drawable recursiveCollisionCheck(Drawable main, Point2D.Double testLocation) {
+        return recursiveCollisionCheck(main, testLocation, (Drawable)elements.getRoot());
     }
 
     public Drawable recursiveCollisionCheck(Drawable main, Point2D.Double testLocation, Drawable currentNode) {

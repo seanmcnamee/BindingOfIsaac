@@ -27,7 +27,7 @@ public class Projectile extends Mobile {
 
     //TODO make sure the range number matches up to a block distance (units is blocks)
     public void setProjectileStats(Projectiles p) {
-        SpriteSheet spriteSheet = new SpriteSheet(gameValues.SPRITE_SHEET);
+        SpriteSheet spriteSheet = new SpriteSheet(gameValues.DEGRADABLES_SPRITE_SHEET);
 
         switch(p) {
             case Tear:
@@ -35,7 +35,7 @@ public class Projectile extends Mobile {
                 this.maxSpeed = 5;
                 this.range = 5;
                 this.maxHealth = 1;
-                this.image = spriteSheet.shrink(spriteSheet.grabImage(14, 2, 2, 2, gameValues.SPRITE_SHEET_BOX_SIZE));
+                this.image = spriteSheet.shrink(spriteSheet.grabImage(14, 2, 2, 2, gameValues.DEGRADABLES_SPRITE_SHEET_BOX_SIZE));
                 break;
             default:
                 this.maxSpeed = this.range = 0;

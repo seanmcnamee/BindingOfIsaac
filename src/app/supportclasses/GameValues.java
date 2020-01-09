@@ -55,6 +55,9 @@ public class GameValues {
     public final String STARTING_BACKGROUND_FILE = "res//tutorialbackground.png";
     public final String GAME_WALL_SPRITESHEET = "res//Walls.png";
     public final int WALL_SPRITESHEET_SIZE = 700;
+    public final String DEGRADABLES_SPRITE_SHEET = "res//DegradablesSpriteSheet.png";
+    public final int DEGRADABLES_SPRITE_SHEET_BOX_SIZE = 41;
+
     public final int FIELD_X_SPACES = 13;
     public final int FIELD_Y_SPACES = 7;
     public final double WALL_THICKNESS = 1;
@@ -69,7 +72,9 @@ public class GameValues {
     
     //GameBar
     public final String GENERAL_GAMEBAR_SPRITE_SHEET = "res//GeneralGameBarShpriteSheet.png";
-    public final int GENERAL_GAMEBAR_PICTURE_SIZE = 64;
+    public final int GENERAL_GAMEBAR_SPRITE_SHEET_BOX_SIZE = 64;
+    public final String ICON_SPRITE_SHEET = "res//RoomIconSpriteSheet.png";
+    public final int ICON_SPRITE_SHEET_BOX_SIZE = 100;
     public final double GAME_BAR_HEIGHT = .15;
     public final double GAME_BAR_WIDTH = 1;
     public double barXStart = 0;
@@ -99,9 +104,6 @@ public class GameValues {
     public int moveLeftKey = KeyEvent.VK_A;
     public int moveRightKey = KeyEvent.VK_D;
 
-    //Others
-    public final String SPRITE_SHEET = "res//MainSpriteSheet.png";
-    public final int SPRITE_SHEET_BOX_SIZE = 20;
 
     public final double DEGRADABLE_Y_HITBOX = .5;
 

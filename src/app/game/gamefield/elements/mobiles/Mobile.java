@@ -84,14 +84,12 @@ public abstract class Mobile extends Destructible{
         tempLocation.y += velocityPercent.y*maxSpeedPerTick;
 
         //TODO test recursive version
-        Drawable collidingElement = room.checkCollisions(this, tempLocation);
+        Drawable collidingElement = room.recursiveCollisionCheck(this, tempLocation);
         if (collidingElement!=null) {
             location = onCollision(tempLocation, collidingElement, room);
         }   else {
             location = tempLocation;
         }
-
-        
     }
 
     //TODO possibly add mass for more realizstic collisions
