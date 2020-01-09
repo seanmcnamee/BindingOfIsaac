@@ -2,7 +2,7 @@ package app.game.gamefield.elements.mobiles;
 
 import app.game.gamefield.elements.Destructible;
 import app.game.gamefield.elements.rendering.Drawable;
-import app.game.gamefield.rooms.Room;
+import app.game.gamefield.house.rooms.Room;
 import app.supportclasses.GameValues;
 
 import java.awt.geom.Point2D;

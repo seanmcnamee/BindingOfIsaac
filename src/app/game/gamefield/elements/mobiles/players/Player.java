@@ -7,7 +7,7 @@ import app.game.gamefield.elements.rendering.Drawable;
 import app.game.gamefield.elements.rendering.HitBox;
 import app.game.gamefield.elements.rendering.InterchangeableImage;
 import app.game.gamefield.elements.rendering.LoopingPictures;
-import app.game.gamefield.rooms.Room;
+import app.game.gamefield.house.Room;
 import app.supportclasses.GameValues;
 import app.supportclasses.SpriteSheet;
 

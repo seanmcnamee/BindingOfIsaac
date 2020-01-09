@@ -199,5 +199,4 @@ public class BST {
             System.out.print(node.getPriority()+"_"+node.getParentDir()+" ");
         }
     }
-
 }

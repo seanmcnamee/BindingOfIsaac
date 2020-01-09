@@ -2,7 +2,7 @@ package app.game.gamefield.elements.immovables.walls;
 
 import java.awt.geom.Point2D.Double;
 
-import app.game.gamefield.elements.immovables.Indestructible;
+import app.game.gamefield.elements.rendering.Drawable;
 import app.game.gamefield.elements.rendering.HitBox;
 import app.supportclasses.GameValues;
 import app.supportclasses.SpriteSheet;
@@ -10,7 +10,7 @@ import app.supportclasses.SpriteSheet;
 /**
  * Wall
  */
-public class Wall extends Indestructible {
+public class Wall extends Drawable {
     private int drawPriority;
 
     public enum WallType {

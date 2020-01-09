@@ -3,8 +3,7 @@ package app.game;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 
-import app.game.gamefield.rooms.Room;
-import app.game.gamefield.rooms.SpawnRoom;
+import app.game.gamefield.house.House;
 import app.supportclasses.GameValues;
 import app.game.gamefield.elements.mobiles.players.Player;
 /**
@@ -16,17 +15,20 @@ public class GameField {
     private Player player;
 
     //TODO make a map class and stuff
-    private Room room;
+    private House house;
     
 
     public GameField(GameValues gameValues, Player player) {
         this.gameValues = gameValues;
         this.player = player;
-        room = new SpawnRoom(gameValues, player);
+        house = new House();
     }
 
     public void tick() {
-        room.tick();
+        house.getCurrentFloor().getCurrentRoom().tick(); 
+        
+        //TODO add a check in here so that the next floor can be loaded
+        //if *floorcomplete* then house.updateCurrentFloor()
     }
 
     public void render(Graphics g) {
@@ -50,7 +52,7 @@ public class GameField {
         this.gameValues.fieldXZero = gameValues.fieldXStart+(gameValues.singleSquareX*(gameValues.WALL_THICKNESS+halfABlock));
         this.gameValues.fieldYZero = gameValues.fieldYStart+(gameValues.singleSquareY*(gameValues.WALL_THICKNESS+halfABlock));
 
-        room.render(g); //TODO make this through the map class
+        house.getCurrentFloor().getCurrentRoom().render(g); //TODO make this through the map class
     }
 
     public void keyPressed(KeyEvent e) {

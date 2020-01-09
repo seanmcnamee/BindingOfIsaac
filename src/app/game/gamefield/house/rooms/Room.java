@@ -1,4 +1,4 @@
-package app.game.gamefield.rooms;
+package app.game.gamefield.house.rooms;
 
 import java.awt.Graphics;
 import java.util.ArrayList;
@@ -13,41 +13,39 @@ import app.supportclasses.SpriteSheet;
 
 import java.awt.image.BufferedImage;
 import java.awt.geom.Point2D;
+import java.awt.Point;
 
 /**
  * Room
  */
-public abstract class Room {
+public abstract class Room extends Traversable{
+    
     protected BST elements; // Drawables
-    protected ArrayList<Mobile> movables;
+    protected ArrayList<Mobile> movables; //Things that move and must be checked for collision
+    private BufferedImage background; // Background picture
+    protected GameValues gameValues;
 
-    //TODO add actual objects as the walls for a room, not just a background...
-    private BufferedImage background; // Background
-    private BufferedImage roomIcon;
-    private boolean explored;
-    GameValues gameValues;
-
-    public enum Rooms {
-        Spawn, Regular, Arcade, Shop, Treasure, Boss, Secret;
+    public enum Rooms { //TODO change these into class types???
+        Spawn, Regular, Shop, Treasure, Arcade, Boss, Secret;
     }
 
-    public Room(GameValues gameValues, Drawable player, Rooms roomType) {
+    public Room(GameValues gameValues, Drawable player, Rooms roomType, Point location, Traversable above, Traversable below, Traversable left, Traversable right) {
+        super(location, above, below, left, right);
         this.gameValues = gameValues;
         this.elements = new BST();
         this.movables = new ArrayList<Mobile>();
-        this.explored = false;
         setPictures(roomType);
         createWalls();
 
         this.elements.add(player);
         this.movables.add((Mobile)player);
+
+        createMobiles();
+        createImmovables();
     }
 
     private void setPictures(Rooms room) {
         SpriteSheet icons = new SpriteSheet(gameValues.ICON_SPRITE_SHEET);
-        this.roomIcon = null;
-        
-
         
         //TODO go through these backgrounds
         switch(room) {
@@ -83,6 +81,22 @@ public abstract class Room {
                 break;
         }
     }
+
+    private void createWalls() {
+        Drawable wallTop, wallBottom, wallLeft, wallRight;
+        wallTop = new Wall(gameValues, Wall.WallType.Top);
+        wallBottom = new Wall(gameValues, Wall.WallType.Bottom);
+        wallLeft = new Wall(gameValues, Wall.WallType.Left);
+        wallRight = new Wall(gameValues, Wall.WallType.Right);
+
+        this.elements.add(wallTop);
+        this.elements.add(wallBottom);
+        this.elements.add(wallLeft);
+        this.elements.add(wallRight);
+    }
+
+    protected abstract void createMobiles();
+    protected abstract void createImmovables();
 
     public void tick() {
         for (Mobile m: movables) {
@@ -143,26 +157,12 @@ public abstract class Room {
             }
         }
     }
-
+    
     public void destroyElement(Drawable element) {
         if (element.getClass().equals(Mobile.class)) {
             movables.remove(element);
         }
         elements.bubbleDown(element);
-    }
-
-    private void createWalls() {
-        Drawable wallTop, wallBottom, wallLeft, wallRight;
-        wallTop = new Wall(gameValues, Wall.WallType.Top);
-        wallBottom = new Wall(gameValues, Wall.WallType.Bottom);
-        wallLeft = new Wall(gameValues, Wall.WallType.Left);
-        wallRight = new Wall(gameValues, Wall.WallType.Right);
-
-        this.elements.add(wallTop);
-        this.elements.add(wallBottom);
-        this.elements.add(wallLeft);
-        this.elements.add(wallRight);
-
     }
 
 }
