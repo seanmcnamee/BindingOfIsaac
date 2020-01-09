@@ -3,6 +3,7 @@ package app.game.gamefield.house;
 import app.game.gamefield.house.rooms.Room;
 
 import java.awt.Point;
+import java.util.Map;
 /**
  * GameMap
  */
@@ -15,7 +16,7 @@ public class Floor {
     private int maxRooms;
 
     //TODO have input as num of each type of Room
-    public Floor(int... roomCounts) {
+    public Floor(Map<Room.Rooms, Integer> roomCounts) {
         this.maxRooms = getTotal(roomCounts);
         rooms = new Room[this.maxRooms];
         roomMap = new Room[(int)(sizeOfMap.getX())][(int)(sizeOfMap.getY())];
@@ -24,16 +25,16 @@ public class Floor {
         setStartingRoom(); //TODO Might remove this if the starting room isn't in the center of the roomMap
     }
 
-    private int getTotal(int[] values) {
+    private int getTotal(Map<Room.Rooms, Integer> roomCounts) {
         int sum = 0;
-        for (int i : values) {
-            sum+=i;
+        for (Room.Rooms roomType: Room.Rooms.values()) {
+            sum += roomCounts.get(roomType);
         }
         return sum;
     }
 
     //TODO If the starting room is not in the center of the roomMap, load it in here!!!
-    private void generateFloorMap(int... roomCounts) {
+    private void generateFloorMap(Map<Room.Rooms, Integer> roomCounts) {
 
     }
 
