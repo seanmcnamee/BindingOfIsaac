@@ -74,7 +74,7 @@ public class GameValues {
     public final String GENERAL_GAMEBAR_SPRITE_SHEET = "res//GeneralGameBarShpriteSheet.png";
     public final int GENERAL_GAMEBAR_SPRITE_SHEET_BOX_SIZE = 64;
     public final String ICON_SPRITE_SHEET = "res//RoomIconSpriteSheet.png";
-    public final int ICON_SPRITE_SHEET_BOX_SIZE = 100;
+    public final int ICON_SPRITE_SHEET_BOX_SIZE = 69;
     public final double GAME_BAR_HEIGHT = .15;
     public final double GAME_BAR_WIDTH = 1;
     public double barXStart = 0;

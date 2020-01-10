@@ -63,8 +63,8 @@ public class MiniMap extends DrawingCalculator{
         for (Room room : this.floor.getRooms()) {
             if (room.getClass()!=RegularRoom.class) {
 
-                Point2D.Double iconSize = new Point2D.Double(generalIconSize.getX()*(1.5*room.getIcon().getWidth()/(double)gameValues.ICON_SPRITE_SHEET_BOX_SIZE),
-                                                            generalIconSize.getY()*(1.5*room.getIcon().getHeight()/(double)gameValues.ICON_SPRITE_SHEET_BOX_SIZE));
+                Point2D.Double iconSize = new Point2D.Double(generalIconSize.getX()*(room.getIcon().getWidth()/(double)gameValues.ICON_SPRITE_SHEET_BOX_SIZE),
+                                                            generalIconSize.getY()*(room.getIcon().getHeight()/(double)gameValues.ICON_SPRITE_SHEET_BOX_SIZE));
 
                 int xPos = findPixelLocation(room.getLocation().getX(), iconSize.getX(), miniMapStart.getX(), blockSize.getX());
                 int yPos = findPixelLocation(room.getLocation().getY(), iconSize.getY(), miniMapStart.getY(), blockSize.getY());
