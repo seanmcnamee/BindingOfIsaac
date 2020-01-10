@@ -11,7 +11,10 @@ import java.awt.geom.Point2D;
 import java.awt.Point;
 
 /**
- * SpawnRoom
+ * ShopRoom
+ * always locked (key)
+ * Only 1 per floor (chapters 1 2 and 3 only)
+ * secret room can be adjacent
  */
 public class ShopRoom extends Room {
     

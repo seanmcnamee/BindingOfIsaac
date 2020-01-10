@@ -11,7 +11,9 @@ import java.awt.geom.Point2D;
 import java.awt.Point;
 
 /**
- * SpawnRoom
+ * Locked in every except Basement1
+ * TreasureRoom: Never border more than one regular/spawn room
+ * Can have an adjacent secret room
  */
 public class TreasureRoom extends Room {
     

@@ -21,7 +21,7 @@ public class GameField {
     public GameField(GameValues gameValues, Player player) {
         this.gameValues = gameValues;
         this.player = player;
-        house = new House();
+        house = new House(this.gameValues, this.player);
     }
 
     public void tick() {
@@ -37,9 +37,8 @@ public class GameField {
         this.gameValues.fieldXSize = gameValues.WIDTH_SCALE_1*(gameValues.gameScale);
         this.gameValues.fieldYSize = gameValues.HEIGHT_SCALE_1*gameValues.gameScale*(1-gameValues.GAME_BAR_HEIGHT);
 
-        gameValues.singleSquareX = (gameValues.fieldXSize)/(gameValues.FIELD_X_SPACES+gameValues.WALL_THICKNESS*2);// - gameValues.WALL_THICKNESS*2;
-        gameValues.singleSquareY = (gameValues.fieldYSize)/(gameValues.FIELD_Y_SPACES+gameValues.WALL_THICKNESS*2);// - gameValues.WALL_THICKNESS*2;
-
+        this.gameValues.singleSquareX = (gameValues.fieldXSize)/(gameValues.FIELD_X_SPACES+gameValues.WALL_THICKNESS*2);// - gameValues.WALL_THICKNESS*2;
+        this.gameValues.singleSquareY = (gameValues.fieldYSize)/(gameValues.FIELD_Y_SPACES+gameValues.WALL_THICKNESS*2);// - gameValues.WALL_THICKNESS*2;
 
         double excessWidth = gameValues.frameWidth-(gameValues.WIDTH_SCALE_1*gameValues.gameScale);
         double excessHeight = gameValues.frameHeight-(gameValues.HEIGHT_SCALE_1*gameValues.gameScale);
@@ -61,5 +60,9 @@ public class GameField {
 
     public void keyReleased(KeyEvent e) {
         player.keyReleased(e);
+    }
+
+    public House getHouse() {
+        return this.house;
     }
 }

@@ -28,7 +28,7 @@ public class Degradable extends Destructible {
     public void setDegradingImages(Degradables degradable) {
         SpriteSheet spriteSheet = new SpriteSheet(gameValues.DEGRADABLES_SPRITE_SHEET);
         
-        System.out.println("Creating degradable: " + degradable);
+        //System.out.println("Creating degradable: " + degradable);
         switch(degradable) {
             case Poop:
                 this.maxHealth = 3;

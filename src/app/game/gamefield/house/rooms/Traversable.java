@@ -47,5 +47,9 @@ public abstract class Traversable {
     public Point getLocationRight() {
         return new Point((int)(location.getX()+1), (int)(location.getY()));
     }
+
+    public BufferedImage getIcon() {
+        return roomIcon;
+    }
     
 }

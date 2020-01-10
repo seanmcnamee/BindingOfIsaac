@@ -12,6 +12,8 @@ import java.awt.Point;
 
 /**
  * SpawnRoom
+ * adjacent to 3 or 4 rooms
+ * entrances to/from never have rocks/gaps in the way
  */
 public class SecretRoom extends Room {
     

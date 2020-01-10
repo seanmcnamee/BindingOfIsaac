@@ -34,6 +34,7 @@ public abstract class Room extends Traversable{
         this.gameValues = gameValues;
         this.elements = new BST();
         this.movables = new ArrayList<Mobile>();
+
         setPictures(roomType);
         createWalls();
 

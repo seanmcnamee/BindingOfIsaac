@@ -23,7 +23,7 @@ public class GameBar {
     public GameBar(GameValues gameValues, GameField gameField) {
         this.gameValues = gameValues;
         this.gameField = gameField;
-        //this.minimap = new MiniMap(gameField.getLevels().getCurrentFloor());  //TODO add this
+        this.minimap = new MiniMap(gameField.getHouse().getCurrentFloor(), gameValues);
         //this.playerStatsPrinter = new PlayerStatsPrinter(gameField.getPlayer()); //TODO add this
         loadImages();
     }
@@ -52,7 +52,7 @@ public class GameBar {
         
 
         drawBackgroundAndBorder(g);
-        //miniMap.render(g);
+        minimap.render(g);
         //playerStatsPrinter.render(g);
     }
 

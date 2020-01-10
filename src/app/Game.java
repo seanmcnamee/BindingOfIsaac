@@ -25,9 +25,15 @@ public class Game extends DisplayScreen{
     public Game(JFrame frame, GameValues gameValues) {
         super(frame);
         this.gameValues = gameValues;
-        Player player = new Player(gameValues, gameValues.chosenCharacter, new Point2D.Double(gameValues.FIELD_X_SPACES/2.0, gameValues.FIELD_Y_SPACES/2.0));
-        gameField = new GameField(gameValues, player);
-        gameBar = new GameBar(gameValues, gameField);
+        
+        //TODO see if this will work once the button is pressed.
+        initialize();
+    }
+
+    private void initialize() {
+        Player player = new Player(this.gameValues, gameValues.chosenCharacter, new Point2D.Double(gameValues.FIELD_X_SPACES/2.0, gameValues.FIELD_Y_SPACES/2.0));
+        gameField = new GameField(this.gameValues, player);
+        gameBar = new GameBar(this.gameValues, gameField);
     }
 
 

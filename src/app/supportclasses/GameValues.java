@@ -81,6 +81,10 @@ public class GameValues {
     public double barYStart = 0;
     public double barXSize = 0;
     public double barYSize = 0;
+    public final double MINIMAP_X_SIZE = .4;
+    public final double MINIMAP_Y_SIZE = 1;
+    
+
     
     //Player
     public final String ISSAC_FILE = "res//isaac_spritesheet.png";

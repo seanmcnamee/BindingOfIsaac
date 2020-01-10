@@ -105,7 +105,7 @@ public class SpriteSheet {
         int imgHeight = image.getHeight();
         
         BufferedImage flippedImage = new BufferedImage(imgWidth, imgHeight, BufferedImage.TYPE_INT_ARGB);
-        System.out.println("Image: " + imgWidth + ", " + imgHeight);
+        //System.out.println("Image: " + imgWidth + ", " + imgHeight);
 
         //Go through array and flip pixels
         for (int y = 0; y < imgHeight; y++) {
@@ -123,7 +123,7 @@ public class SpriteSheet {
         int imgHeight = image.getHeight();
         
         BufferedImage flippedImage = new BufferedImage(imgWidth, imgHeight, BufferedImage.TYPE_INT_ARGB);
-        System.out.println("Image: " + imgWidth + ", " + imgHeight);
+        //System.out.println("Image: " + imgWidth + ", " + imgHeight);
 
         //Go through array and flip pixels
         for (int y = 0; y < imgHeight; y++) {

@@ -2,7 +2,7 @@ package app.game.gamefield.elements.mobiles.projectiles;
 
 import app.game.gamefield.elements.mobiles.Mobile;
 import app.game.gamefield.elements.rendering.Drawable;
-import app.game.gamefield.house.Room;
+import app.game.gamefield.house.rooms.Room;
 import app.supportclasses.GameValues;
 import app.supportclasses.SpriteSheet;
 

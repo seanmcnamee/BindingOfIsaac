@@ -18,48 +18,26 @@ public class Drawable extends Node {
     protected Point2D.Double sizeInBlocks;
     protected HitBox hitbox;
     protected GameValues gameValues;
+    private DrawingCalculator calculator;
 
     public Drawable(GameValues gameValues, Point2D.Double location) {
         super();
         this.gameValues = gameValues;
         this.location = location;
+        this.calculator = new DrawingCalculator(gameValues);
     }
 
     public void render(Graphics g) {
-        g.drawImage(getImage(), (int)(findPixelXLocation()), (int)(findPixelYLocation()), (int)findPixelXSize(), (int)findPixelYSize(), null);
-        g.drawRect((int)findHitBoxPixelXLocation(), (int)findHitBoxPixelYLocation(), (int)findHitBoxPixelXSize(), (int)findHitBoxPixelYSize());
-    }
-
-    private double findPixelXLocation() {
-        return gameValues.fieldXZero+((this.getLocation().getX()-this.getSizeInBlocks().getX()/2.0)*gameValues.singleSquareX);
-    }
-
-    private double findPixelYLocation() {
-        return gameValues.fieldYZero+((this.getLocation().getY()-this.getSizeInBlocks().getY()/2.0)*gameValues.singleSquareY);
-    }
-
-    private double findPixelXSize() {
-        return gameValues.singleSquareX*this.getSizeInBlocks().getX();
-    }
-
-    private double findPixelYSize() {
-        return gameValues.singleSquareY*this.getSizeInBlocks().getY();
-    }
-
-    private double findHitBoxPixelXLocation() {
-        return gameValues.fieldXZero+((this.getHitBoxLocation().getX()-this.getHitBoxSizeInBlocks().getX()/2.0)*gameValues.singleSquareX);
-    }
-
-    private double findHitBoxPixelYLocation() {
-        return gameValues.fieldYZero+((this.getHitBoxLocation().getY()-this.getHitBoxSizeInBlocks().getY()/2.0)*gameValues.singleSquareY);
-    }
-
-    private double findHitBoxPixelXSize() {
-        return gameValues.singleSquareX*this.getHitBoxSizeInBlocks().getX();
-    }
-
-    private double findHitBoxPixelYSize() {
-        return gameValues.singleSquareY*this.getHitBoxSizeInBlocks().getY();
+        g.drawImage(getImage(), calculator.findPixelLocation(getLocation().getX(), getSizeInBlocks().getX(), gameValues.fieldXZero, gameValues.singleSquareX), 
+                                calculator.findPixelLocation(getLocation().getY(), getSizeInBlocks().getY(), gameValues.fieldYZero, gameValues.singleSquareY), 
+                                calculator.findPixelSize(getSizeInBlocks().getX(), gameValues.singleSquareX), 
+                                calculator.findPixelSize(getSizeInBlocks().getY(), gameValues.singleSquareY), 
+                                null);
+        
+        g.drawRect(calculator.findPixelLocation(getHitBoxLocation().getX(), getHitBoxSizeInBlocks().getX(), gameValues.fieldXZero, gameValues.singleSquareX), 
+                    calculator.findPixelLocation(getHitBoxLocation().getY(), getHitBoxSizeInBlocks().getY(), gameValues.fieldYZero, gameValues.singleSquareY), 
+                    calculator.findPixelSize(getHitBoxSizeInBlocks().getX(), gameValues.singleSquareX), 
+                    calculator.findPixelSize(getHitBoxSizeInBlocks().getY(), gameValues.singleSquareY));
     }
 
     @Override
