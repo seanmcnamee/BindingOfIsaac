@@ -52,7 +52,9 @@ public class GameValues {
     /////Game Values
     //GameField
     public final String GAME_BACKGROUND_FILE = "res//background.png";
-    public final String STARTING_BACKGROUND_FILE = "res//tutorialbackground.png";
+    public final String STARTING_DIRECTIONS_FILE = "res//directions.png";
+    public final double DIRECTIONS_WIDTH = .7;
+    public final double DIRECTIONS_HEIGHT = .4;
     public final String GAME_WALL_SPRITESHEET = "res//Walls.png";
     public final int WALL_SPRITESHEET_SIZE = 700;
     public final String DEGRADABLES_SPRITE_SHEET = "res//DegradablesSpriteSheet.png";

@@ -29,18 +29,27 @@ public abstract class Room extends Traversable{
         Spawn, Regular, Shop, Treasure, Arcade, Boss, Secret;
     }
 
+    public Room(GameValues gameValues, Drawable player, Rooms roomType, Point location) {
+        super(location);
+        initializeRoom(gameValues, player, roomType);
+    }
+    
     public Room(GameValues gameValues, Drawable player, Rooms roomType, Point location, Traversable above, Traversable below, Traversable left, Traversable right) {
         super(location, above, below, left, right);
+        initializeRoom(gameValues, player, roomType);
+    }
+
+    private void initializeRoom(GameValues gameValues, Drawable player, Rooms roomType) {
         this.gameValues = gameValues;
+
         this.elements = new BST();
-        this.movables = new ArrayList<Mobile>();
-
-        setPictures(roomType);
-        createWalls();
-
         this.elements.add(player);
+
+        this.movables = new ArrayList<Mobile>();
         this.movables.add((Mobile)player);
 
+        setPictures(roomType);
+        //createWalls();
         createMobiles();
         createImmovables();
     }
@@ -50,10 +59,6 @@ public abstract class Room extends Traversable{
         
         //TODO go through these backgrounds
         switch(room) {
-            case Spawn:
-                this.background = new BufferedImageLoader(gameValues.STARTING_BACKGROUND_FILE).getImage();
-                this.roomIcon = icons.shrink(icons.grabImage(2, 1, 1, 1, gameValues.ICON_SPRITE_SHEET_BOX_SIZE));
-                break;
             case Regular:
                 this.background = new BufferedImageLoader(gameValues.GAME_BACKGROUND_FILE).getImage();
                 this.roomIcon = icons.shrink(icons.grabImage(1, 1, 1, 1, gameValues.ICON_SPRITE_SHEET_BOX_SIZE));
@@ -77,7 +82,7 @@ public abstract class Room extends Traversable{
                 this.roomIcon = icons.shrink(icons.grabImage(0, 1, 1, 1, gameValues.ICON_SPRITE_SHEET_BOX_SIZE));
                 break;
             default:
-            this.background = new BufferedImageLoader(gameValues.GAME_BACKGROUND_FILE).getImage();
+                this.background = new BufferedImageLoader(gameValues.GAME_BACKGROUND_FILE).getImage();
                 this.roomIcon = icons.shrink(icons.grabImage(1, 1, 1, 1, gameValues.ICON_SPRITE_SHEET_BOX_SIZE));
                 break;
         }
@@ -106,8 +111,12 @@ public abstract class Room extends Traversable{
     }
 
     public void render(Graphics g) {
-        g.drawImage(background, (int)gameValues.fieldXStart, (int)gameValues.fieldYStart, (int)gameValues.fieldXSize, (int)gameValues.fieldYSize, null);
+        drawBackground(g);
         renderElements(g);
+    }
+
+    protected void drawBackground(Graphics g) {
+        g.drawImage(background, (int)gameValues.fieldXStart, (int)gameValues.fieldYStart, (int)gameValues.fieldXSize, (int)gameValues.fieldYSize, null);
     }
 
     private void renderElements(Graphics g) {

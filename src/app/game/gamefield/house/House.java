@@ -36,7 +36,7 @@ public class House {
 
         addGuaranteedFloors(roomCounts);
 
-        roomCounts.put(Room.Rooms.Regular, 15);
+        roomCounts.put(Room.Rooms.Regular, 8);
         
         this.floors[0] = new Floor(this.gameValues, this.player, Floor.FloorName.Basement1, roomCounts);
     }
@@ -105,7 +105,7 @@ public class House {
     }
 
     private void addGuaranteedFloors(Map<Room.Rooms, Integer> roomCounts) {
-        roomCounts.put(Room.Rooms.Spawn, 1);
+        roomCounts.put(Room.Rooms.Spawn, 0);
         roomCounts.put(Room.Rooms.Shop, 1);
         roomCounts.put(Room.Rooms.Treasure, 1); //Should require key everywhere except Basement1
         roomCounts.put(Room.Rooms.Boss, 1);

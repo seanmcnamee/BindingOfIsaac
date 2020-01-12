@@ -165,8 +165,10 @@ public class BST {
             //For the final iteration, make this new node the child node
             //System.out.println("Out of loop. Setting child's right: " + followRight);
             if (followRight) {
+                //System.out.println("\tCurrent: " + current + ", newNode: " + newNode);
                 current.setRightChild(newNode);
             }   else {
+                //System.out.println("\tCurrent: " + current + ", newNode: " + newNode);
                 current.setLeftChild(newNode);
             }
         }

@@ -49,31 +49,35 @@ public class MiniMap extends DrawingCalculator{
         Color borderOfRoom = Color.WHITE;//new Color(25, 25, 25);
 
         for (Room room : this.floor.getRooms()) {
-            int xPos = findPixelLocation(room.getLocation().getX(), singleRoomSize.getX(), miniMapStart.getX(), blockSize.getX());
-            int yPos = findPixelLocation(room.getLocation().getY(), singleRoomSize.getY(), miniMapStart.getY(), blockSize.getY());
-            int xSize = findPixelSize(singleRoomSize.getX(), blockSize.getX());
-            int ySize = findPixelSize(singleRoomSize.getY(), blockSize.getY());
+            if (room!=null) {
+                int xPos = findPixelLocation(room.getLocation().getX(), singleRoomSize.getX(), miniMapStart.getX(), blockSize.getX());
+                int yPos = findPixelLocation(room.getLocation().getY(), singleRoomSize.getY(), miniMapStart.getY(), blockSize.getY());
+                int xSize = findPixelSize(singleRoomSize.getX(), blockSize.getX());
+                int ySize = findPixelSize(singleRoomSize.getY(), blockSize.getY());
 
-            g.setColor(emptyRoom);
-            g.fillRect(xPos, yPos, xSize, ySize);
-            g.setColor(borderOfRoom);
-            g.drawRect(xPos, yPos, xSize, ySize);
+                g.setColor(emptyRoom);
+                g.fillRect(xPos, yPos, xSize, ySize);
+                g.setColor(borderOfRoom);
+                g.drawRect(xPos, yPos, xSize, ySize);
+            }
         }
 
         for (Room room : this.floor.getRooms()) {
-            if (room.getClass()!=RegularRoom.class) {
+            if (room!=null) {
+                if (room.getClass()!=RegularRoom.class) {
 
-                Point2D.Double iconSize = new Point2D.Double(generalIconSize.getX()*(room.getIcon().getWidth()/(double)gameValues.ICON_SPRITE_SHEET_BOX_SIZE),
-                                                            generalIconSize.getY()*(room.getIcon().getHeight()/(double)gameValues.ICON_SPRITE_SHEET_BOX_SIZE));
+                    Point2D.Double iconSize = new Point2D.Double(generalIconSize.getX()*(room.getIcon().getWidth()/(double)gameValues.ICON_SPRITE_SHEET_BOX_SIZE),
+                                                                generalIconSize.getY()*(room.getIcon().getHeight()/(double)gameValues.ICON_SPRITE_SHEET_BOX_SIZE));
 
-                int xPos = findPixelLocation(room.getLocation().getX(), iconSize.getX(), miniMapStart.getX(), blockSize.getX());
-                int yPos = findPixelLocation(room.getLocation().getY(), iconSize.getY(), miniMapStart.getY(), blockSize.getY());
-                
-                
-                int xSize = findPixelSize(iconSize.getX(), blockSize.getX());
-                int ySize = findPixelSize(iconSize.getY(), blockSize.getY());
-                g.drawImage(room.getIcon(), xPos, yPos, xSize, ySize, null); 
-            }   
+                    int xPos = findPixelLocation(room.getLocation().getX(), iconSize.getX(), miniMapStart.getX(), blockSize.getX());
+                    int yPos = findPixelLocation(room.getLocation().getY(), iconSize.getY(), miniMapStart.getY(), blockSize.getY());
+                    
+                    
+                    int xSize = findPixelSize(iconSize.getX(), blockSize.getX());
+                    int ySize = findPixelSize(iconSize.getY(), blockSize.getY());
+                    g.drawImage(room.getIcon(), xPos, yPos, xSize, ySize, null); 
+                }   
+            }
         }
         
     }
