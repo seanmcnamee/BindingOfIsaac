@@ -18,8 +18,8 @@ import java.awt.Point;
  */
 public class ShopRoom extends Room {
     
-    public ShopRoom(GameValues gameValues, Drawable player, Point location, Traversable above, Traversable below, Traversable left, Traversable right) {
-        super(gameValues, player, Room.Rooms.Shop, location, above, above, above, above);
+    public ShopRoom(GameValues gameValues, Drawable player, Point location) {
+        super(gameValues, player, Room.Rooms.Shop, location);
     }
 
     @Override

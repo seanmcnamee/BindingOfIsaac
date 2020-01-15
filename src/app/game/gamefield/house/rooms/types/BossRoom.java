@@ -15,8 +15,8 @@ import java.awt.Point;
  */
 public class BossRoom extends Room {
     
-    public BossRoom(GameValues gameValues, Drawable player, Point location, Traversable above, Traversable below, Traversable left, Traversable right) {
-        super(gameValues, player, Room.Rooms.Boss, location, above, above, above, above);
+    public BossRoom(GameValues gameValues, Drawable player, Point location) {
+        super(gameValues, player, Room.Rooms.Boss, location);
     }
 
     @Override

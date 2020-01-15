@@ -17,8 +17,8 @@ import java.awt.Point;
  */
 public class TreasureRoom extends Room {
     
-    public TreasureRoom(GameValues gameValues, Drawable player, Point location, Traversable above, Traversable below, Traversable left, Traversable right) {
-        super(gameValues, player, Room.Rooms.Treasure, location, above, above, above, above);
+    public TreasureRoom(GameValues gameValues, Drawable player, Point location) {
+        super(gameValues, player, Room.Rooms.Treasure, location);
     }
 
     @Override

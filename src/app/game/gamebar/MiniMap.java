@@ -17,7 +17,7 @@ import java.awt.Point;
 public class MiniMap extends DrawingCalculator{
     private Floor floor;
     private Point2D.Double adjustedMapSize;
-    private Point2D.Double singleRoomSize = new Point2D.Double(1.0, 1.0);;
+    private Point2D.Double singleRoomSize = new Point2D.Double(1.0, 1.0);
     private final Point2D.Double generalIconSize = new Point2D.Double(1, 2.5);
     private final double outsideEdge = .5;
     
@@ -33,7 +33,7 @@ public class MiniMap extends DrawingCalculator{
     private void init(Floor floor) {
         this.floor = floor;
         
-        adjustedMapSize = new Point2D.Double(floor.getSizeOfMap().getX()+outsideEdge*3, floor.getSizeOfMap().getY()+outsideEdge*3);
+        adjustedMapSize = new Point2D.Double(gameValues.MAPSIZE.getX()+outsideEdge*3, gameValues.MAPSIZE.getY()+outsideEdge*3);
     }
 
     public void render(Graphics g) {
@@ -43,13 +43,13 @@ public class MiniMap extends DrawingCalculator{
         Point2D.Double miniMapPixelSize = new Point2D.Double(miniMapXSize, miniMapYSize);
         Point2D.Double blockSize = findSingleBlockSize(miniMapPixelSize, adjustedMapSize);
 
-        Point2D.Double miniMapStart = new Point2D.Double(gameValues.barXStart+blockSize.getX()*2*outsideEdge, gameValues.barYStart+blockSize.getY()*2*outsideEdge);
+        Point2D.Double miniMapStart = new Point2D.Double(gameValues.barXStart+blockSize.getX()*4*outsideEdge, gameValues.barYStart+blockSize.getY()*4*outsideEdge);
 
         Color emptyRoom = new Color(100, 100, 100);
         Color borderOfRoom = Color.WHITE;//new Color(25, 25, 25);
 
         for (Room room : this.floor.getRooms()) {
-            if (room!=null) {
+            //if (room!=null) {
                 int xPos = findPixelLocation(room.getLocation().getX(), singleRoomSize.getX(), miniMapStart.getX(), blockSize.getX());
                 int yPos = findPixelLocation(room.getLocation().getY(), singleRoomSize.getY(), miniMapStart.getY(), blockSize.getY());
                 int xSize = findPixelSize(singleRoomSize.getX(), blockSize.getX());
@@ -59,7 +59,7 @@ public class MiniMap extends DrawingCalculator{
                 g.fillRect(xPos, yPos, xSize, ySize);
                 g.setColor(borderOfRoom);
                 g.drawRect(xPos, yPos, xSize, ySize);
-            }
+            //}
         }
 
         for (Room room : this.floor.getRooms()) {

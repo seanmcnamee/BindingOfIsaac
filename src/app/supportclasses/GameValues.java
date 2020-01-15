@@ -1,6 +1,8 @@
 package app.supportclasses;
 
 import app.game.gamefield.elements.mobiles.players.Player;
+import java.awt.Point;
+
 import java.awt.event.KeyEvent;
 
 /**
@@ -59,6 +61,7 @@ public class GameValues {
     public final int WALL_SPRITESHEET_SIZE = 700;
     public final String DEGRADABLES_SPRITE_SHEET = "res//DegradablesSpriteSheet.png";
     public final int DEGRADABLES_SPRITE_SHEET_BOX_SIZE = 41;
+    public final Point MAPSIZE = new Point(7, 5);
 
     public final int FIELD_X_SPACES = 13;
     public final int FIELD_Y_SPACES = 7;

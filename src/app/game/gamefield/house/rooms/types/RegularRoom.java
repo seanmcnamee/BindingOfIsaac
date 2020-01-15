@@ -16,7 +16,7 @@ import java.awt.Point;
 public class RegularRoom extends Room {
     
     public RegularRoom(GameValues gameValues, Drawable player, Point location) {
-        super(gameValues, player, Room.Rooms.Treasure, location);
+        super(gameValues, player, Room.Rooms.Regular, location);
     }
 
     @Override

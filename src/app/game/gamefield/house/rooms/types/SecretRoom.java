@@ -17,8 +17,8 @@ import java.awt.Point;
  */
 public class SecretRoom extends Room {
     
-    public SecretRoom(GameValues gameValues, Drawable player, Point location, Traversable above, Traversable below, Traversable left, Traversable right) {
-        super(gameValues, player, Room.Rooms.Secret, location, above, above, above, above);
+    public SecretRoom(GameValues gameValues, Drawable player, Point location) {
+        super(gameValues, player, Room.Rooms.Secret, location);
     }
 
     @Override
