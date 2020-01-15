@@ -4,6 +4,7 @@ import app.game.gamefield.elements.rendering.DrawingCalculator;
 import app.game.gamefield.house.Floor;
 import app.game.gamefield.house.rooms.Room;
 import app.game.gamefield.house.rooms.types.RegularRoom;
+import app.game.gamefield.house.rooms.types.SpawnRoom;
 import app.supportclasses.GameValues;
 
 import java.awt.Graphics;
@@ -43,40 +44,49 @@ public class MiniMap extends DrawingCalculator{
         Point2D.Double miniMapPixelSize = new Point2D.Double(miniMapXSize, miniMapYSize);
         Point2D.Double blockSize = findSingleBlockSize(miniMapPixelSize, adjustedMapSize);
 
-        Point2D.Double miniMapStart = new Point2D.Double(gameValues.barXStart+blockSize.getX()*4*outsideEdge, gameValues.barYStart+blockSize.getY()*4*outsideEdge);
+        Point2D.Double miniMapStart = new Point2D.Double(gameValues.barXStart+blockSize.getX()*2*outsideEdge, gameValues.barYStart+blockSize.getY()*2*outsideEdge);
 
-        Color emptyRoom = new Color(100, 100, 100);
-        Color borderOfRoom = Color.WHITE;//new Color(25, 25, 25);
+        Color currentRoom = new Color(150, 150, 150);
+        Color exploredRoom = new Color(100, 100, 100);
+        Color seenRoom = new Color(50, 50, 50);
+        Color borderOfRoom = Color.BLACK;
 
         for (Room room : this.floor.getRooms()) {
-            //if (room!=null) {
+            if (room.isSeen() || room.isExplored()) {
                 int xPos = findPixelLocation(room.getLocation().getX(), singleRoomSize.getX(), miniMapStart.getX(), blockSize.getX());
                 int yPos = findPixelLocation(room.getLocation().getY(), singleRoomSize.getY(), miniMapStart.getY(), blockSize.getY());
                 int xSize = findPixelSize(singleRoomSize.getX(), blockSize.getX());
                 int ySize = findPixelSize(singleRoomSize.getY(), blockSize.getY());
 
-                g.setColor(emptyRoom);
+                if (room.isSeen()) {
+                    g.setColor(seenRoom);
+                }   else {
+                    if (floor.getCurrentRoom() == room) {
+                        g.setColor(currentRoom);
+                    }   else {
+                        g.setColor(exploredRoom);
+                    }
+                }
+                
                 g.fillRect(xPos, yPos, xSize, ySize);
                 g.setColor(borderOfRoom);
                 g.drawRect(xPos, yPos, xSize, ySize);
-            //}
+            }
         }
 
+        
         for (Room room : this.floor.getRooms()) {
-            if (room!=null) {
-                if (room.getClass()!=RegularRoom.class) {
+            if ((room.isSeen() || room.isExplored()) && (room.getClass()!=RegularRoom.class && room.getClass()!=SpawnRoom.class)) {
+                Point2D.Double iconSize = new Point2D.Double(generalIconSize.getX()*(room.getIcon().getWidth()/(double)gameValues.ICON_SPRITE_SHEET_BOX_SIZE),
+                                                            generalIconSize.getY()*(room.getIcon().getHeight()/(double)gameValues.ICON_SPRITE_SHEET_BOX_SIZE));
 
-                    Point2D.Double iconSize = new Point2D.Double(generalIconSize.getX()*(room.getIcon().getWidth()/(double)gameValues.ICON_SPRITE_SHEET_BOX_SIZE),
-                                                                generalIconSize.getY()*(room.getIcon().getHeight()/(double)gameValues.ICON_SPRITE_SHEET_BOX_SIZE));
-
-                    int xPos = findPixelLocation(room.getLocation().getX(), iconSize.getX(), miniMapStart.getX(), blockSize.getX());
-                    int yPos = findPixelLocation(room.getLocation().getY(), iconSize.getY(), miniMapStart.getY(), blockSize.getY());
-                    
-                    
-                    int xSize = findPixelSize(iconSize.getX(), blockSize.getX());
-                    int ySize = findPixelSize(iconSize.getY(), blockSize.getY());
-                    g.drawImage(room.getIcon(), xPos, yPos, xSize, ySize, null); 
-                }   
+                int xPos = findPixelLocation(room.getLocation().getX(), iconSize.getX(), miniMapStart.getX(), blockSize.getX());
+                int yPos = findPixelLocation(room.getLocation().getY(), iconSize.getY(), miniMapStart.getY(), blockSize.getY());
+                
+                
+                int xSize = findPixelSize(iconSize.getX(), blockSize.getX());
+                int ySize = findPixelSize(iconSize.getY(), blockSize.getY());
+                g.drawImage(room.getIcon(), xPos, yPos, xSize, ySize, null);  
             }
         }
         

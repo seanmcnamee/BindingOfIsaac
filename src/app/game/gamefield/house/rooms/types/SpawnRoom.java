@@ -39,7 +39,15 @@ public class SpawnRoom extends Room {
     protected void drawBackground(Graphics g) {
         super.drawBackground(g);
         if (directionsNeeded) {
-            g.drawImage(this.directions, (int)(gameValues.fieldXStart+(gameValues.fieldXSize*(1-gameValues.DIRECTIONS_WIDTH)/2)), (int)(gameValues.fieldYStart+(gameValues.fieldYSize*(1-gameValues.DIRECTIONS_HEIGHT)/2)), (int)(gameValues.fieldXSize*gameValues.DIRECTIONS_WIDTH), (int)(gameValues.fieldYSize*gameValues.DIRECTIONS_HEIGHT), null);
+            int xSize = (int)(gameValues.fieldXSize*gameValues.DIRECTIONS_WIDTH);
+            int ySize = (int)(gameValues.fieldYSize*gameValues.DIRECTIONS_HEIGHT);
+            
+            double xOffsetPercent = ( gameValues.DIRECTIONS_X_PERCENT_LOCATION-((gameValues.DIRECTIONS_WIDTH)/2.0) );
+            double yOffsetPercent = ( gameValues.DIRECTIONS_Y_PERCENT_LOCATION-((gameValues.DIRECTIONS_HEIGHT)/2.0) );
+            int xPos = (int)(gameValues.fieldXStart + (gameValues.fieldXSize*xOffsetPercent));
+            int yPos = (int)(gameValues.fieldYStart + (gameValues.fieldYSize*yOffsetPercent));
+
+            g.drawImage(this.directions, xPos, yPos, xSize, ySize, null);
         }
    }
 }

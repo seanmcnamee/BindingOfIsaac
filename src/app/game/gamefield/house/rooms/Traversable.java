@@ -7,32 +7,72 @@ import java.awt.Point;
 /**
  * Traversable
  */
-public class Traversable {
+public abstract class Traversable {
     protected BufferedImage roomIcon;
-    private boolean explored;
+
+    public enum Status {
+        UNEXPLORED, SEEN, EXPLORED;
+    }
+    private Status roomStatus;
     private Traversable above, below, left, right;
     private boolean surroundingLocked = false;
     private Point location;
 
     public Traversable(Point location) {
         this.location = location;
-        this.explored = false;
+        this.roomStatus = Status.UNEXPLORED;
         this.surroundingLocked = false;
     }
 
+    /*
     public Traversable(Point location, Traversable above, Traversable below, Traversable left, Traversable right) {
         this.location = location;
-        this.explored = false;
+        this.roomStatus = false;
         setSurroundingAndLock(above, below, left, right);
         this.surroundingLocked = true;
+    }*/
+
+    protected abstract void createDoors();
+
+    public boolean isSeen() {
+        return this.roomStatus == Status.SEEN;
     }
 
     public boolean isExplored() {
-        return explored;
+        return this.roomStatus == Status.EXPLORED;
     }
 
     public void setExplored() {
-        explored = true;
+        this.roomStatus = Status.EXPLORED;
+        System.out.println("Setting surrounding rooms as seen");
+        setSurroundingSeen();
+    }
+
+    private void setSurroundingSeen() {
+        if (above!=null) {
+            System.out.println("\tAbove");
+            above.setSeen();
+        }
+        if (right!=null) {
+            System.out.println("\tRight");
+            right.setSeen();
+        }
+        if (below!=null) {
+            System.out.println("\tBelow");
+            below.setSeen();
+        }
+        if (left!=null) {
+            System.out.println("\tLeft");
+            left.setSeen();
+        }
+    }
+
+    private void setSeen() {
+        System.out.println("Setting as seen");
+        if (this.roomStatus==Status.UNEXPLORED) {
+            System.out.println("No, Really!");
+            this.roomStatus = Status.SEEN;
+        }
     }
 
     public Point getLocation() {
@@ -82,6 +122,7 @@ public class Traversable {
             this.left = left;
             this.right = right;
             surroundingLocked = true;
+            createDoors();
         }   else {
             try {
                 throw new InvalidClassException("Can't change surrounding rooms once they are locked!");

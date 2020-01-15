@@ -55,12 +55,16 @@ public class GameValues {
     //GameField
     public final String GAME_BACKGROUND_FILE = "res//background.png";
     public final String STARTING_DIRECTIONS_FILE = "res//directions.png";
-    public final double DIRECTIONS_WIDTH = .7;
-    public final double DIRECTIONS_HEIGHT = .4;
+    public final double DIRECTIONS_WIDTH = .8;
+    public final double DIRECTIONS_HEIGHT = .35;
+    public final double DIRECTIONS_X_PERCENT_LOCATION = .5;
+    public final double DIRECTIONS_Y_PERCENT_LOCATION = .35;
     public final String GAME_WALL_SPRITESHEET = "res//Walls.png";
     public final int WALL_SPRITESHEET_SIZE = 700;
     public final String DEGRADABLES_SPRITE_SHEET = "res//DegradablesSpriteSheet.png";
     public final int DEGRADABLES_SPRITE_SHEET_BOX_SIZE = 41;
+    public final String DOOR_SPRITE_SHEET = "res//doorSpriteSheet.png";
+    public final int DORR_SPRITE_SHEET_BOX_SIZE = 183;
     public final Point MAPSIZE = new Point(7, 5);
 
     public final int FIELD_X_SPACES = 13;

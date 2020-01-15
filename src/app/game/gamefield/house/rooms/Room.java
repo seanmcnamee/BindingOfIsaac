@@ -34,22 +34,23 @@ public abstract class Room extends Traversable{
         initializeRoom(gameValues, player, roomType);
     }
     
+    /*
     public Room(GameValues gameValues, Drawable player, Rooms roomType, Point location, Traversable above, Traversable below, Traversable left, Traversable right) {
         super(location, above, below, left, right);
         initializeRoom(gameValues, player, roomType);
-    }
+    }*/
 
     private void initializeRoom(GameValues gameValues, Drawable player, Rooms roomType) {
         this.gameValues = gameValues;
 
         this.elements = new BST();
-        this.elements.add(player);
+        //this.elements.add(player);
 
         this.movables = new ArrayList<Mobile>();
-        this.movables.add((Mobile)player);
+        //this.movables.add((Mobile)player);
 
         setPictures(roomType);
-        //createWalls();
+        createWalls();
         createMobiles();
         createImmovables();
     }
@@ -88,13 +89,26 @@ public abstract class Room extends Traversable{
         }
     }
 
+    /**
+     * Called once the surrounding rooms are set
+     */
+    protected void createDoors() {
+        if (getAbove()!=null) {
+            //elements.add(new Door())
+        }
+    }
+
     private void createWalls() {
+        System.out.println("Creating Walls for " + this.getClass());
         Drawable wallTop, wallBottom, wallLeft, wallRight;
         wallTop = new Wall(gameValues, Wall.WallType.Top);
         wallBottom = new Wall(gameValues, Wall.WallType.Bottom);
         wallLeft = new Wall(gameValues, Wall.WallType.Left);
         wallRight = new Wall(gameValues, Wall.WallType.Right);
+        System.out.println("Elements: " + wallTop + "- " + "- " + wallRight + "- " + wallBottom + "- " + wallLeft);
+        System.out.println("Elements Heap: " + elements);
 
+        System.out.println("Adding elements to room");
         this.elements.add(wallTop);
         this.elements.add(wallBottom);
         this.elements.add(wallLeft);
@@ -173,6 +187,16 @@ public abstract class Room extends Traversable{
             movables.remove(element);
         }
         elements.bubbleDown(element);
+    }
+
+    public void addPlayer(Drawable player) {
+        this.elements.add(player);
+        this.movables.add((Mobile)player);
+    }
+
+    public void removePlayer(Drawable player) {
+        destroyElement(player);
+        this.movables.remove((Mobile)player);
     }
 
 }
