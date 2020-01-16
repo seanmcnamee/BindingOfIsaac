@@ -54,6 +54,10 @@ public class Drawable extends Node {
         double bottomMost = getHitBox().getBottomOfHitBox(testingLocation.getY(), sizeInBlocks.getY());
         */
 
+        // System.out.println(".Contains for " + this + " vs " + other);
+        // System.out.println(other.location);
+        // System.out.println(other.sizeInBlocks);
+
         double otherLeftMost = other.getHitBox().getLeftOfHitBox(other.location.getX(), other.sizeInBlocks.getX());
         double otherTopMost = other.getHitBox().getTopOfHitBox(other.location.getY(), other.sizeInBlocks.getY());
         double otherRightMost = other.getHitBox().getRightOfHitBox(other.location.getX(), other.sizeInBlocks.getX());

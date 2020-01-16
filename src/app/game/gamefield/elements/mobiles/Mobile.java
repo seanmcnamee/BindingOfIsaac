@@ -2,6 +2,7 @@ package app.game.gamefield.elements.mobiles;
 
 import app.game.gamefield.elements.Destructible;
 import app.game.gamefield.elements.rendering.Drawable;
+import app.game.gamefield.house.Floor;
 import app.game.gamefield.house.rooms.Room;
 import app.supportclasses.GameValues;
 
@@ -75,7 +76,7 @@ public abstract class Mobile extends Destructible{
         //System.out.println("Velocity... x: " + velocityPercent.getX() + ", y: " + velocityPercent.getY());
     }
 
-    protected void testCollisionAndMove(Room room) {
+    protected void testCollisionAndMove(Floor floor) {
         Point2D.Double tempLocation = new Point2D.Double(location.getX(), location.getY());
 
         double maxSpeedPerTick = maxSpeed/60.0;
@@ -84,9 +85,9 @@ public abstract class Mobile extends Destructible{
         tempLocation.y += velocityPercent.y*maxSpeedPerTick;
 
         //TODO test recursive version
-        Drawable collidingElement = room.recursiveCollisionCheck(this, tempLocation);
+        Drawable collidingElement = floor.getCurrentRoom().recursiveCollisionCheck(this, tempLocation);
         if (collidingElement!=null) {
-            location = onCollision(tempLocation, collidingElement, room);
+            location = onCollision(tempLocation, collidingElement, floor);
         }   else {
             location = tempLocation;
         }
@@ -94,11 +95,11 @@ public abstract class Mobile extends Destructible{
 
     //TODO possibly add mass for more realizstic collisions
     //TODO add collision recoil (bounceback) if mass is added
-    protected abstract Point2D.Double onCollision(Point2D.Double newLocation, Drawable collidingElement, Room r);
+    protected abstract Point2D.Double onCollision(Point2D.Double newLocation, Drawable collidingElement, Floor floor);
 
     public double getMaxSpeed() {
         return maxSpeed;
     }
 
-    public abstract void tick(Room r);
+    public abstract void tick(Floor f);
 }

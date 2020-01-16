@@ -25,7 +25,7 @@ public class GameField {
     }
 
     public void tick() {
-        house.getCurrentFloor().getCurrentRoom().tick(); 
+        house.getCurrentFloor().tick(); 
         
         //TODO add a check in here so that the next floor can be loaded
         //if *floorcomplete* then house.updateCurrentFloor()

@@ -26,7 +26,7 @@ public class Wall extends Drawable {
 
     private void loadWallPictureAndSize(WallType wall) {
         SpriteSheet ss = new SpriteSheet(gameValues.GAME_WALL_SPRITESHEET);
-        drawPriority = 10000;
+        drawPriority = Integer.MAX_VALUE;//10000;
         final double longX = gameValues.FIELD_X_SPACES+2*gameValues.WALL_THICKNESS;
         final double longY = gameValues.FIELD_Y_SPACES+3*gameValues.WALL_THICKNESS;
 

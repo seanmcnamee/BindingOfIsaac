@@ -4,6 +4,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Map;
 
+import app.game.gamefield.elements.mobiles.Mobile;
 import app.game.gamefield.elements.mobiles.players.Player;
 import app.game.gamefield.house.floorgenerator.Level;
 import app.game.gamefield.house.rooms.Room;
@@ -25,6 +26,7 @@ public class Floor {
 
     private GameValues gameValues;
     private Player player;
+    private boolean changingRoom;
 
     public enum FloorName {
         Basement1, Basement2, Caves1, Caves2, TheDepths1, TheDepths2, TheWomb;
@@ -35,6 +37,7 @@ public class Floor {
         this.player = player;
         this.floorName = floorName;
         rooms = generateFloorMap(roomCounts);
+        this.changingRoom = false;
 
         System.out.println();
         System.out.println("               Printing Overall Rooms");
@@ -124,13 +127,15 @@ public class Floor {
         }
     }
 
-    private void setCurrentRoom(Room room) {
+    public void setCurrentRoom(Room room) {
+        this.changingRoom = true;
         if (currentRoom!=null) {
             removePlayerFrom(this.currentRoom);
         }
         this.currentRoom = room;
         room.setExplored();
         addPlayerTo(room);
+        this.changingRoom = false;
     }
 
     private void addPlayerTo(Room room) {
@@ -147,5 +152,15 @@ public class Floor {
 
     public Room[] getRooms() {
         return this.rooms;
+    }
+
+    public void tick() {
+        ArrayList<Mobile> mobiles = currentRoom.getMovables();
+        for (int m = 0; m < mobiles.size(); m++) {
+            if (this.changingRoom) {
+                return;
+            }
+            mobiles.get(m).tick(this);
+        }
     }
 }

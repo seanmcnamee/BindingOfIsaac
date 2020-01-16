@@ -36,7 +36,7 @@ public class House {
 
         addGuaranteedFloors(roomCounts);
 
-        roomCounts.put(Room.Rooms.Regular, 8);
+        roomCounts.put(Room.Rooms.Regular, 5);
         
         this.floors[0] = new Floor(this.gameValues, this.player, Floor.FloorName.Basement1, roomCounts);
     }

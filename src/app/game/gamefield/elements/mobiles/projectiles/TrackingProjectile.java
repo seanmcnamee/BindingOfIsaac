@@ -2,7 +2,7 @@ package app.game.gamefield.elements.mobiles.projectiles;
 
 import java.awt.geom.Point2D;
 
-import app.game.gamefield.house.rooms.Room;
+import app.game.gamefield.house.Floor;
 import app.supportclasses.GameValues;
 
 /**
@@ -15,9 +15,9 @@ public class TrackingProjectile extends Projectile {
     }
 
     @Override
-    public void tick(Room room) {
+    public void tick(Floor floor) {
         //Figure out which way to accelerate to get towards the player and
         //accelerate(xAcc, yAcc);
-        super.tick(room);
+        super.tick(floor);
     }
 }

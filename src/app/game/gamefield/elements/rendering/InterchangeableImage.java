@@ -31,7 +31,7 @@ public class InterchangeableImage {
         if (index < this.images.length && index >= 0) {
             return true;
         }   else {
-            throw new IndexOutOfBoundsException("An image won't exist for " + index +". The max is " + this.images.length);
+            throw new IndexOutOfBoundsException("An image won't exist for " + index +". The length is " + this.images.length);
         }
     }
 

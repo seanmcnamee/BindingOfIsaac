@@ -1,12 +1,14 @@
 package app.game.gamefield.elements.mobiles.players;
 
 import app.game.gamefield.elements.immovables.Degradable;
+import app.game.gamefield.elements.immovables.doors.Door;
 import app.game.gamefield.elements.immovables.walls.Wall;
 import app.game.gamefield.elements.mobiles.Mobile;
 import app.game.gamefield.elements.rendering.Drawable;
 import app.game.gamefield.elements.rendering.HitBox;
 import app.game.gamefield.elements.rendering.InterchangeableImage;
 import app.game.gamefield.elements.rendering.LoopingPictures;
+import app.game.gamefield.house.Floor;
 import app.game.gamefield.house.rooms.Room;
 import app.supportclasses.GameValues;
 import app.supportclasses.SpriteSheet;
@@ -60,46 +62,70 @@ public class Player extends Mobile {
     }
 
     @Override
-    public void tick(Room r) {
+    public void tick(Floor f) {
         accelerate(moveUp, moveDown, moveLeft, moveRight);
         updateVelocity();
         // head.setCurrentImageIndex(6);
         setImagesBasedOnVelocity();
         updateLoopingPictures();
-        testCollisionAndMove(r);
+        testCollisionAndMove(f);
         // System.out.println("Position: " + location.getX() + ", " + location.getY());
     }
 
     @Override
-    protected Point2D.Double onCollision(Double newLocation, Drawable collidingElement, Room room) {
-        
+    protected Point2D.Double onCollision(Double newLocation, Drawable collidingElement, Floor floor) {
+
         if (collidingElement.getClass() == Degradable.class || collidingElement.getClass() == Wall.class) {
-            return regularCollision(newLocation, collidingElement, room);
+            return regularCollision(newLocation, collidingElement, floor.getCurrentRoom());
         }
-        
-        //Default is stop motion and remain still.
+
+        if (collidingElement.getClass() == Door.class) {
+            return doorCollision(newLocation, (Door) collidingElement, floor);
+        }
+
+        // Default is stop motion and remain still.
         this.velocityPercent.x = this.velocityPercent.y = 0;
         return this.location;
-        //this.velocityPercent
+        // this.velocityPercent
     }
 
     private Point2D.Double regularCollision(Double newLocation, Drawable collidingElement, Room room) {
         Point2D.Double onlyY = new Point2D.Double(newLocation.getX(), location.getY());
         Drawable onlyYCollision = room.recursiveCollisionCheck(this, onlyY);
-        if (onlyYCollision==null) {
+        if (onlyYCollision == null) {
             this.velocityPercent.y = 0;
             return onlyY;
         }
 
         Point2D.Double onlyX = new Point2D.Double(location.getX(), newLocation.getY());
         Drawable onlyXCollision = room.recursiveCollisionCheck(this, onlyX);
-        if (onlyXCollision==null) {
+        if (onlyXCollision == null) {
             this.velocityPercent.x = 0;
             return onlyX;
         }
 
         this.velocityPercent.x = this.velocityPercent.y = 0;
         return this.location;
+    }
+
+    private Point2D.Double doorCollision(Double newLocation, Door door, Floor floor) {
+        System.out.println("DOOR COLLISION!!!");
+        if (door.isOpen()) {
+            floor.setCurrentRoom(door.getRoomFromDoorPosition(floor.getCurrentRoom()));
+
+            System.out.println("Door collision location: " + this.location);
+            double newY = ((gameValues.FIELD_Y_SPACES-getSizeInBlocks().getY()-3*gameValues.DOOR_OFFSET)-(this.location.getY()+getSizeInBlocks().getY())); //-1.5
+            double newX = ((gameValues.FIELD_X_SPACES-2*gameValues.DOOR_OFFSET)-(this.location.getX()+getSizeInBlocks().getX()));
+            if (door.isTop()||door.isBelow()) {
+                System.out.println("\t Going to " + (new Double(newLocation.getX(), newY)));
+                return new Double(newLocation.getX(), newY);
+            }   else {
+                System.out.println("\t Going to " + (new Double(newX, newLocation.getY())));
+                return new Double(newX, newLocation.getY());
+            }
+        }
+
+        return regularCollision(newLocation, door, floor.getCurrentRoom());
     }
 
     @Override
@@ -125,7 +151,7 @@ public class Player extends Mobile {
     protected Point2D.Double getHitBoxLocation() {
         if (isPrintingHead) {
             return head.getHitBox().getCenterOfHitBox(location, sizeInBlocks);
-        }   else {
+        } else {
             return legs.getHitBox().getCenterOfHitBox(location, sizeInBlocks);
         }
     }
@@ -134,7 +160,7 @@ public class Player extends Mobile {
     protected Point2D.Double getHitBoxSizeInBlocks() {
         if (isPrintingHead) {
             return head.getHitBox().getHitBoxSize(sizeInBlocks);
-        }   else {
+        } else {
             return legs.getHitBox().getHitBoxSize(sizeInBlocks);
         }
     }
@@ -143,7 +169,7 @@ public class Player extends Mobile {
     public BufferedImage getImage() {
         if (isPrintingHead) {
             return head.getCurrentImage();
-        }   else {
+        } else {
             return legs.getCurrentImage();
         }
     }
@@ -151,26 +177,26 @@ public class Player extends Mobile {
     private void setImagesBasedOnVelocity() {
         double xVel = velocityPercent.getX();
         double yVel = velocityPercent.getY();
-            double max = Math.max(Math.abs(xVel), Math.abs(yVel));
-            if (Math.abs(xVel)==max) {
-                if (xVel > 0) {
-                    head.setCurrentImageIndex(2);
-                    legs.setCurrentImageIndex(10);
-                }   else if(xVel < 0) {
-                    head.setCurrentImageIndex(6);
-                    legs.setCurrentImageIndex(20);
-                }   else {
-                    legs.setCurrentImageIndex(30);
-                    head.setCurrentImageIndex(0);
-                }
-            }   else {
-                legs.setCurrentImageIndex(2); //TODO maybe start on a varying part of the cycle for up/down
-                if (yVel >= 0) {
-                    head.setCurrentImageIndex(0);
-                }   else if(yVel < 0) {
-                    head.setCurrentImageIndex(4);
-                }
+        double max = Math.max(Math.abs(xVel), Math.abs(yVel));
+        if (Math.abs(xVel) == max) {
+            if (xVel > 0) {
+                head.setCurrentImageIndex(2);
+                legs.setCurrentImageIndex(10);
+            } else if (xVel < 0) {
+                head.setCurrentImageIndex(6);
+                legs.setCurrentImageIndex(20);
+            } else {
+                legs.setCurrentImageIndex(30);
+                head.setCurrentImageIndex(0);
             }
+        } else {
+            legs.setCurrentImageIndex(2); // TODO maybe start on a varying part of the cycle for up/down
+            if (yVel >= 0) {
+                head.setCurrentImageIndex(0);
+            } else if (yVel < 0) {
+                head.setCurrentImageIndex(4);
+            }
+        }
     }
 
     private void updateLoopingPictures() {
@@ -213,15 +239,13 @@ public class Player extends Mobile {
         final int rightLegs = 10;
         final int leftLegs = 10;
         final int totalLegs = frontBackLegs + rightLegs + leftLegs;
-        Point[] ranges = {
-            new Point(0, frontBackLegs-1), 
-            new Point(frontBackLegs, rightLegs+frontBackLegs-1),
-            new Point(frontBackLegs+rightLegs, frontBackLegs+rightLegs+leftLegs-1),
-            new Point(totalLegs, totalLegs)
-        };
+        Point[] ranges = { new Point(0, frontBackLegs - 1), new Point(frontBackLegs, rightLegs + frontBackLegs - 1),
+                new Point(frontBackLegs + rightLegs, frontBackLegs + rightLegs + leftLegs - 1),
+                new Point(totalLegs, totalLegs) };
 
-        HitBox legHitBox = new HitBox(gameValues.LEGS_X_SIZE_PERCENT, gameValues.LEGS_Y_SIZE_PERCENT, gameValues.LEGS_X_OFFSET_PERCENT, gameValues.LEGS_Y_OFFSET_PERCENT);
-        this.legs = new LoopingPictures(totalLegs+1, legHitBox, gameValues.TICKS_PER_PICTURE_STEP, ranges);
+        HitBox legHitBox = new HitBox(gameValues.LEGS_X_SIZE_PERCENT, gameValues.LEGS_Y_SIZE_PERCENT,
+                gameValues.LEGS_X_OFFSET_PERCENT, gameValues.LEGS_Y_OFFSET_PERCENT);
+        this.legs = new LoopingPictures(totalLegs + 1, legHitBox, gameValues.TICKS_PER_PICTURE_STEP, ranges);
 
         final int maxInRow = 8;
         final int startingSpot = 6;
@@ -238,7 +262,8 @@ public class Player extends Mobile {
             }
         }
 
-        this.legs.setImage(totalLegs, spriteSheet.shrink(spriteSheet.grabImage(0, 1, 1, 1, gameValues.PLAYER_SHEET_BOX_SIZE)));
+        this.legs.setImage(totalLegs,
+                spriteSheet.shrink(spriteSheet.grabImage(0, 1, 1, 1, gameValues.PLAYER_SHEET_BOX_SIZE)));
         this.legs.setCurrentImageIndex(totalLegs);
     }
 
@@ -248,7 +273,8 @@ public class Player extends Mobile {
         final int leftHead = 2;
         final int backHead = 2;
         final int totalHead = frontHead + rightHead + leftHead + backHead;
-        HitBox headHitBox = new HitBox(gameValues.HEAD_X_SIZE_PERCENT, gameValues.HEAD_Y_SIZE_PERCENT, gameValues.HEAD_X_OFFSET_PERCENT, gameValues.HEAD_Y_OFFSET_PERCENT);
+        HitBox headHitBox = new HitBox(gameValues.HEAD_X_SIZE_PERCENT, gameValues.HEAD_Y_SIZE_PERCENT,
+                gameValues.HEAD_X_OFFSET_PERCENT, gameValues.HEAD_Y_OFFSET_PERCENT);
         this.head = new InterchangeableImage(totalHead, headHitBox);
 
         final int startingSpot = 0;

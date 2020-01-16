@@ -2,6 +2,7 @@ package app.game.gamefield.elements.mobiles.projectiles;
 
 import app.game.gamefield.elements.mobiles.Mobile;
 import app.game.gamefield.elements.rendering.Drawable;
+import app.game.gamefield.house.Floor;
 import app.game.gamefield.house.rooms.Room;
 import app.supportclasses.GameValues;
 import app.supportclasses.SpriteSheet;
@@ -53,13 +54,13 @@ public class Projectile extends Mobile {
     }
 
     @Override
-    public void tick(Room room) {
+    public void tick(Floor floor) {
         //Maybe for future types, acclerate
         updateVelocity();
-        testCollisionAndMove(room);
+        testCollisionAndMove(floor);
         incrementTraveled(getTickDistance());
         if (endOfRange()) {
-            room.destroyElement(this);
+            floor.getCurrentRoom().destroyElement(this);
         }
     }
 
@@ -68,7 +69,7 @@ public class Projectile extends Mobile {
     }
 
     @Override
-    protected Point2D.Double onCollision(Point2D.Double newLocation, Drawable collidingElement, Room room) {
+    protected Point2D.Double onCollision(Point2D.Double newLocation, Drawable collidingElement, Floor floor) {
         //TODO write block
         return location;
     }

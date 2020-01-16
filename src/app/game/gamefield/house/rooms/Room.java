@@ -3,6 +3,8 @@ package app.game.gamefield.house.rooms;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
+import app.game.gamefield.elements.immovables.doors.Door;
+import app.game.gamefield.elements.immovables.doors.Door.DoorPosition;
 import app.game.gamefield.elements.immovables.walls.Wall;
 import app.game.gamefield.elements.mobiles.Mobile;
 import app.game.gamefield.elements.rendering.BST;
@@ -24,6 +26,7 @@ public abstract class Room extends Traversable{
     protected ArrayList<Mobile> movables; //Things that move and must be checked for collision
     private BufferedImage background; // Background picture
     protected GameValues gameValues;
+    private Rooms roomType;
 
     public enum Rooms { //TODO change these into class types???
         Spawn, Regular, Shop, Treasure, Arcade, Boss, Secret;
@@ -31,6 +34,7 @@ public abstract class Room extends Traversable{
 
     public Room(GameValues gameValues, Drawable player, Rooms roomType, Point location) {
         super(location);
+        this.roomType = roomType;
         initializeRoom(gameValues, player, roomType);
     }
     
@@ -93,9 +97,25 @@ public abstract class Room extends Traversable{
      * Called once the surrounding rooms are set
      */
     protected void createDoors() {
+        
         if (getAbove()!=null) {
-            //elements.add(new Door())
+            System.out.println("Creating door above");
+            elements.add(new Door(gameValues, ((Room)getAbove()).roomType, DoorPosition.Top));
         }
+        if (getRight()!=null) {
+            System.out.println("Creating door right");
+            elements.add(new Door(gameValues, ((Room)getRight()).roomType, DoorPosition.Right));
+        }
+        if (getBelow()!=null) {
+            System.out.println("Creating door below");
+            elements.add(new Door(gameValues, ((Room)getBelow()).roomType, DoorPosition.Below));
+        }
+        
+        if (getLeft()!=null) {
+            System.out.println("Creating door left");
+            elements.add(new Door(gameValues, ((Room)getLeft()).roomType, DoorPosition.Left));
+        }
+        
     }
 
     private void createWalls() {
@@ -117,12 +137,6 @@ public abstract class Room extends Traversable{
 
     protected abstract void createMobiles();
     protected abstract void createImmovables();
-
-    public void tick() {
-        for (Mobile m: movables) {
-            m.tick(this);
-        }
-    }
 
     public void render(Graphics g) {
         drawBackground(g);
@@ -197,6 +211,10 @@ public abstract class Room extends Traversable{
     public void removePlayer(Drawable player) {
         destroyElement(player);
         this.movables.remove((Mobile)player);
+    }
+
+    public ArrayList<Mobile> getMovables() {
+        return movables;
     }
 
 }

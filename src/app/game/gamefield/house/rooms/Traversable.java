@@ -68,9 +68,7 @@ public abstract class Traversable {
     }
 
     private void setSeen() {
-        System.out.println("Setting as seen");
         if (this.roomStatus==Status.UNEXPLORED) {
-            System.out.println("No, Really!");
             this.roomStatus = Status.SEEN;
         }
     }
@@ -115,7 +113,7 @@ public abstract class Traversable {
         return right;
     }
 
-    public void setSurroundingAndLock(Traversable above, Traversable below, Traversable left, Traversable right) {
+    public void setSurroundingAndLock(Traversable above, Traversable right, Traversable below, Traversable left) {
         if (!surroundingLocked) {
             this.above = above;
             this.below = below;

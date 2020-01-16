@@ -100,7 +100,7 @@ public class SpriteSheet {
         return smallerImage;
     }
 
-    public BufferedImage flipLeftRight(BufferedImage image) {
+    public static BufferedImage flipLeftRight(BufferedImage image) {
         int imgWidth = image.getWidth();
         int imgHeight = image.getHeight();
         
@@ -118,7 +118,7 @@ public class SpriteSheet {
         return flippedImage;
     }
 
-    public BufferedImage flipTopBottom(BufferedImage image) {
+    public static BufferedImage flipTopBottom(BufferedImage image) {
         int imgWidth = image.getWidth();
         int imgHeight = image.getHeight();
         
@@ -134,6 +134,42 @@ public class SpriteSheet {
         }
 
         return flippedImage;
+    }
+
+    public static BufferedImage rotateCounter90(BufferedImage image) {
+        int imgHeight = image.getWidth();
+        int imgWidth = image.getHeight();
+        
+        BufferedImage rotatedImage = new BufferedImage(imgWidth, imgHeight, BufferedImage.TYPE_INT_ARGB);
+        //System.out.println("Image: " + imgWidth + ", " + imgHeight);
+
+        //Go through array and flip pixels
+        for (int y = 0; y < imgHeight; y++) {
+            for (int x = 0; x < imgWidth; x++) {
+                int oldRGB = image.getRGB(imgHeight-y-1, x);
+                rotatedImage.setRGB(x, y, oldRGB);
+            }
+        }
+
+        return rotatedImage;
+    }
+
+    public static BufferedImage rotateClock90(BufferedImage image) {
+        int imgHeight = image.getWidth();
+        int imgWidth = image.getHeight();
+        
+        BufferedImage rotatedImage = new BufferedImage(imgWidth, imgHeight, BufferedImage.TYPE_INT_ARGB);
+        //System.out.println("Image: " + imgWidth + ", " + imgHeight);
+
+        //Go through array and flip pixels
+        for (int y = 0; y < imgHeight; y++) {
+            for (int x = 0; x < imgWidth; x++) {
+                int oldRGB = image.getRGB(y, imgWidth-1-x);
+                rotatedImage.setRGB(x, y, oldRGB);
+            }
+        }
+
+        return rotatedImage;
     }
 
 }
