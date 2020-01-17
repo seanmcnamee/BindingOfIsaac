@@ -79,7 +79,7 @@ public abstract class Mobile extends Destructible{
     protected void testCollisionAndMove(Floor floor) {
         Point2D.Double tempLocation = new Point2D.Double(location.getX(), location.getY());
 
-        double maxSpeedPerTick = maxSpeed/60.0;
+        double maxSpeedPerTick = maxSpeed/gameValues.goalTicksPerSecond;
 
         tempLocation.x += velocityPercent.x*maxSpeedPerTick;
         tempLocation.y += velocityPercent.y*maxSpeedPerTick;

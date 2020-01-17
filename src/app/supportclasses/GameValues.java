@@ -65,7 +65,6 @@ public class GameValues {
     public final int DEGRADABLES_SPRITE_SHEET_BOX_SIZE = 41;
     public final String DOOR_SPRITE_SHEET = "res//doorSpriteSheet.png";
     public final int DOOR_SPRITE_SHEET_BOX_SIZE = 185;
-    public final double DOOR_OFFSET = .02;
     public final Point MAPSIZE = new Point(7, 5);
 
     public final int FIELD_X_SPACES = 13;
@@ -79,6 +78,10 @@ public class GameValues {
     public double fieldYZero = 0;
     public double singleSquareX = 0;
     public double singleSquareY = 0;
+
+    public final double DOOR_OFFSET = .02;
+    public final double DOOR_DEPTH = .8;
+    public final double DOOR_WIDTH = 2;
     
     //GameBar
     public final String GENERAL_GAMEBAR_SPRITE_SHEET = "res//GeneralGameBarShpriteSheet.png";

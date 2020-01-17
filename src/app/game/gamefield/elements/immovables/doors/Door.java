@@ -132,7 +132,7 @@ public class Door extends Drawable {
             default:
                 throw new NoSuchElementException("Enum: " + doorType + " not yet added!");
         }
-        images.setCurrentImageIndex(0);
+        images.setCurrentImageIndex(1);
     }
 
     private BufferedImage flipImagesOnPosition(BufferedImage imageToTransform) {

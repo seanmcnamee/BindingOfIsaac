@@ -114,12 +114,24 @@ public class Player extends Mobile {
             floor.setCurrentRoom(door.getRoomFromDoorPosition(floor.getCurrentRoom()));
 
             System.out.println("Door collision location: " + this.location);
-            double newY = ((gameValues.FIELD_Y_SPACES-getSizeInBlocks().getY()-3*gameValues.DOOR_OFFSET)-(this.location.getY()+getSizeInBlocks().getY())); //-1.5
-            double newX = ((gameValues.FIELD_X_SPACES-2*gameValues.DOOR_OFFSET)-(this.location.getX()+getSizeInBlocks().getX()));
+            //double newY = ((gameValues.FIELD_Y_SPACES-getSizeInBlocks().getY()-4*gameValues.DOOR_OFFSET)-(this.location.getY()+getSizeInBlocks().getY())); //-1.5
+            //double newX = ((gameValues.FIELD_X_SPACES-4*gameValues.DOOR_OFFSET)-(this.location.getX()+getSizeInBlocks().getX()));
             if (door.isTop()||door.isBelow()) {
+                double newY;
+                if (door.isTop()) {
+                    newY = (gameValues.FIELD_Y_SPACES - 1) + gameValues.WALL_THICKNESS - .5 - this.sizeInBlocks.getY()/2.0 + velocityPercent.getY()*(this.maxSpeed/gameValues.goalTicksPerSecond); 
+                }   else {
+                    newY = -gameValues.WALL_THICKNESS + .5 + this.sizeInBlocks.getY()/2.0 + velocityPercent.getY()*(this.maxSpeed/gameValues.goalTicksPerSecond);
+                }
                 System.out.println("\t Going to " + (new Double(newLocation.getX(), newY)));
                 return new Double(newLocation.getX(), newY);
             }   else {
+                double newX;
+                if (door.isLeft()) {
+                    newX = (gameValues.FIELD_X_SPACES - 1) + gameValues.WALL_THICKNESS - .5 - this.sizeInBlocks.getX()/2.0 + velocityPercent.getX()*(this.maxSpeed/gameValues.goalTicksPerSecond); 
+                }   else {
+                    newX = -gameValues.WALL_THICKNESS + .5 + this.sizeInBlocks.getX()/2.0 + velocityPercent.getX()*(this.maxSpeed/gameValues.goalTicksPerSecond);
+                }
                 System.out.println("\t Going to " + (new Double(newX, newLocation.getY())));
                 return new Double(newX, newLocation.getY());
             }
