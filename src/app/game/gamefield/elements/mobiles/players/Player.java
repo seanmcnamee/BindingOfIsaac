@@ -37,7 +37,7 @@ public class Player extends Mobile {
     public Player(GameValues gameValues, Characters c, Point2D.Double location) {
         super(gameValues, location);
         money = bombs = keys = 0;
-        sizeInBlocks = new Point2D.Double(.9, 1);
+        sizeInBlocks = new Point2D.Double(1, 1.11);
         setCharacterStats(c);
         setFullHealth();
     }
@@ -69,11 +69,13 @@ public class Player extends Mobile {
         setImagesBasedOnVelocity();
         updateLoopingPictures();
         testCollisionAndMove(f);
+        //System.out.println("Size total: " + sizeInBlocks.getX() + " vs feet hitbox: " + (sizeInBlocks.getX()*(getHitBox().getHitBoxSize(sizeInBlocks).getX())));
         // System.out.println("Position: " + location.getX() + ", " + location.getY());
     }
 
     @Override
     protected Point2D.Double onCollision(Double newLocation, Drawable collidingElement, Floor floor) {
+        System.out.println("Collision with element " + collidingElement + " with priority: " + collidingElement.getPriority());
 
         if (collidingElement.getClass() == Degradable.class || collidingElement.getClass() == Wall.class) {
             return regularCollision(newLocation, collidingElement, floor.getCurrentRoom());
@@ -86,7 +88,6 @@ public class Player extends Mobile {
         // Default is stop motion and remain still.
         this.velocityPercent.x = this.velocityPercent.y = 0;
         return this.location;
-        // this.velocityPercent
     }
 
     private Point2D.Double regularCollision(Double newLocation, Drawable collidingElement, Room room) {
@@ -109,29 +110,30 @@ public class Player extends Mobile {
     }
 
     private Point2D.Double doorCollision(Double newLocation, Door door, Floor floor) {
-        System.out.println("DOOR COLLISION!!!");
+        System.out.println("DOOR COLLISION: " + this.location);
+        double halfABlock = .5;
         if (door.isOpen()) {
             floor.setCurrentRoom(door.getRoomFromDoorPosition(floor.getCurrentRoom()));
 
-            System.out.println("Door collision location: " + this.location);
-            //double newY = ((gameValues.FIELD_Y_SPACES-getSizeInBlocks().getY()-4*gameValues.DOOR_OFFSET)-(this.location.getY()+getSizeInBlocks().getY())); //-1.5
-            //double newX = ((gameValues.FIELD_X_SPACES-4*gameValues.DOOR_OFFSET)-(this.location.getX()+getSizeInBlocks().getX()));
             if (door.isTop()||door.isBelow()) {
                 double newY;
                 if (door.isTop()) {
-                    newY = (gameValues.FIELD_Y_SPACES - 1) + gameValues.WALL_THICKNESS - .5 - this.sizeInBlocks.getY()/2.0 + velocityPercent.getY()*(this.maxSpeed/gameValues.goalTicksPerSecond); 
+                    newY = (gameValues.FIELD_Y_SPACES-1) - (sizeInBlocks.getY()-1)/2.0;
                 }   else {
-                    newY = -gameValues.WALL_THICKNESS + .5 + this.sizeInBlocks.getY()/2.0 + velocityPercent.getY()*(this.maxSpeed/gameValues.goalTicksPerSecond);
+                    newY = -this.sizeInBlocks.getY() + sizeInBlocks.getY()*this.getHitBox().getHitBoxSize(sizeInBlocks).getY();
                 }
+                newY += velocityPercent.getY()*(this.maxSpeed/gameValues.goalTicksPerSecond);
                 System.out.println("\t Going to " + (new Double(newLocation.getX(), newY)));
                 return new Double(newLocation.getX(), newY);
             }   else {
                 double newX;
+                double widthChangeFromFeet = this.sizeInBlocks.getX() - sizeInBlocks.getX()*legs.getHitBox().getHitBoxSize(sizeInBlocks).getX();
                 if (door.isLeft()) {
-                    newX = (gameValues.FIELD_X_SPACES - 1) + gameValues.WALL_THICKNESS - .5 - this.sizeInBlocks.getX()/2.0 + velocityPercent.getX()*(this.maxSpeed/gameValues.goalTicksPerSecond); 
+                    newX = (gameValues.FIELD_X_SPACES - 1) + widthChangeFromFeet/2.0;
                 }   else {
-                    newX = -gameValues.WALL_THICKNESS + .5 + this.sizeInBlocks.getX()/2.0 + velocityPercent.getX()*(this.maxSpeed/gameValues.goalTicksPerSecond);
+                    newX = -widthChangeFromFeet/2.0;
                 }
+                newX += velocityPercent.getX()*(this.maxSpeed/gameValues.goalTicksPerSecond);
                 System.out.println("\t Going to " + (new Double(newX, newLocation.getY())));
                 return new Double(newX, newLocation.getY());
             }
@@ -301,5 +303,13 @@ public class Player extends Mobile {
                         .grabImage((spot - (leftHead + backHead)), 0, 1, 1, gameValues.PLAYER_SHEET_BOX_SIZE))));
             }
         }
+    }
+
+    public double getX() {
+        return location.getX();
+    }
+
+    public double getY() {
+        return location.getY();
     }
 }

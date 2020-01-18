@@ -65,7 +65,7 @@ public class GameBar {
 
         final double thickness = .1;
         g.setColor(border);
-        g.fillRect(0, (int)(gameValues.barYSize*(1-thickness)), (int)gameValues.barXSize, (int)(gameValues.barYSize*(thickness)));
+        g.fillRect((int)gameValues.barXStart, (int)(gameValues.barYSize*(1-thickness)), (int)gameValues.barXSize, (int)(gameValues.barYSize*(thickness)));
     }
 
 }

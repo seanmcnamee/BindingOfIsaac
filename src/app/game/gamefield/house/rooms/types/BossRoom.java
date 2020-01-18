@@ -29,5 +29,8 @@ public class BossRoom extends Room {
         // TODO Auto-generated method stub
         Drawable r = new Degradable(this.gameValues, Degradables.Rock, new Point2D.Double(2, 3));
         elements.add(r);
+
+        Drawable s = new Degradable(this.gameValues, Degradables.Rock, new Point2D.Double(3, 3));
+        elements.add(s);
     }
 }

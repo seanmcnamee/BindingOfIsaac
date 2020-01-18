@@ -79,9 +79,10 @@ public class GameValues {
     public double singleSquareX = 0;
     public double singleSquareY = 0;
 
-    public final double DOOR_OFFSET = .02;
-    public final double DOOR_DEPTH = .8;
+    public final double DOOR_DEPTH = .75;
     public final double DOOR_WIDTH = 2;
+    public final double DOOR_HITBOX_DEPTH = 1;
+    public final double DOOR_HITBOX_WIDTH = .1;
     
     //GameBar
     public final String GENERAL_GAMEBAR_SPRITE_SHEET = "res//GeneralGameBarShpriteSheet.png";

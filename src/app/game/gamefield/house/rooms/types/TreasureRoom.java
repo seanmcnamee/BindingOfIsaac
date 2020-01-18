@@ -31,5 +31,14 @@ public class TreasureRoom extends Room {
         // TODO Auto-generated method stub
         Drawable r = new Degradable(this.gameValues, Degradables.Rock, new Point2D.Double(3, 1));
         elements.add(r);
+
+        Drawable s = new Degradable(this.gameValues, Degradables.Rock, new Point2D.Double(9, 1));
+        elements.add(s);
+
+        Drawable a = new Degradable(this.gameValues, Degradables.Rock, new Point2D.Double(3, 4));
+        elements.add(a);
+
+        Drawable w = new Degradable(this.gameValues, Degradables.Rock, new Point2D.Double(9, 4));
+        elements.add(w);
     }
 }

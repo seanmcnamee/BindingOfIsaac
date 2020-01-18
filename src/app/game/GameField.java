@@ -2,6 +2,9 @@ package app.game;
 
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
+import java.text.DecimalFormat;
+import java.awt.Font;
+import java.awt.Color;
 
 import app.game.gamefield.house.House;
 import app.supportclasses.GameValues;
@@ -51,7 +54,12 @@ public class GameField {
         this.gameValues.fieldXZero = gameValues.fieldXStart+(gameValues.singleSquareX*(gameValues.WALL_THICKNESS+halfABlock));
         this.gameValues.fieldYZero = gameValues.fieldYStart+(gameValues.singleSquareY*(gameValues.WALL_THICKNESS+halfABlock));
 
-        house.getCurrentFloor().getCurrentRoom().render(g); //TODO make this through the map class
+        house.getCurrentFloor().getCurrentRoom().render(g);
+
+        g.setColor(Color.WHITE);
+        g.setFont(new Font("TimesRoman", Font.BOLD, 20));
+        DecimalFormat df = new DecimalFormat("#,###,##0.00");
+        g.drawString("(" + df.format(player.getX()) + ", " + df.format(player.getY()) + ")", (int)(gameValues.fieldXStart), (int)(gameValues.fieldYStart+.5*gameValues.singleSquareX));
     }
 
     public void keyPressed(KeyEvent e) {

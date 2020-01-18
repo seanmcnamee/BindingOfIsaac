@@ -32,5 +32,8 @@ public class ShopRoom extends Room {
         // TODO Auto-generated method stub
         Drawable r = new Degradable(this.gameValues, Degradables.Rock, new Point2D.Double(0, 4));
         elements.add(r);
+
+        Drawable s = new Degradable(this.gameValues, Degradables.Rock, new Point2D.Double(0, 5));
+        elements.add(s);
     }
 }

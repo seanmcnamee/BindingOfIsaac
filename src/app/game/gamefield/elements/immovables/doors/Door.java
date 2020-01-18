@@ -44,9 +44,9 @@ public class Door extends Drawable {
             x = gameValues.FIELD_X_SPACES/2.0;
         }   else {
             if (position==DoorPosition.Right) {
-                x = gameValues.FIELD_X_SPACES + gameValues.WALL_THICKNESS/2.0 - gameValues.DOOR_OFFSET;
+                x = gameValues.FIELD_X_SPACES + gameValues.WALL_THICKNESS/2.0 - (gameValues.WALL_THICKNESS-gameValues.DOOR_DEPTH)/2.0;
             } else {
-                x = -gameValues.WALL_THICKNESS/2.0 + gameValues.DOOR_OFFSET;
+                x = -gameValues.WALL_THICKNESS/2.0 + (gameValues.WALL_THICKNESS-gameValues.DOOR_DEPTH)/2.0;
             }
         }
 
@@ -56,9 +56,9 @@ public class Door extends Drawable {
             y = gameValues.FIELD_Y_SPACES/2.0;
         }   else {
             if (position==DoorPosition.Below) {
-                y = gameValues.FIELD_Y_SPACES + gameValues.WALL_THICKNESS/2.0 - gameValues.DOOR_OFFSET;
+                y = gameValues.FIELD_Y_SPACES + gameValues.WALL_THICKNESS/2.0 - (gameValues.WALL_THICKNESS-gameValues.DOOR_DEPTH)/2.0;
             } else {
-                y = -gameValues.WALL_THICKNESS/2.0 + gameValues.DOOR_OFFSET;
+                y = -gameValues.WALL_THICKNESS/2.0 + (gameValues.WALL_THICKNESS-gameValues.DOOR_DEPTH)/2.0;
             }
         }
 
@@ -72,20 +72,20 @@ public class Door extends Drawable {
         System.out.println("Setting size/hitbox for " + this.position);
         switch(this.position) {
             case Top:
-                this.sizeInBlocks = new Point2D.Double(2, 1);
-                this.hitbox = new HitBox(.7, 1, 0, 0);
+                this.sizeInBlocks = new Point2D.Double(gameValues.DOOR_WIDTH, gameValues.DOOR_DEPTH);
+                this.hitbox = new HitBox(gameValues.DOOR_HITBOX_WIDTH, gameValues.DOOR_HITBOX_DEPTH, 0, 0);
                 break;
             case Right:
-                this.sizeInBlocks = new Point2D.Double(1, 2);
-                this.hitbox = new HitBox(1, .7, 0, 0);
+                this.sizeInBlocks = new Point2D.Double(gameValues.DOOR_DEPTH, gameValues.DOOR_WIDTH);
+                this.hitbox = new HitBox(gameValues.DOOR_HITBOX_DEPTH, gameValues.DOOR_HITBOX_WIDTH, 0, 0);
                 break;
             case Below:
-                this.sizeInBlocks = new Point2D.Double(2, 1);
-                this.hitbox = new HitBox(.7, 1, 0, 0);
+                this.sizeInBlocks = new Point2D.Double(gameValues.DOOR_WIDTH, gameValues.DOOR_DEPTH);
+                this.hitbox = new HitBox(gameValues.DOOR_HITBOX_WIDTH, gameValues.DOOR_HITBOX_DEPTH, 0, 0);
                 break;
             case Left:
-                this.sizeInBlocks = new Point2D.Double(1, 2);
-                this.hitbox = new HitBox(1, .7, 0, 0);
+                this.sizeInBlocks = new Point2D.Double(gameValues.DOOR_DEPTH, gameValues.DOOR_WIDTH);
+                this.hitbox = new HitBox(gameValues.DOOR_HITBOX_DEPTH, gameValues.DOOR_HITBOX_WIDTH, 0, 0);
                 break;
             default:
                 throw new NoSuchElementException("Unknown enum '" + position + "' given.");

@@ -2,6 +2,8 @@ package app.game.gamefield.house.rooms;
 
 import java.awt.Graphics;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 
 import app.game.gamefield.elements.immovables.doors.Door;
 import app.game.gamefield.elements.immovables.doors.Door.DoorPosition;
@@ -174,12 +176,58 @@ public abstract class Room extends Traversable{
     */
 
     /**
-     * Recursively actually works better than removing and creating a new Priority Queue
+     * MUST do regular to ensure that things ontop of other things (doors on walls) will be checked for collision first
      */
     public Drawable recursiveCollisionCheck(Drawable main, Point2D.Double testLocation) {
-        return recursiveCollisionCheck(main, testLocation, (Drawable)elements.getRoot());
+        //System.out.println("Checking collisions");
+        return testEachCollision(main, testLocation);
+        //return recursiveCollisionCheck(main, testLocation, (Drawable)elements.getRoot());
     }
 
+    private Drawable testEachCollision(Drawable main, Point2D.Double testLocation) {
+        ArrayList<Drawable> drawableArray = getAllDrawables();
+        int arrayLength = drawableArray.size();
+        for (int i = 0; i < arrayLength; i++) {
+            Drawable currentlyChecking = getLowestPriority(drawableArray);
+            //System.out.println("\tTesting " + currentlyChecking + " with Priority " + currentlyChecking.getPriority());
+            if (main != currentlyChecking && main.contains(testLocation, currentlyChecking)) {
+                return currentlyChecking;
+            }
+        }
+        return null;
+    }
+
+    private ArrayList<Drawable> getAllDrawables() {
+        Queue<Drawable> toGetChildren = new LinkedList<Drawable>();
+        ArrayList<Drawable> drawableArray = new ArrayList<Drawable>();
+        toGetChildren.add((Drawable)elements.getRoot());
+
+        while (!toGetChildren.isEmpty()) {
+            Drawable current = toGetChildren.remove();
+            Drawable left = (Drawable)current.getLeft();
+            Drawable right = (Drawable)current.getRight();
+            if (left!=null) {
+                toGetChildren.add(left);
+            }
+            if (right!=null) {
+                toGetChildren.add(right);
+            }
+            drawableArray.add(current);
+        }
+        return drawableArray;
+    }
+
+    private Drawable getLowestPriority(ArrayList<Drawable> drawableArray) {
+        Point indexAndPriority = new Point(0, drawableArray.get(0).getPriority());
+        for (int i = 0 ; i < drawableArray.size(); i++) {
+            if (drawableArray.get(i).getPriority() < indexAndPriority.getY()) {
+                indexAndPriority = new Point(i, drawableArray.get(i).getPriority());
+            }
+        }
+        return drawableArray.remove((int)indexAndPriority.getX());
+    }
+
+    /*
     public Drawable recursiveCollisionCheck(Drawable main, Point2D.Double testLocation, Drawable currentNode) {
         if (currentNode == null) {
             return null;
@@ -195,6 +243,8 @@ public abstract class Room extends Traversable{
             }
         }
     }
+    */
+
     
     public void destroyElement(Drawable element) {
         if (element.getClass().equals(Mobile.class)) {
