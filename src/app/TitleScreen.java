@@ -30,7 +30,6 @@ public class TitleScreen extends DisplayScreen {
         super(frame);
         background = new BufferedImageLoader(gameValues.MAIN_MENU_FILE);
         SpriteSheet buttons = new SpriteSheet(gameValues.MAIN_MENU_BUTTONS);
-        // TODO fix this position and finish up the others
         
         btnStart = new Button(buttons.shrink(buttons.grabImage(0, 0, 1, 1, gameValues.MENU_BUTTON_SIZE)), (int)(gameValues.START_BUTTON_X*gameValues.WIDTH_SCALE_1), (int)(gameValues.START_BUTTON_Y*gameValues.HEIGHT_SCALE_1), gameValues);
         btnCredits = new Button(buttons.shrink(buttons.grabImage(1, 0, 1, 1, gameValues.MENU_BUTTON_SIZE)), (int)(gameValues.CREDIT_BUTTON_X*gameValues.WIDTH_SCALE_1), (int)(gameValues.CREDIT_BUTTON_Y*gameValues.HEIGHT_SCALE_1), gameValues);
@@ -61,7 +60,6 @@ public class TitleScreen extends DisplayScreen {
     }
     */
 
-    //TODO setup transparent background buttons for this menu
     @Override
     public void render(Graphics g) {
         g.drawImage(background.getImage(), 0, 0, (int)(gameValues.WIDTH_SCALE_1*gameValues.gameScale), (int)(gameValues.HEIGHT_SCALE_1*gameValues.gameScale), null);
@@ -82,6 +80,7 @@ public class TitleScreen extends DisplayScreen {
             System.out.println("Starting Game");
             System.out.println("Setting currentScreen to 'game'");
             System.out.println("Game: " + game);
+            ((Game)game).initialize();
             gameValues.currentScreen = game;
         }   else if (btnExit.contains(e.getPoint())) {
             gameValues.gameState = GameValues.GameState.QUIT;
