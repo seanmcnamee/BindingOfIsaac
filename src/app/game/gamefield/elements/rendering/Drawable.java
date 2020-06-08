@@ -14,16 +14,18 @@ import java.awt.geom.Point2D;
  */
 public class Drawable extends Node {
     protected Point2D.Double location;
+    protected int zValue;
     protected BufferedImage image;
     protected Point2D.Double sizeInBlocks;
     protected HitBox hitbox;
     protected GameValues gameValues;
     private DrawingCalculator calculator;
 
-    public Drawable(GameValues gameValues, Point2D.Double location) {
+    public Drawable(GameValues gameValues, Point2D.Double location, int zValue) {
         super();
         this.gameValues = gameValues;
         this.location = location;
+        this.zValue = zValue;
         this.calculator = new DrawingCalculator(gameValues);
     }
 
@@ -34,15 +36,15 @@ public class Drawable extends Node {
                                 calculator.findPixelSize(getSizeInBlocks().getY(), gameValues.singleSquareY), 
                                 null);
         
-        // g.drawRect(calculator.findPixelLocation(getHitBoxLocation().getX(), getHitBoxSizeInBlocks().getX(), gameValues.fieldXZero, gameValues.singleSquareX), 
-        //             calculator.findPixelLocation(getHitBoxLocation().getY(), getHitBoxSizeInBlocks().getY(), gameValues.fieldYZero, gameValues.singleSquareY), 
-        //             calculator.findPixelSize(getHitBoxSizeInBlocks().getX(), gameValues.singleSquareX), 
-        //             calculator.findPixelSize(getHitBoxSizeInBlocks().getY(), gameValues.singleSquareY));
+         g.drawRect(calculator.findPixelLocation(getHitBoxLocation().getX(), getHitBoxSizeInBlocks().getX(), gameValues.fieldXZero, gameValues.singleSquareX), 
+                     calculator.findPixelLocation(getHitBoxLocation().getY(), getHitBoxSizeInBlocks().getY(), gameValues.fieldYZero, gameValues.singleSquareY), 
+                     calculator.findPixelSize(getHitBoxSizeInBlocks().getX(), gameValues.singleSquareX), 
+                     calculator.findPixelSize(getHitBoxSizeInBlocks().getY(), gameValues.singleSquareY));
     }
 
     @Override
     public int getPriority() {
-        return (int)(-this.location.getY()*10.0);
+        return -(int)(this.location.getY()*10.0 + this.zValue);
     }
 
     //TODO allow for a dual hitbox to check against a dual hitbox

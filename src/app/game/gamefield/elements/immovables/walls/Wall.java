@@ -11,14 +11,13 @@ import app.supportclasses.SpriteSheet;
  * Wall
  */
 public class Wall extends Drawable {
-    private int drawPriority;
 
     public enum WallType {
         Top, Bottom, Left, Right;
     }
 
     public Wall(GameValues gameValues, WallType wallType) {
-        super(gameValues, Wall.loadWallLocation(gameValues, wallType));
+        super(gameValues, Wall.loadWallLocation(gameValues, wallType), gameValues.WALL_Z);
         loadWallPictureAndSize(wallType);
         this.hitbox = new HitBox();
         // TODO Auto-generated constructor stub
@@ -26,7 +25,6 @@ public class Wall extends Drawable {
 
     private void loadWallPictureAndSize(WallType wall) {
         SpriteSheet ss = new SpriteSheet(gameValues.GAME_WALL_SPRITESHEET);
-        drawPriority = Integer.MAX_VALUE;//10000;
         final double longX = gameValues.FIELD_X_SPACES+2*gameValues.WALL_THICKNESS;
         final double longY = gameValues.FIELD_Y_SPACES+3*gameValues.WALL_THICKNESS;
 
@@ -34,12 +32,12 @@ public class Wall extends Drawable {
             case Top:
                 this.image = ss.shrink(ss.grabImage(1, 0, 1, 1, gameValues.WALL_SPRITESHEET_SIZE));
                 this.sizeInBlocks = new Double(longX, gameValues.WALL_THICKNESS);
-                drawPriority--;
+                //drawPriority--;
                 break;
             case Bottom:
                 this.image = ss.flipTopBottom(ss.shrink(ss.grabImage(1, 0, 1, 1, gameValues.WALL_SPRITESHEET_SIZE)));
                 this.sizeInBlocks = new Double(longX, gameValues.WALL_THICKNESS);
-                drawPriority--;
+                //drawPriority--;
                 break;
             case Left:
                 this.image = ss.flipLeftRight(ss.shrink(ss.grabImage(0, 0, 1, 1, gameValues.WALL_SPRITESHEET_SIZE)));
@@ -68,9 +66,9 @@ public class Wall extends Drawable {
                 return new Double(half_block+gameValues.FIELD_X_SPACES-gameValues.WALL_THICKNESS/2.0, gameValues.FIELD_Y_SPACES/2.0 - half_block);
         }
     }
-
+/*
     @Override
     public int getPriority() {
         return this.drawPriority;
-    }
+    }*/
 }

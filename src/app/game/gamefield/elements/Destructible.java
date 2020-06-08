@@ -11,8 +11,8 @@ import app.supportclasses.GameValues;
 public abstract class Destructible extends Drawable {
     protected int maxHealth, health; // A full heart is 2. A half heart is 1
 
-    public Destructible(GameValues gameValues, Point2D.Double location) {
-        super(gameValues, location);
+    public Destructible(GameValues gameValues, Point2D.Double location, int zValue) {
+        super(gameValues, location, zValue);
     }
 
     public boolean damage(int damage) {

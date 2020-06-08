@@ -25,7 +25,7 @@ public abstract class Mobile extends Destructible{
     }*/
 
     public Mobile(GameValues gameValues, Point2D.Double location) {
-        super(gameValues, location);
+        super(gameValues, location, gameValues.MOBILE_Z);
         velocityPercent = new Point2D.Double();
         accelerationPercent = new Point();
     }
@@ -99,6 +99,16 @@ public abstract class Mobile extends Destructible{
 
     public double getMaxSpeed() {
         return maxSpeed;
+    }
+
+    @Override
+    /**
+     * A moving object should only be drawn behind something when the bottom of it's picture is completely above the top of the other.
+     * Adding half the height of the mobile object achieves this (location based on center)
+     */
+    public int getPriority() {
+        int typicalPriority = super.getPriority();
+        return typicalPriority + this.zValue - (int)(.5*this.getHitBoxSizeInBlocks().getY()*10.0);
     }
 
     public abstract void tick(Floor f);

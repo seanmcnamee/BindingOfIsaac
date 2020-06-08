@@ -19,7 +19,7 @@ public class Degradable extends Destructible {
     }
 
     public Degradable(GameValues gameValues, Degradables degradable, Point2D.Double location) {
-        super(gameValues, location);
+        super(gameValues, location, gameValues.DESTRUCTIBLE_Z);
         setDegradingImages(degradable);
         setFullHealth();
         updateImage();

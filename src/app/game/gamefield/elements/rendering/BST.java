@@ -4,6 +4,8 @@ import app.game.gamefield.elements.rendering.Node;
 
 /**
  * BST
+ * The larger the priority (an integer), the closer to the root
+ * Closest to the root is drawn first (and seems to be in the 'back')
  */
 public class BST {
     private Node root;

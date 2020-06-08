@@ -28,7 +28,7 @@ public class Door extends Drawable {
     }
 
     public Door(GameValues gameValues, Room.Rooms door, DoorPosition position) {
-        super(gameValues, calculationLocation(position, gameValues));
+        super(gameValues, calculationLocation(position, gameValues), gameValues.DOOR_Z);
         this.position = position;
         doorState = DoorState.Open;
         setDoorSizeAndHitBox();
@@ -150,11 +150,11 @@ public class Door extends Drawable {
                 throw new NoSuchElementException("Unknown enum '" + position + "' given.");
         }
     }
-
+/*
     @Override
     public int getPriority() {
         return Integer.MAX_VALUE/2;
-    }
+    }*/
 
     @Override
     protected BufferedImage getImage() {

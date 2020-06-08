@@ -83,6 +83,13 @@ public class GameValues {
     public final double DOOR_WIDTH = 2;
     public final double DOOR_HITBOX_DEPTH = 1;
     public final double DOOR_HITBOX_WIDTH = .1;
+
+    public final int WALL_Z = -100;
+    public final int DOOR_Z = -10;
+    public final int DESTRUCTIBLE_Z = 0;
+    public final int MOBILE_Z = 5;
+    public final int FLYING_Z = 100;
+
     
     //GameBar
     public final String GENERAL_GAMEBAR_SPRITE_SHEET = "res//GeneralGameBarShpriteSheet.png";
