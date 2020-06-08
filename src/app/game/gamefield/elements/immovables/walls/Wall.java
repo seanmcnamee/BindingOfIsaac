@@ -17,10 +17,9 @@ public class Wall extends Drawable {
     }
 
     public Wall(GameValues gameValues, WallType wallType) {
-        super(gameValues, Wall.loadWallLocation(gameValues, wallType), gameValues.WALL_Z);
+        super(gameValues, Wall.loadWallLocation(gameValues, wallType), gameValues.TOP_BOTTOM_WALL_Z);
         loadWallPictureAndSize(wallType);
         this.hitbox = new HitBox();
-        // TODO Auto-generated constructor stub
     }
 
     private void loadWallPictureAndSize(WallType wall) {
@@ -32,21 +31,21 @@ public class Wall extends Drawable {
             case Top:
                 this.image = ss.shrink(ss.grabImage(1, 0, 1, 1, gameValues.WALL_SPRITESHEET_SIZE));
                 this.sizeInBlocks = new Double(longX, gameValues.WALL_THICKNESS);
-                //drawPriority--;
                 break;
             case Bottom:
                 this.image = ss.flipTopBottom(ss.shrink(ss.grabImage(1, 0, 1, 1, gameValues.WALL_SPRITESHEET_SIZE)));
                 this.sizeInBlocks = new Double(longX, gameValues.WALL_THICKNESS);
-                //drawPriority--;
                 break;
             case Left:
                 this.image = ss.flipLeftRight(ss.shrink(ss.grabImage(0, 0, 1, 1, gameValues.WALL_SPRITESHEET_SIZE)));
                 this.sizeInBlocks = new Double(gameValues.WALL_THICKNESS, longY);
+                this.zValue = gameValues.SIDE_WALL_Z;
                 break;
             case Right:
             default:
                 this.image = ss.shrink(ss.grabImage(0, 0, 1, 1, gameValues.WALL_SPRITESHEET_SIZE));
                 this.sizeInBlocks = new Double(gameValues.WALL_THICKNESS, longY);
+                this.zValue = gameValues.SIDE_WALL_Z;
                 
                 break;
         }

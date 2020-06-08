@@ -84,7 +84,8 @@ public class GameValues {
     public final double DOOR_HITBOX_DEPTH = 1;
     public final double DOOR_HITBOX_WIDTH = .1;
 
-    public final int WALL_Z = -100;
+    public final int TOP_BOTTOM_WALL_Z = -50;
+    public final int SIDE_WALL_Z = -100;
     public final int DOOR_Z = -10;
     public final int DESTRUCTIBLE_Z = 0;
     public final int MOBILE_Z = 5;
