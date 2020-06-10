@@ -9,9 +9,9 @@ import app.game.gamefield.elements.immovables.doors.Door;
 import app.game.gamefield.elements.immovables.doors.Door.DoorPosition;
 import app.game.gamefield.elements.immovables.walls.Wall;
 import app.game.gamefield.elements.mobiles.Mobile;
-import app.game.gamefield.elements.rendering.BST;
+import app.game.gamefield.elements.rendering.structure.BST;
 import app.game.gamefield.elements.rendering.Drawable;
-import app.supportclasses.BufferedImageLoader;
+import app.game.gamefield.elements.rendering.InterchangeableImage;
 import app.supportclasses.GameValues;
 import app.supportclasses.SpriteSheet;
 
@@ -26,18 +26,12 @@ public abstract class Room extends Traversable{
     
     protected BST elements; // Drawables
     protected ArrayList<Mobile> movables; //Things that move and must be checked for collision
-    private BufferedImage background; // Background picture
+    protected BufferedImage background; // Background picture
     protected GameValues gameValues;
-    private Rooms roomType;
 
-    public enum Rooms { //TODO change these into class types???
-        Spawn, Regular, Shop, Treasure, Arcade, Boss, Secret;
-    }
-
-    public Room(GameValues gameValues, Drawable player, Rooms roomType, Point location) {
+    public Room(GameValues gameValues, Drawable player, Point location) {
         super(location);
-        this.roomType = roomType;
-        initializeRoom(gameValues, player, roomType);
+        initializeRoom(gameValues, player);
     }
     
     /*
@@ -46,7 +40,7 @@ public abstract class Room extends Traversable{
         initializeRoom(gameValues, player, roomType);
     }*/
 
-    private void initializeRoom(GameValues gameValues, Drawable player, Rooms roomType) {
+    private void initializeRoom(GameValues gameValues, Drawable player) {
         this.gameValues = gameValues;
 
         this.elements = new BST();
@@ -55,67 +49,33 @@ public abstract class Room extends Traversable{
         this.movables = new ArrayList<Mobile>();
         //this.movables.add((Mobile)player);
 
-        setPictures(roomType);
         createWalls();
         createMobiles();
         createImmovables();
-    }
-
-    private void setPictures(Rooms room) {
-        SpriteSheet icons = new SpriteSheet(gameValues.ICON_SPRITE_SHEET);
-        
-        //TODO go through these backgrounds
-        switch(room) {
-            case Regular:
-                this.background = new BufferedImageLoader(gameValues.GAME_BACKGROUND_FILE).getImage();
-                this.roomIcon = icons.shrink(icons.grabImage(1, 1, 1, 1, gameValues.ICON_SPRITE_SHEET_BOX_SIZE));
-                break;
-            //case Arcade: //TODO add arcade room as well
-                //this.roomIcon = spriteSheet.shrink(spriteSheet.grabImage(1, 1, 1, 1, gameValues.ICON_SPRITE_SHEET_BOX_SIZE));
-            case Shop:
-                this.background = new BufferedImageLoader(gameValues.GAME_BACKGROUND_FILE).getImage();
-                this.roomIcon = icons.shrink(icons.grabImage(1, 0, 1, 1, gameValues.ICON_SPRITE_SHEET_BOX_SIZE));
-                break;
-            case Treasure:
-                this.background = new BufferedImageLoader(gameValues.GAME_BACKGROUND_FILE).getImage();
-                this.roomIcon = icons.shrink(icons.grabImage(0, 0, 1, 1, gameValues.ICON_SPRITE_SHEET_BOX_SIZE));
-                break;
-            case Boss:
-                this.background = new BufferedImageLoader(gameValues.GAME_BACKGROUND_FILE).getImage();    
-                this.roomIcon = icons.shrink(icons.grabImage(2, 0, 1, 1, gameValues.ICON_SPRITE_SHEET_BOX_SIZE));
-                break;
-            case Secret:
-                this.background = new BufferedImageLoader(gameValues.GAME_BACKGROUND_FILE).getImage();    
-                this.roomIcon = icons.shrink(icons.grabImage(0, 1, 1, 1, gameValues.ICON_SPRITE_SHEET_BOX_SIZE));
-                break;
-            default:
-                this.background = new BufferedImageLoader(gameValues.GAME_BACKGROUND_FILE).getImage();
-                this.roomIcon = icons.shrink(icons.grabImage(1, 1, 1, 1, gameValues.ICON_SPRITE_SHEET_BOX_SIZE));
-                break;
-        }
+        setPictures(new SpriteSheet(gameValues.ICON_SPRITE_SHEET));
     }
 
     /**
      * Called once the surrounding rooms are set
      */
     protected void createDoors() {
-        
+
         if (getAbove()!=null) {
             System.out.println("Creating door above");
-            elements.add(new Door(gameValues, ((Room)getAbove()).roomType, DoorPosition.Top));
+            elements.add(new Door(gameValues, ((Room)getAbove()), DoorPosition.Top));
         }
         if (getRight()!=null) {
             System.out.println("Creating door right");
-            elements.add(new Door(gameValues, ((Room)getRight()).roomType, DoorPosition.Right));
+            elements.add(new Door(gameValues, ((Room)getRight()), DoorPosition.Right));
         }
         if (getBelow()!=null) {
             System.out.println("Creating door below");
-            elements.add(new Door(gameValues, ((Room)getBelow()).roomType, DoorPosition.Below));
+            elements.add(new Door(gameValues, ((Room)getBelow()), DoorPosition.Below));
         }
         
         if (getLeft()!=null) {
             System.out.println("Creating door left");
-            elements.add(new Door(gameValues, ((Room)getLeft()).roomType, DoorPosition.Left));
+            elements.add(new Door(gameValues, ((Room)getLeft()), DoorPosition.Left));
         }
         
     }
@@ -139,6 +99,8 @@ public abstract class Room extends Traversable{
 
     protected abstract void createMobiles();
     protected abstract void createImmovables();
+    protected abstract void setPictures(SpriteSheet icons);
+    public abstract InterchangeableImage createDoorImage(SpriteSheet doorSprites, Door.DoorPosition position);
 
     public void render(Graphics g) {
         drawBackground(g);

@@ -1,5 +1,6 @@
 package app.game.gamefield.elements.rendering;
 
+import app.game.gamefield.elements.rendering.structure.Node;
 import app.supportclasses.Button;
 import app.supportclasses.GameValues;
 

@@ -1,4 +1,4 @@
-package app.game.gamefield.elements.rendering;
+package app.game.gamefield.elements.rendering.structure;
 /**
  * BTNode
  */

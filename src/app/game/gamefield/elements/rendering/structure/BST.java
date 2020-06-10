@@ -1,6 +1,6 @@
-package app.game.gamefield.elements.rendering;
+package app.game.gamefield.elements.rendering.structure;
 
-import app.game.gamefield.elements.rendering.Node;
+import app.game.gamefield.elements.rendering.structure.Node;
 
 /**
  * BST
@@ -132,45 +132,55 @@ public class BST {
     private void addIterative(Node newNode) {
         //System.out.println("Adding node: " + newNode.getPriority());
         Node current = root;
+        //System.out.println("Iterative add...");
 
         //For root node insert
         if (root == null) {
             this.root = newNode;
+            //System.out.println("\tRoot insert");
 
         //For all other cases
         }   else {
             int base = 2;
             int completeRows = (int)Math.floor( (Math.log(nodeCount+1)/Math.log(base)) );
-            int spareCount = nodeCount-(int)Math.pow(2, completeRows)+1;
+            int spareCount = nodeCount-(int)Math.pow(base, completeRows)+1;
             boolean followRight = false;
             //System.out.println("\tNodeCount: " + nodeCount + "\n\t completeRows: " + completeRows + "\n\t spareCount: " + spareCount);
 
             
             for (int i = 0; i < completeRows; i++) {
-                //System.out.println("\tIteration " + i);
+                //System.out.println("\t\tIteration " + i);
                 int spareInPath = spareCount % ( (int)Math.pow(base, completeRows-i) );
                 int leftPathFullAmount = (int)Math.pow(base, completeRows-i-1);
                 followRight = (spareInPath >= leftPathFullAmount);
                 
-                //System.out.println("\t\tSpare in path: " + spareInPath + "\n\t\tleftPathFullAmount: " + leftPathFullAmount);
-                //System.out.println("\t\tFollowing right: " + followRight);
+                //System.out.println("\t\t\tSpare in path: " + spareInPath + "\n\t\t\tleftPathFullAmount: " + leftPathFullAmount);
+                //System.out.println("\t\t\tFollowing right: " + followRight);
                 //Follow until the last iteration
                 if (!(i==completeRows-1)) {
                     if (followRight) {
-                        current = current.getRight();
+                        if (current.getRight() != null) {
+                            current = current.getRight();
+                        }   else {
+                            break;
+                        }
                     }   else {
-                        current = current.getLeft();
+                        if (current.getLeft() != null) {
+                            current = current.getLeft();
+                        }   else {
+                            break;
+                        }
                     }
                 }
             }
 
             //For the final iteration, make this new node the child node
-            //System.out.println("Out of loop. Setting child's right: " + followRight);
+            //System.out.println("\tOut of loop. Setting child's right: " + followRight);
             if (followRight) {
-                //System.out.println("\tCurrent: " + current + ", newNode: " + newNode);
+                //System.out.println("\t\tCurrent: " + current + ", newNode: " + newNode);
                 current.setRightChild(newNode);
             }   else {
-                //System.out.println("\tCurrent: " + current + ", newNode: " + newNode);
+                //System.out.println("\t\tCurrent: " + current + ", newNode: " + newNode);
                 current.setLeftChild(newNode);
             }
         }

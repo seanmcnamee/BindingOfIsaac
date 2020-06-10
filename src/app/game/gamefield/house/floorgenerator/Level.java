@@ -1,7 +1,12 @@
 package app.game.gamefield.house.floorgenerator;
 
 import app.game.gamefield.house.floorgenerator.Direction;
-import app.game.gamefield.house.rooms.Room.Rooms;
+import app.game.gamefield.house.rooms.types.ArcadeRoom;
+import app.game.gamefield.house.rooms.types.BossRoom;
+import app.game.gamefield.house.rooms.types.RegularRoom;
+import app.game.gamefield.house.rooms.types.ShopRoom;
+import app.game.gamefield.house.rooms.types.SpawnRoom;
+import app.game.gamefield.house.rooms.types.TreasureRoom;
 import app.supportclasses.GameValues;
 
 import java.util.LinkedList;
@@ -14,23 +19,23 @@ import java.awt.Point;
  */
 public class Level {
     
-    private Rooms[][] roomMap;
+    private Class<?>[][] roomMap;
     private Point mapSize;
 
-    public Level(Map<Rooms, Integer> roomCounts, GameValues gameValues) {
+    public Level(Map<Class<?>, Integer> roomCounts, GameValues gameValues) {
         this.mapSize = gameValues.MAPSIZE;
         roomMap = generateRooms(roomCounts);
         System.out.println("done making map");
         
     }
 
-    public Rooms[][] getRoomMap() {
+    public Class<?>[][] getRoomMap() {
         return this.roomMap;
     }
 
     public void print() {
-        for (Rooms[] roomArr : roomMap) {
-            for (Rooms r : roomArr) {
+        for (Class<?>[] roomArr : roomMap) {
+            for (Class<?> r : roomArr) {
                 System.out.print("-");
                 if (r!=null) {
                     System.out.print(r);
@@ -41,9 +46,9 @@ public class Level {
         System.out.println("Yaaa");
     }
 
-    private void quickPrint(Rooms[][] rooms) {
-        for (Rooms[] roomArr : rooms) {
-            for (Rooms r : roomArr) {
+    private void quickPrint(Class<?>[][] rooms) {
+        for (Class<?>[] roomArr : rooms) {
+            for (Class<?> r : roomArr) {
                 System.out.print("-");
                 if (r!=null) {
                     System.out.print(r);
@@ -54,13 +59,13 @@ public class Level {
         System.out.println("Yaaa");
     }
 
-    private Rooms[][] generateRooms(Map<Rooms, Integer> roomCounts) {
-        Rooms[][] rooms = new Rooms[(int)mapSize.getX()][(int)mapSize.getY()];
+    private Class<?>[][] generateRooms(Map<Class<?>, Integer> roomCounts) {
+        Class<?>[][] rooms = new Class<?>[(int)mapSize.getX()][(int)mapSize.getY()];
         Queue<Point> locationsToExtend = new LinkedList<Point>();
 
         Point spawnLocation = pickSpawnLocation();
-        setRoomAtLocationInMatrixAndQueue(Rooms.Spawn, spawnLocation, rooms, locationsToExtend);
-        decreaseCountOf(Rooms.Spawn, roomCounts);
+        setRoomAtLocationInMatrixAndQueue(SpawnRoom.class, spawnLocation, rooms, locationsToExtend);
+        decreaseCountOf(SpawnRoom.class, roomCounts);
 
         System.out.println("Spawn was just made at + " + spawnLocation);
 
@@ -68,7 +73,7 @@ public class Level {
             //Choose a certain amount to add
             System.out.println("Enter while loop... Queue: " + locationsToExtend.size());
             int specialtyLeft = getSpecialtyLeftToAdd(roomCounts);
-            int regularLeftToExtend = locationsToExtend.size() + roomCounts.get(Rooms.Regular);
+            int regularLeftToExtend = locationsToExtend.size() + roomCounts.get(RegularRoom.class);
             Direction roomCurrentlyExtending = new Direction(locationsToExtend.remove());
 
             MutableBoolean upAvail = new MutableBoolean(isSpotAvailable(new Direction(roomCurrentlyExtending.upLocation()), rooms));
@@ -90,7 +95,7 @@ public class Level {
                 System.out.println("Available bool: " + upAvail.getBoolean() + "-" + rightAvail.getBoolean() +"-" + downAvail.getBoolean() + "-" + leftAvail.getBoolean());
                 if (roomCurrentlyExtending.oneAvailable(upAvail, rightAvail, downAvail, leftAvail)) {
                     Point newPoint = roomCurrentlyExtending.getRandomAdjacentFromAvailableAndUpdateBooleans(upAvail, rightAvail, downAvail, leftAvail);
-                    Rooms newRoomType = getNextRoomType(roomCounts);
+                    Class<?> newRoomType = getNextRoomType(roomCounts);
                     setRoomAtLocationInMatrixAndQueue(newRoomType, newPoint, rooms, locationsToExtend);
                     decreaseCountOf(newRoomType, roomCounts);
                     totalAvailable--;
@@ -101,21 +106,21 @@ public class Level {
         return rooms;
     }
 
-    private int getSpecialtyLeftToAdd(Map<Rooms, Integer> roomCounts) {
-        return roomCounts.get(Rooms.Boss) + 
-                roomCounts.get(Rooms.Treasure) + 
-                roomCounts.get(Rooms.Shop) + 
-                roomCounts.get(Rooms.Arcade);
+    private int getSpecialtyLeftToAdd(Map<Class<?>, Integer> roomCounts) {
+        return roomCounts.get(BossRoom.class) + 
+                roomCounts.get(TreasureRoom.class) + 
+                roomCounts.get(ShopRoom.class) + 
+                roomCounts.get(ArcadeRoom.class);
     }
 
-    private int getRegularLeftToAdd(Map<Rooms, Integer> roomCounts) {
-        return roomCounts.get(Rooms.Regular);
+    private int getRegularLeftToAdd(Map<Class<?>, Integer> roomCounts) {
+        return roomCounts.get(RegularRoom.class);
     }
 
-    private void setRoomAtLocationInMatrixAndQueue(Rooms type, Point location, Rooms[][] matrix, Queue<Point> locationsToExtend) {
+    private void setRoomAtLocationInMatrixAndQueue(Class<?> type, Point location, Class<?>[][] matrix, Queue<Point> locationsToExtend) {
         matrix[(int)location.getX()][(int)location.getY()] = type;
 
-        if (type==Rooms.Spawn || type==Rooms.Regular) {
+        if (type==SpawnRoom.class || type==RegularRoom.class) {
             locationsToExtend.add(location);
         }
     }
@@ -130,12 +135,12 @@ public class Level {
             return new Point(Direction.rndInRange(new Point(lowX, highX)), Direction.rndInRange(new Point(lowY, highY)));
     }
 
-    private void decreaseCountOf(Rooms type, Map<Rooms, Integer> roomCounts) {
+    private void decreaseCountOf(Class<?> type, Map<Class<?>, Integer> roomCounts) {
         Integer count = roomCounts.get(type) - 1;
         roomCounts.put(type, count);
     }
 
-    private boolean isSpotAvailable(Direction locationToTestAdjacents, Rooms[][] rooms) {
+    private boolean isSpotAvailable(Direction locationToTestAdjacents, Class<?>[][] rooms) {
         //Make sure the count around that spot is <=1
         System.out.println("Checking if " + locationToTestAdjacents.getLocation() + " is available through its surroundings");
         Point roomLoc = locationToTestAdjacents.getLocation();
@@ -153,14 +158,14 @@ public class Level {
         return false;
     }
 
-    private int isSpotIsTaken(Point testLocation, Rooms[][] rooms) {
+    private int isSpotIsTaken(Point testLocation, Class<?>[][] rooms) {
         return (isSpotInRange(testLocation) && isSpotTaken(testLocation, rooms))? 1:0;
     }
 
     /**
      * Assumes that the location being tested is within range
      */
-    private boolean isSpotTaken(Point testLocation, Rooms[][] rooms) {
+    private boolean isSpotTaken(Point testLocation, Class<?>[][] rooms) {
         return (rooms[(int)testLocation.getX()][(int)testLocation.getY()] != null);
     }
 
@@ -171,7 +176,7 @@ public class Level {
         return xInRange && yInRange;
     }
 
-    private Rooms getNextRoomType(Map<Rooms, Integer> roomCounts) {
+    private Class<?> getNextRoomType(Map<Class<?>, Integer> roomCounts) {
 
         int specialty = getSpecialtyLeftToAdd(roomCounts);
         int regular = getRegularLeftToAdd(roomCounts);
@@ -179,26 +184,26 @@ public class Level {
         if (specialty > regular) {
             return getSpecialtyType(roomCounts);
         }   else {
-            return Rooms.Regular;
+            return RegularRoom.class;
         }
     }
 
-    private Rooms getSpecialtyType(Map<Rooms, Integer> roomCounts) {
-        Rooms[] choices = new Rooms[getSpecialtyLeftToAdd(roomCounts)];
-        for (int i = 0; i < roomCounts.get(Rooms.Boss); i++) {
-            choices[i] = Rooms.Boss;
+    private Class<?> getSpecialtyType(Map<Class<?>, Integer> roomCounts) {
+        Class<?>[] choices = new Class<?>[getSpecialtyLeftToAdd(roomCounts)];
+        for (int i = 0; i < roomCounts.get(BossRoom.class); i++) {
+            choices[i] = BossRoom.class;
         }
-        for (int i = 0; i < roomCounts.get(Rooms.Treasure); i++) {
-            choices[i+roomCounts.get(Rooms.Boss)] = Rooms.Treasure;
+        for (int i = 0; i < roomCounts.get(TreasureRoom.class); i++) {
+            choices[i+roomCounts.get(BossRoom.class)] = TreasureRoom.class;
         }
-        for (int i = 0; i < roomCounts.get(Rooms.Shop); i++) {
-            choices[i+roomCounts.get(Rooms.Boss)+roomCounts.get(Rooms.Treasure)] = Rooms.Shop;
+        for (int i = 0; i < roomCounts.get(ShopRoom.class); i++) {
+            choices[i+roomCounts.get(BossRoom.class)+roomCounts.get(TreasureRoom.class)] = ShopRoom.class;
         }
 
         for(int i = 0; i < choices.length; i++) {
             System.out.println("Choice " + i + ": " + choices[i]);
         }
-        Rooms choice = choices[Direction.rndInRange(new Point(0, choices.length-1))];
+        Class<?> choice = choices[Direction.rndInRange(new Point(0, choices.length-1))];
         System.out.println("Returning specialty type: " + choice);
         return choice;
     }

@@ -4,6 +4,13 @@ import app.game.gamefield.elements.rendering.Drawable;
 import app.game.gamefield.elements.rendering.HitBox;
 import app.game.gamefield.elements.rendering.InterchangeableImage;
 import app.game.gamefield.house.rooms.Room;
+import app.game.gamefield.house.rooms.types.ArcadeRoom;
+import app.game.gamefield.house.rooms.types.BossRoom;
+import app.game.gamefield.house.rooms.types.RegularRoom;
+import app.game.gamefield.house.rooms.types.SecretRoom;
+import app.game.gamefield.house.rooms.types.ShopRoom;
+import app.game.gamefield.house.rooms.types.SpawnRoom;
+import app.game.gamefield.house.rooms.types.TreasureRoom;
 import app.supportclasses.GameValues;
 import app.supportclasses.SpriteSheet;
 
@@ -27,12 +34,12 @@ public class Door extends Drawable {
         Top, Right, Below, Left;
     }
 
-    public Door(GameValues gameValues, Room.Rooms door, DoorPosition position) {
+    public Door(GameValues gameValues, Room room, DoorPosition position) {
         super(gameValues, calculationLocation(position, gameValues), gameValues.DOOR_Z);
         this.position = position;
         doorState = DoorState.Open;
         setDoorSizeAndHitBox();
-        setDoorImages(door);
+        setDoorImages(room);
     }
 
     private static Point2D.Double calculationLocation(DoorPosition position, GameValues gameValues) {
@@ -92,52 +99,54 @@ public class Door extends Drawable {
         }
     }
 
-    private void setDoorImages(Room.Rooms doorType) {
-        SpriteSheet doorSprites = new SpriteSheet(gameValues.DOOR_SPRITE_SHEET);
+    private void setDoorImages(Room room) {
+        images = room.createDoorImage(new SpriteSheet(gameValues.DOOR_SPRITE_SHEET), this.position);
+        //images.setCurrentImageIndex(1);
 
-        switch(doorType) {
-            case Spawn:
-            case Regular:
+        /*
+        switch(roomClassType) {
+            case SpawnRoom.class.toString():
+            case RegularRoom.class.toString():
                 images = new InterchangeableImage(2, new HitBox());
                 images.setImage(0, flipImagesOnPosition(doorSprites.shrink(doorSprites.grabImage(1, 0, 1, 1, gameValues.DOOR_SPRITE_SHEET_BOX_SIZE))));
                 images.setImage(1, flipImagesOnPosition(doorSprites.shrink(doorSprites.grabImage(2, 0, 1, 1, gameValues.DOOR_SPRITE_SHEET_BOX_SIZE))));
                 break;
-            case Shop:
+            case ShopRoom.class.toString():
                 images = new InterchangeableImage(3, new HitBox());
                 images.setImage(2, flipImagesOnPosition(doorSprites.shrink(doorSprites.grabImage(0, 0, 1, 1, gameValues.DOOR_SPRITE_SHEET_BOX_SIZE))));
                 images.setImage(0, flipImagesOnPosition(doorSprites.shrink(doorSprites.grabImage(1, 0, 1, 1, gameValues.DOOR_SPRITE_SHEET_BOX_SIZE))));
                 images.setImage(1, flipImagesOnPosition(doorSprites.shrink(doorSprites.grabImage(2, 0, 1, 1, gameValues.DOOR_SPRITE_SHEET_BOX_SIZE))));
                 break;
-            case Secret:
+            case SecretRoom.class.toString():
                 images = new InterchangeableImage(1, new HitBox());
                 images.setImage(0, flipImagesOnPosition(doorSprites.shrink(doorSprites.grabImage(2, 1, 1, 1, gameValues.DOOR_SPRITE_SHEET_BOX_SIZE))));
                 break;
-            case Treasure:
+            case TreasureRoom.class.toString():
                 images = new InterchangeableImage(3, new HitBox());
                 images.setImage(2, flipImagesOnPosition(doorSprites.shrink(doorSprites.grabImage(0, 2, 1, 1, gameValues.DOOR_SPRITE_SHEET_BOX_SIZE))));
                 images.setImage(0, flipImagesOnPosition(doorSprites.shrink(doorSprites.grabImage(1, 2, 1, 1, gameValues.DOOR_SPRITE_SHEET_BOX_SIZE))));
                 images.setImage(1, flipImagesOnPosition(doorSprites.shrink(doorSprites.grabImage(2, 2, 1, 1, gameValues.DOOR_SPRITE_SHEET_BOX_SIZE))));
                 break;
-            case Boss:
+            case BossRoom.class.toString():
                 images = new InterchangeableImage(2, new HitBox());
                 images.setImage(0, flipImagesOnPosition(doorSprites.shrink(doorSprites.grabImage(1, 3, 1, 1, gameValues.DOOR_SPRITE_SHEET_BOX_SIZE))));
                 images.setImage(1, flipImagesOnPosition(doorSprites.shrink(doorSprites.grabImage(2, 3, 1, 1, gameValues.DOOR_SPRITE_SHEET_BOX_SIZE))));
                 break;
-            case Arcade:
+            case ArcadeRoom.class.toString():
                 images = new InterchangeableImage(3, new HitBox());
                 images.setImage(2, flipImagesOnPosition(doorSprites.shrink(doorSprites.grabImage(0, 4, 1, 1, gameValues.DOOR_SPRITE_SHEET_BOX_SIZE))));
                 images.setImage(0, flipImagesOnPosition(doorSprites.shrink(doorSprites.grabImage(1, 4, 1, 1, gameValues.DOOR_SPRITE_SHEET_BOX_SIZE))));
                 images.setImage(1, flipImagesOnPosition(doorSprites.shrink(doorSprites.grabImage(2, 4, 1, 1, gameValues.DOOR_SPRITE_SHEET_BOX_SIZE))));
                 break;
             default:
-                throw new NoSuchElementException("Enum: " + doorType + " not yet added!");
+                throw new NoSuchElementException("Class not found!");
         }
-        images.setCurrentImageIndex(1);
+        */
     }
 
-    private BufferedImage flipImagesOnPosition(BufferedImage imageToTransform) {
-        System.out.println("Flipping door at " + this.position);
-        switch(this.position) {
+    public static BufferedImage flipImagesOnPosition(BufferedImage imageToTransform, Door.DoorPosition position) {
+        System.out.println("Flipping door at " + position);
+        switch(position) {
             case Top:
                 return imageToTransform;
             case Right:

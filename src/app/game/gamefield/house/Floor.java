@@ -1,11 +1,13 @@
 package app.game.gamefield.house;
 
 import java.awt.Point;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Map;
 
 import app.game.gamefield.elements.mobiles.Mobile;
 import app.game.gamefield.elements.mobiles.players.Player;
+import app.game.gamefield.elements.rendering.Drawable;
 import app.game.gamefield.house.floorgenerator.Level;
 import app.game.gamefield.house.rooms.Room;
 import app.game.gamefield.house.rooms.types.BossRoom;
@@ -32,7 +34,7 @@ public class Floor {
         Basement1, Basement2, Caves1, Caves2, TheDepths1, TheDepths2, TheWomb;
     }
 
-    public Floor(GameValues gameValues, Player player, FloorName floorName, Map<Room.Rooms, Integer> roomCounts) {
+    public Floor(GameValues gameValues, Player player, FloorName floorName, Map<Class<?>, Integer> roomCounts) {
         this.gameValues = gameValues;
         this.player = player;
         this.floorName = floorName;
@@ -47,24 +49,26 @@ public class Floor {
         }
     }
 
-    private Room[] generateFloorMap(Map<Room.Rooms, Integer> roomCounts) {
+    private Room[] generateFloorMap(Map<Class<?>, Integer> roomCounts) {
         Level levelFromCounts = new Level(roomCounts, gameValues);
         return convertFromEnumMatrixToRoomArray(levelFromCounts.getRoomMap());
     }
 
-    private Room[] convertFromEnumMatrixToRoomArray(Room.Rooms[][] enumMatrix) {
+    private Room[] convertFromEnumMatrixToRoomArray(Class<?>[][] enumMatrix) {
         System.out.println();
         System.out.println();
         System.out.println("Converting to Room Matrix");
         Room[][] roomMatrix = convertFromEnumToRoomMatrix(enumMatrix);
         ArrayList<Room> roomArrayList = new ArrayList<Room>();
-        
+
         System.out.println();
         System.out.println("Converting to arrayList");
         for (int x = 0; x < roomMatrix.length; x++) {
             for (int y = 0; y < roomMatrix[x].length; y++) {
-                if (roomMatrix[x][y]!=null) {
-                    roomMatrix[x][y].setSurroundingAndLock(getRoomAt(x, y-1, roomMatrix), getRoomAt(x+1, y, roomMatrix), getRoomAt(x, y+1, roomMatrix), getRoomAt(x-1, y, roomMatrix));
+                if (roomMatrix[x][y] != null) {
+                    roomMatrix[x][y].setSurroundingAndLock(getRoomAt(x, y - 1, roomMatrix),
+                            getRoomAt(x + 1, y, roomMatrix), getRoomAt(x, y + 1, roomMatrix),
+                            getRoomAt(x - 1, y, roomMatrix));
                     roomArrayList.add(roomMatrix[x][y]);
                 }
             }
@@ -87,17 +91,17 @@ public class Floor {
     private Room getRoomAt(int x, int y, Room[][] roomMatrix) {
         if (x >= 0 && x < roomMatrix.length && y >= 0 && y < roomMatrix[0].length) {
             return roomMatrix[x][y];
-        }   else {
+        } else {
             return null;
         }
     }
 
-    private Room[][] convertFromEnumToRoomMatrix(Room.Rooms[][] enumMatrix) {
+    private Room[][] convertFromEnumToRoomMatrix(Class<?>[][] enumMatrix) {
         Room[][] roomMatrix = new Room[enumMatrix.length][enumMatrix[0].length];
-        
+
         for (int x = 0; x < roomMatrix.length; x++) {
             for (int y = 0; y < roomMatrix[x].length; y++) {
-                if (enumMatrix[x][y]!=null) {
+                if (enumMatrix[x][y] != null) {
                     Point location = new Point(x, y);
                     roomMatrix[x][y] = makeDisconnectedRoom(enumMatrix[x][y], location);
                     System.out.println("Room object: " + roomMatrix[x][y]);
@@ -108,22 +112,32 @@ public class Floor {
         return roomMatrix;
     }
 
-
-    private Room makeDisconnectedRoom(Room.Rooms type, Point location) {
+    private Room makeDisconnectedRoom(Class<?> type, Point location) {
         System.out.println("\nMaking a new " + type + " room");
-        switch(type) {
-            case Boss:
-                return new BossRoom(this.gameValues, this.player, location);
-            case Treasure:
-                return new TreasureRoom(this.gameValues, this.player, location);
-            case Shop:
-                return new ShopRoom(this.gameValues, this.player, location);
-            case Regular:
-                return new RegularRoom(this.gameValues, this.player, location);
-            case Spawn:
-                return new SpawnRoom(this.gameValues, this.player, (this.floorName==FloorName.Basement1), location);
-            default: 
-                throw new NullPointerException("Invalid Choice given when creating specialty room!");
+        if (type.equals(SpawnRoom.class)) {
+            return new SpawnRoom(this.gameValues, this.player, (this.floorName == FloorName.Basement1), location);
+        } else if (type.equals(BossRoom.class)) {
+            return new BossRoom(this.gameValues, this.player, location);
+        } else if (type.equals(TreasureRoom.class)) {
+            return new TreasureRoom(this.gameValues, this.player, location);
+        } else if (type.equals(ShopRoom.class)) {
+            return new ShopRoom(this.gameValues, this.player, location);
+        } else if (type.equals(RegularRoom.class)) {
+            return new RegularRoom(this.gameValues, this.player, location);
+        } else {
+            throw new NullPointerException("Invalid Choice given when creating specialty room!");
+            
+            /*
+            try {
+                
+                return (Room) type.getConstructor(GameValues.class, Drawable.class, Point.class)
+                        .newInstance(this.gameValues, this.player, location);
+            } catch (InstantiationException | IllegalAccessException | IllegalArgumentException
+                    | InvocationTargetException | NoSuchMethodException | SecurityException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+                throw new ExceptionInInitializerError("Class types are fucked on creation");
+            }*/
         }
     }
 
