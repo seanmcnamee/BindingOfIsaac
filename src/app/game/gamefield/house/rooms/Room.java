@@ -11,6 +11,7 @@ import app.game.gamefield.elements.immovables.walls.Wall;
 import app.game.gamefield.elements.mobiles.Mobile;
 import app.game.gamefield.elements.rendering.structure.BST;
 import app.game.gamefield.elements.rendering.Drawable;
+import app.game.gamefield.elements.rendering.HitBox;
 import app.game.gamefield.elements.rendering.InterchangeableImage;
 import app.supportclasses.GameValues;
 import app.supportclasses.SpriteSheet;
@@ -21,6 +22,10 @@ import java.awt.Point;
 
 /**
  * Room
+ * holds all the elements of the room
+ * deals with initializing Walls, and calls methods for initializing room entities (mobiles and immovables)
+ * Doors are created after all Rooms are in place, 
+ * Deals with rendering all elements
  */
 public abstract class Room extends Traversable{
     
@@ -55,6 +60,27 @@ public abstract class Room extends Traversable{
         setPictures(new SpriteSheet(gameValues.ICON_SPRITE_SHEET));
     }
 
+    private void createWalls() {
+        System.out.println("Creating Walls for " + this.getClass());
+        Drawable wallTop, wallBottom, wallLeft, wallRight;
+        wallTop = new Wall(gameValues, Wall.WallType.Top);
+        wallBottom = new Wall(gameValues, Wall.WallType.Bottom);
+        wallLeft = new Wall(gameValues, Wall.WallType.Left);
+        wallRight = new Wall(gameValues, Wall.WallType.Right);
+        System.out.println("Elements: " + wallTop + "- " + "- " + wallRight + "- " + wallBottom + "- " + wallLeft);
+        System.out.println("Elements Heap: " + elements);
+
+        System.out.println("Adding elements to room");
+        this.elements.add(wallTop);
+        this.elements.add(wallBottom);
+        this.elements.add(wallLeft);
+        this.elements.add(wallRight);
+    }
+
+    protected abstract void createMobiles();
+    protected abstract void createImmovables();
+    protected abstract void setPictures(SpriteSheet icons);
+
     /**
      * Called once the surrounding rooms are set
      */
@@ -80,27 +106,18 @@ public abstract class Room extends Traversable{
         
     }
 
-    private void createWalls() {
-        System.out.println("Creating Walls for " + this.getClass());
-        Drawable wallTop, wallBottom, wallLeft, wallRight;
-        wallTop = new Wall(gameValues, Wall.WallType.Top);
-        wallBottom = new Wall(gameValues, Wall.WallType.Bottom);
-        wallLeft = new Wall(gameValues, Wall.WallType.Left);
-        wallRight = new Wall(gameValues, Wall.WallType.Right);
-        System.out.println("Elements: " + wallTop + "- " + "- " + wallRight + "- " + wallBottom + "- " + wallLeft);
-        System.out.println("Elements Heap: " + elements);
-
-        System.out.println("Adding elements to room");
-        this.elements.add(wallTop);
-        this.elements.add(wallBottom);
-        this.elements.add(wallLeft);
-        this.elements.add(wallRight);
+    /**
+     * Called from 'Doors' to get the door images required from the Room type. Default Spawn/Regular
+     */
+    public InterchangeableImage createDoorImage(SpriteSheet doorSprites, DoorPosition position) {
+        InterchangeableImage images = new InterchangeableImage(2, new HitBox());
+        images.setImage(0, Door.flipImagesOnPosition(doorSprites.shrink(doorSprites.grabImage(1, 0, 1, 1, gameValues.DOOR_SPRITE_SHEET_BOX_SIZE)), position));
+        images.setImage(1, Door.flipImagesOnPosition(doorSprites.shrink(doorSprites.grabImage(2, 0, 1, 1, gameValues.DOOR_SPRITE_SHEET_BOX_SIZE)), position));
+        
+        images.setCurrentImageIndex(1);
+        
+        return images;
     }
-
-    protected abstract void createMobiles();
-    protected abstract void createImmovables();
-    protected abstract void setPictures(SpriteSheet icons);
-    public abstract InterchangeableImage createDoorImage(SpriteSheet doorSprites, Door.DoorPosition position);
 
     public void render(Graphics g) {
         drawBackground(g);
@@ -137,10 +154,28 @@ public abstract class Room extends Traversable{
     }
     */
 
+    /*
+    public Drawable recursiveCollisionCheck(Drawable main, Point2D.Double testLocation, Drawable currentNode) {
+        if (currentNode == null) {
+            return null;
+        }   else if (main != currentNode && main.contains(testLocation, currentNode)) {
+            return currentNode;
+        }   else {
+            Drawable left = recursiveCollisionCheck(main, testLocation, (Drawable)currentNode.getLeft());
+            Drawable right = recursiveCollisionCheck(main, testLocation, (Drawable)currentNode.getRight());
+            if (left!=null) {
+                return left;
+            }   else {
+                return right;
+            }
+        }
+    }
+    */
+
     /**
      * MUST do regular to ensure that things ontop of other things (doors on walls) will be checked for collision first
      */
-    public Drawable recursiveCollisionCheck(Drawable main, Point2D.Double testLocation) {
+    public Drawable collisionCheck(Drawable main, Point2D.Double testLocation) {
         //System.out.println("Checking collisions");
         return testEachCollision(main, testLocation);
         //return recursiveCollisionCheck(main, testLocation, (Drawable)elements.getRoot());
@@ -188,25 +223,6 @@ public abstract class Room extends Traversable{
         }
         return drawableArray.remove((int)indexAndPriority.getX());
     }
-
-    /*
-    public Drawable recursiveCollisionCheck(Drawable main, Point2D.Double testLocation, Drawable currentNode) {
-        if (currentNode == null) {
-            return null;
-        }   else if (main != currentNode && main.contains(testLocation, currentNode)) {
-            return currentNode;
-        }   else {
-            Drawable left = recursiveCollisionCheck(main, testLocation, (Drawable)currentNode.getLeft());
-            Drawable right = recursiveCollisionCheck(main, testLocation, (Drawable)currentNode.getRight());
-            if (left!=null) {
-                return left;
-            }   else {
-                return right;
-            }
-        }
-    }
-    */
-
     
     public void destroyElement(Drawable element) {
         if (element.getClass().equals(Mobile.class)) {

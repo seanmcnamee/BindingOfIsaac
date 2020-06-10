@@ -16,7 +16,7 @@ import app.game.gamefield.house.rooms.types.TreasureRoom;
 import app.supportclasses.GameValues;
 
 /**
- * Levels
+ * House
  */
 public class House {
     //Holds the different floors

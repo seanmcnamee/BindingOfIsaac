@@ -10,6 +10,7 @@ import app.supportclasses.SpriteSheet;
 
 /**
  * Degradable
+ * Represents anything who's image changes based on its health
  */
 public class Degradable extends Destructible {
     private InterchangeableImage images;

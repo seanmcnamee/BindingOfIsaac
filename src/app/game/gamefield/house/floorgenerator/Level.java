@@ -1,6 +1,5 @@
 package app.game.gamefield.house.floorgenerator;
 
-import app.game.gamefield.house.floorgenerator.Direction;
 import app.game.gamefield.house.rooms.types.ArcadeRoom;
 import app.game.gamefield.house.rooms.types.BossRoom;
 import app.game.gamefield.house.rooms.types.RegularRoom;
@@ -16,6 +15,7 @@ import java.awt.Point;
 
 /**
  * Level
+ * Generates a Class<?> matrix for a single floor based on a Mapping of Class<?> to their counts
  */
 public class Level {
     

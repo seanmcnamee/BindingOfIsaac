@@ -7,6 +7,7 @@ import app.supportclasses.GameValues;
 
 /**
  * Destroyable
+ * Represents anything that has health
  */
 public abstract class Destructible extends Drawable {
     protected int maxHealth, health; // A full heart is 2. A half heart is 1

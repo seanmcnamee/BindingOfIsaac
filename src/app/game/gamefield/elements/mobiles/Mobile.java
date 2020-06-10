@@ -3,21 +3,22 @@ package app.game.gamefield.elements.mobiles;
 import app.game.gamefield.elements.Destructible;
 import app.game.gamefield.elements.rendering.Drawable;
 import app.game.gamefield.house.Floor;
-import app.game.gamefield.house.rooms.Room;
 import app.supportclasses.GameValues;
 
 import java.awt.geom.Point2D;
 import java.awt.Point;
 
 /**
- * Entity
+ * Mobile
+ * Provides background calculation methods/variables for movement
+ * Deals with collisions in the 'onCollision' method
  */
 public abstract class Mobile extends Destructible{
     protected double maxSpeed;
-    protected double accelerationRate; //In blocks per second
+    protected double accelerationRate; //In blocks per second 
     protected Point2D.Double velocityPercent;
-    protected Point accelerationPercent;
-    protected boolean colliding = false;
+    protected Point accelerationPercent; //can only have values of -1, 0, and 1 (toggles the accelerationRate)
+    //protected boolean colliding = false;
 
     /*
     public Mobile(GameValues gameValues, double x, double y) {
@@ -44,7 +45,11 @@ public abstract class Mobile extends Destructible{
         //System.out.println("Accelerated... x: " + accelerationPercent.x + ", y: " + accelerationPercent.y);
     }
 
+    /**
+     * 
+     */
     protected void updateVelocity() {
+        //Converts from blocks/second to blocks/tick
         final double acceleration = accelerationRate/gameValues.goalTicksPerSecond;
         final double friction = gameValues.friction/gameValues.goalTicksPerSecond;
         final double changeWhenFull = .1;
@@ -53,9 +58,11 @@ public abstract class Mobile extends Destructible{
         tempXPercent = velocityPercent.x;
         tempYPercent = velocityPercent.y;
 
+        //Add friction and acceleration to the current velocity
         tempXPercent -= Math.signum(tempXPercent)*friction + acceleration*accelerationPercent.x;
         tempYPercent -= Math.signum(tempYPercent)*friction + acceleration*accelerationPercent.y;
 
+        //Considers static and kinetic friction to be equal
         if (Math.abs(tempXPercent) <= friction) {
             tempXPercent = 0;
         }
@@ -64,6 +71,8 @@ public abstract class Mobile extends Destructible{
             tempYPercent = 0;
         }
 
+        //When the resultant of x and y are too large, lower them both 
+        //this will result in the initial direction always being slightly more than the other
         if (Math.sqrt((Math.pow(tempXPercent, 2) + Math.pow(tempYPercent, 2))) <= 1+changeWhenFull) {
             velocityPercent.x = tempXPercent;
             velocityPercent.y = tempYPercent;
@@ -76,6 +85,8 @@ public abstract class Mobile extends Destructible{
         //System.out.println("Velocity... x: " + velocityPercent.getX() + ", y: " + velocityPercent.getY());
     }
 
+    //Calls the Room's collisionCheck for an element, and sends it to the onCollision method
+    //To deal with how the item should move
     protected void testCollisionAndMove(Floor floor) {
         Point2D.Double tempLocation = new Point2D.Double(location.getX(), location.getY());
 
@@ -84,8 +95,7 @@ public abstract class Mobile extends Destructible{
         tempLocation.x += velocityPercent.x*maxSpeedPerTick;
         tempLocation.y += velocityPercent.y*maxSpeedPerTick;
 
-        //TODO test recursive version
-        Drawable collidingElement = floor.getCurrentRoom().recursiveCollisionCheck(this, tempLocation);
+        Drawable collidingElement = floor.getCurrentRoom().collisionCheck(this, tempLocation);
         if (collidingElement!=null) {
             location = onCollision(tempLocation, collidingElement, floor);
         }   else {

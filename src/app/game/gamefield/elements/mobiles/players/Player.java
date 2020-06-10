@@ -92,14 +92,14 @@ public class Player extends Mobile {
 
     private Point2D.Double regularCollision(Double newLocation, Drawable collidingElement, Room room) {
         Point2D.Double onlyY = new Point2D.Double(newLocation.getX(), location.getY());
-        Drawable onlyYCollision = room.recursiveCollisionCheck(this, onlyY);
+        Drawable onlyYCollision = room.collisionCheck(this, onlyY);
         if (onlyYCollision == null) {
             this.velocityPercent.y = 0;
             return onlyY;
         }
 
         Point2D.Double onlyX = new Point2D.Double(location.getX(), newLocation.getY());
-        Drawable onlyXCollision = room.recursiveCollisionCheck(this, onlyX);
+        Drawable onlyXCollision = room.collisionCheck(this, onlyX);
         if (onlyXCollision == null) {
             this.velocityPercent.x = 0;
             return onlyX;

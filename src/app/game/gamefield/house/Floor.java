@@ -1,13 +1,11 @@
 package app.game.gamefield.house;
 
 import java.awt.Point;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Map;
 
 import app.game.gamefield.elements.mobiles.Mobile;
 import app.game.gamefield.elements.mobiles.players.Player;
-import app.game.gamefield.elements.rendering.Drawable;
 import app.game.gamefield.house.floorgenerator.Level;
 import app.game.gamefield.house.rooms.Room;
 import app.game.gamefield.house.rooms.types.BossRoom;
@@ -18,10 +16,11 @@ import app.game.gamefield.house.rooms.types.TreasureRoom;
 import app.supportclasses.GameValues;
 
 /**
- * GameMap
+ * Floor
+ * Holds the rooms for this floor. Converts from a Class<?> matrix to a Room array
  */
 public class Floor {
-    // Holds the rooms for this floor
+    
     private Room[] rooms;
     private Room currentRoom;
     private FloorName floorName;
@@ -40,7 +39,10 @@ public class Floor {
         this.floorName = floorName;
         rooms = generateFloorMap(roomCounts);
         this.changingRoom = false;
+        printRooms();
+    }
 
+    private void printRooms() {
         System.out.println();
         System.out.println("               Printing Overall Rooms");
         System.out.println("--------------------------------------------------");
