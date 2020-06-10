@@ -1,6 +1,7 @@
 package app.game.gamefield.elements.mobiles.players;
 
 import app.game.gamefield.elements.immovables.Degradable;
+import app.game.gamefield.elements.immovables.doors.BossDoor;
 import app.game.gamefield.elements.immovables.doors.Door;
 import app.game.gamefield.elements.immovables.walls.Wall;
 import app.game.gamefield.elements.mobiles.Mobile;
@@ -81,7 +82,7 @@ public class Player extends Mobile {
             return regularCollision(newLocation, collidingElement, floor.getCurrentRoom());
         }
 
-        if (collidingElement.getClass() == Door.class) {
+        if (collidingElement.getClass() == Door.class || collidingElement.getClass() == BossDoor.class) {
             return doorCollision(newLocation, (Door) collidingElement, floor);
         }
 

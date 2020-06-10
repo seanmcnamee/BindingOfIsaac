@@ -74,15 +74,40 @@ public class GameValues {
     public double fieldYStart = 0;
     public double fieldXSize = 0;
     public double fieldYSize = 0;
-    public double fieldXZero = 0;//For in game location representation //TODO allow change fopr screen scrolling (large room)
+    public double fieldXZero = 0;//For in game location representation //TODO allow change for screen scrolling (large room)
     public double fieldYZero = 0;
     public double singleSquareX = 0;
     public double singleSquareY = 0;
 
+    //Pixel heights
+    private final int DOOR_HEIGHT_REGULAR = 86;
+    private final int DOOR_HEIGHT_BOSS_CLOSED = 126;
+    private final int DOOR_HEIGHT_BOSS_OPEN = 185;
+    private final int DOOR_HEIGHT_BOSS_ABOVE = DOOR_HEIGHT_BOSS_CLOSED-DOOR_HEIGHT_REGULAR;
+    private final int DOOR_HEIGHT_BOSS_BELOW = DOOR_HEIGHT_BOSS_OPEN-DOOR_HEIGHT_BOSS_CLOSED;
+    private final int DOOR_HEIGHT_TREASURE = 91;
+    private final int DOOR_HEIGHT_SECRET = 121;
+    private final int DOOR_HEIGHT_ARCADE = 108;
+
+    //Default blocksize and hitbox size
     public final double DOOR_DEPTH = .75;
     public final double DOOR_WIDTH = 2;
     public final double DOOR_HITBOX_DEPTH = 1;
     public final double DOOR_HITBOX_WIDTH = .1;
+    public final double DOOR_DEPTH_OFFSET = 0;
+    public final double DOOR_HITBOX_DEPTH_OFFSET = 0;
+
+    private final double DOOR_BLOCKSIZE_RATIO = DOOR_DEPTH/DOOR_HEIGHT_REGULAR;
+
+    public final double DOOR_BOSS_OPEN_DEPTH = DOOR_HEIGHT_BOSS_OPEN*DOOR_BLOCKSIZE_RATIO;
+    public final double DOOR_BOSS_CLOSED_DEPTH = DOOR_HEIGHT_BOSS_CLOSED*DOOR_BLOCKSIZE_RATIO;
+    public final double DOOR_BOSS_TREASURE = DOOR_HEIGHT_TREASURE*DOOR_BLOCKSIZE_RATIO;
+    public final double DOOR_BOSS_SECRET = DOOR_HEIGHT_SECRET*DOOR_BLOCKSIZE_RATIO;
+    public final double DOOR_BOSS_ARCADE = DOOR_HEIGHT_ARCADE*DOOR_BLOCKSIZE_RATIO;
+
+    public final double DOOR_BOSS_OPEN_DEPTH_OFFSET = (DOOR_HEIGHT_BOSS_BELOW-DOOR_HEIGHT_BOSS_ABOVE)/2.0*DOOR_BLOCKSIZE_RATIO; //Half of what is extra
+    public final double DOOR_BOSS_OPEN_HITBOX_DEPTH = DOOR_HITBOX_DEPTH*(DOOR_DEPTH/DOOR_BOSS_OPEN_DEPTH);
+    public final double DOOR_BOSS_OPEN_HITBOX_DEPTH_OFFSET = DOOR_BOSS_OPEN_DEPTH_OFFSET/DOOR_BOSS_OPEN_DEPTH;
 
     public final int TOP_BOTTOM_WALL_Z = -50;
     public final int SIDE_WALL_Z = -100;

@@ -2,6 +2,7 @@ package app.game.gamefield.house.rooms.types;
 
 import app.game.gamefield.elements.immovables.Degradable;
 import app.game.gamefield.elements.immovables.Degradable.Degradables;
+import app.game.gamefield.elements.immovables.doors.BossDoor;
 import app.game.gamefield.elements.immovables.doors.Door;
 import app.game.gamefield.elements.immovables.doors.Door.DoorPosition;
 import app.game.gamefield.elements.rendering.Drawable;
@@ -46,13 +47,16 @@ public class BossRoom extends Room {
     }
 
     @Override
+    protected Door makeDoor(DoorPosition position) {
+        return new BossDoor(gameValues, this, position);
+    }
+
+    @Override
     public InterchangeableImage createDoorImage(SpriteSheet doorSprites, DoorPosition position) {
         InterchangeableImage images = new InterchangeableImage(2, new HitBox());
         
         images.setImage(0, Door.flipImagesOnPosition(doorSprites.shrink(doorSprites.grabImage(1, 3, 1, 1, gameValues.DOOR_SPRITE_SHEET_BOX_SIZE)), position));
         images.setImage(1, Door.flipImagesOnPosition(doorSprites.shrink(doorSprites.grabImage(2, 3, 1, 1, gameValues.DOOR_SPRITE_SHEET_BOX_SIZE)), position));
-        
-        images.setCurrentImageIndex(1);
         
         return images;
     }

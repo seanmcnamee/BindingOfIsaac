@@ -5,11 +5,13 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 
+import app.game.gamefield.elements.immovables.doors.BossDoor;
 import app.game.gamefield.elements.immovables.doors.Door;
 import app.game.gamefield.elements.immovables.doors.Door.DoorPosition;
 import app.game.gamefield.elements.immovables.walls.Wall;
 import app.game.gamefield.elements.mobiles.Mobile;
 import app.game.gamefield.elements.rendering.structure.BST;
+import app.game.gamefield.house.rooms.types.BossRoom;
 import app.game.gamefield.elements.rendering.Drawable;
 import app.game.gamefield.elements.rendering.HitBox;
 import app.game.gamefield.elements.rendering.InterchangeableImage;
@@ -88,22 +90,26 @@ public abstract class Room extends Traversable{
 
         if (getAbove()!=null) {
             System.out.println("Creating door above");
-            elements.add(new Door(gameValues, ((Room)getAbove()), DoorPosition.Top));
+            elements.add(((Room)getAbove()).makeDoor(DoorPosition.Top));
         }
         if (getRight()!=null) {
             System.out.println("Creating door right");
-            elements.add(new Door(gameValues, ((Room)getRight()), DoorPosition.Right));
+            elements.add(((Room)getRight()).makeDoor(DoorPosition.Right));
         }
         if (getBelow()!=null) {
             System.out.println("Creating door below");
-            elements.add(new Door(gameValues, ((Room)getBelow()), DoorPosition.Below));
+            elements.add(((Room)getBelow()).makeDoor(DoorPosition.Below));
         }
         
         if (getLeft()!=null) {
             System.out.println("Creating door left");
-            elements.add(new Door(gameValues, ((Room)getLeft()), DoorPosition.Left));
+            elements.add(((Room)getLeft()).makeDoor(DoorPosition.Left));
         }
         
+    }
+
+    protected Door makeDoor(DoorPosition position) {
+        return new Door(gameValues, this, position);
     }
 
     /**
@@ -113,8 +119,6 @@ public abstract class Room extends Traversable{
         InterchangeableImage images = new InterchangeableImage(2, new HitBox());
         images.setImage(0, Door.flipImagesOnPosition(doorSprites.shrink(doorSprites.grabImage(1, 0, 1, 1, gameValues.DOOR_SPRITE_SHEET_BOX_SIZE)), position));
         images.setImage(1, Door.flipImagesOnPosition(doorSprites.shrink(doorSprites.grabImage(2, 0, 1, 1, gameValues.DOOR_SPRITE_SHEET_BOX_SIZE)), position));
-        
-        images.setCurrentImageIndex(1);
         
         return images;
     }

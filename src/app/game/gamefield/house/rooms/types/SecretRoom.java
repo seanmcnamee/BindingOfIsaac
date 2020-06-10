@@ -51,8 +51,6 @@ public class SecretRoom extends Room {
         
         images.setImage(0, Door.flipImagesOnPosition(doorSprites.shrink(doorSprites.grabImage(2, 1, 1, 1, gameValues.DOOR_SPRITE_SHEET_BOX_SIZE)), position));
         
-        images.setCurrentImageIndex(1);
-        
         return images;
     }
 

@@ -45,8 +45,6 @@ public class ArcadeRoom extends Room {
         images.setImage(0, Door.flipImagesOnPosition(doorSprites.shrink(doorSprites.grabImage(1, 4, 1, 1, gameValues.DOOR_SPRITE_SHEET_BOX_SIZE)), position));
         images.setImage(1, Door.flipImagesOnPosition(doorSprites.shrink(doorSprites.grabImage(2, 4, 1, 1, gameValues.DOOR_SPRITE_SHEET_BOX_SIZE)), position));
         
-        images.setCurrentImageIndex(1);
-        
         return images;
     }
     
