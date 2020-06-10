@@ -10,20 +10,23 @@ import app.supportclasses.GameValues;
 import java.awt.Graphics;
 import java.awt.Color;
 import java.awt.geom.Point2D;
-import java.awt.Point;
 
 /**
  * MiniMap
  */
-public class MiniMap extends DrawingCalculator{
+public class MiniMap {
     private Floor floor;
+    private GameValues gameValues;
+    private DrawingCalculator calculator;
+
     private Point2D.Double adjustedMapSize;
     private Point2D.Double singleRoomSize = new Point2D.Double(1.0, 1.0);
     private final Point2D.Double generalIconSize = new Point2D.Double(1, 2.5);
     private final double outsideEdge = .5;
     
     public MiniMap(Floor f, GameValues gameValues) {
-        super(gameValues);
+        this.gameValues = gameValues;
+        this.calculator = new DrawingCalculator();
         init(f);
     }
 
@@ -42,7 +45,7 @@ public class MiniMap extends DrawingCalculator{
         double miniMapYSize = gameValues.barYSize*gameValues.MINIMAP_Y_SIZE;
 
         Point2D.Double miniMapPixelSize = new Point2D.Double(miniMapXSize, miniMapYSize);
-        Point2D.Double blockSize = findSingleBlockSize(miniMapPixelSize, adjustedMapSize);
+        Point2D.Double blockSize = calculator.findSingleBlockSize(miniMapPixelSize, adjustedMapSize);
 
         Point2D.Double miniMapStart = new Point2D.Double(gameValues.barXStart+blockSize.getX()*2*outsideEdge, gameValues.barYStart+blockSize.getY()*2*outsideEdge);
 
@@ -53,10 +56,10 @@ public class MiniMap extends DrawingCalculator{
 
         for (Room room : this.floor.getRooms()) {
             if (room.isSeen() || room.isExplored()) {
-                int xPos = findPixelLocation(room.getLocation().getX(), singleRoomSize.getX(), miniMapStart.getX(), blockSize.getX());
-                int yPos = findPixelLocation(room.getLocation().getY(), singleRoomSize.getY(), miniMapStart.getY(), blockSize.getY());
-                int xSize = findPixelSize(singleRoomSize.getX(), blockSize.getX());
-                int ySize = findPixelSize(singleRoomSize.getY(), blockSize.getY());
+                int xPos = calculator.findPixelLocation(room.getLocation().getX(), singleRoomSize.getX(), miniMapStart.getX(), blockSize.getX());
+                int yPos = calculator.findPixelLocation(room.getLocation().getY(), singleRoomSize.getY(), miniMapStart.getY(), blockSize.getY());
+                int xSize = calculator.findPixelSize(singleRoomSize.getX(), blockSize.getX());
+                int ySize = calculator.findPixelSize(singleRoomSize.getY(), blockSize.getY());
 
                 if (room.isSeen()) {
                     g.setColor(seenRoom);
@@ -80,12 +83,12 @@ public class MiniMap extends DrawingCalculator{
                 Point2D.Double iconSize = new Point2D.Double(generalIconSize.getX()*(room.getIcon().getWidth()/(double)gameValues.ICON_SPRITE_SHEET_BOX_SIZE),
                                                             generalIconSize.getY()*(room.getIcon().getHeight()/(double)gameValues.ICON_SPRITE_SHEET_BOX_SIZE));
 
-                int xPos = findPixelLocation(room.getLocation().getX(), iconSize.getX(), miniMapStart.getX(), blockSize.getX());
-                int yPos = findPixelLocation(room.getLocation().getY(), iconSize.getY(), miniMapStart.getY(), blockSize.getY());
+                int xPos = calculator.findPixelLocation(room.getLocation().getX(), iconSize.getX(), miniMapStart.getX(), blockSize.getX());
+                int yPos = calculator.findPixelLocation(room.getLocation().getY(), iconSize.getY(), miniMapStart.getY(), blockSize.getY());
                 
                 
-                int xSize = findPixelSize(iconSize.getX(), blockSize.getX());
-                int ySize = findPixelSize(iconSize.getY(), blockSize.getY());
+                int xSize = calculator.findPixelSize(iconSize.getX(), blockSize.getX());
+                int ySize = calculator.findPixelSize(iconSize.getY(), blockSize.getY());
                 g.drawImage(room.getIcon(), xPos, yPos, xSize, ySize, null);  
             }
         }

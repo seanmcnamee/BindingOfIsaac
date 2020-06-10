@@ -27,7 +27,7 @@ public class Drawable extends Node {
         this.gameValues = gameValues;
         this.location = location;
         this.zValue = zValue;
-        this.calculator = new DrawingCalculator(gameValues);
+        this.calculator = new DrawingCalculator();
     }
 
     public void render(Graphics g) {

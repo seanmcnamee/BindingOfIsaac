@@ -8,11 +8,6 @@ import java.awt.geom.Point2D;
  * DrawingCalculator
  */
 public class DrawingCalculator {
-    protected GameValues gameValues;
-
-    public DrawingCalculator(GameValues gameValues) {
-        this.gameValues = gameValues;
-    }
 
     public int findPixelLocation(double location, double size, double zeroLocation, double singleBlockSize) {
         return (int)( zeroLocation+((location-(size/2.0))*singleBlockSize) );
