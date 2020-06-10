@@ -105,7 +105,6 @@ public class Level {
             }
             if (locationsToExtend.isEmpty() && (totalLeftToAdd(roomCounts) > 0)) {
                 requeueAllNonSpecialty(rooms, locationsToExtend);
-                //throw new ExceptionInInitializerError("Re-Add all items to the queue SKIP over this to test if it works!");
             }
         }
 
