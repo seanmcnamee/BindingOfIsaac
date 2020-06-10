@@ -37,10 +37,13 @@ public class Drawable extends Node {
                                 calculator.findPixelSize(getSizeInBlocks().getY(), gameValues.singleSquareY), 
                                 null);
         
-         g.drawRect(calculator.findPixelLocation(getHitBoxLocation().getX(), getHitBoxSizeInBlocks().getX(), gameValues.fieldXZero, gameValues.singleSquareX), 
-                     calculator.findPixelLocation(getHitBoxLocation().getY(), getHitBoxSizeInBlocks().getY(), gameValues.fieldYZero, gameValues.singleSquareY), 
-                     calculator.findPixelSize(getHitBoxSizeInBlocks().getX(), gameValues.singleSquareX), 
-                     calculator.findPixelSize(getHitBoxSizeInBlocks().getY(), gameValues.singleSquareY));
+        if (gameValues.debugMode) {
+            g.drawRect(calculator.findPixelLocation(getHitBoxLocation().getX(), getHitBoxSizeInBlocks().getX(), gameValues.fieldXZero, gameValues.singleSquareX), 
+                        calculator.findPixelLocation(getHitBoxLocation().getY(), getHitBoxSizeInBlocks().getY(), gameValues.fieldYZero, gameValues.singleSquareY), 
+                        calculator.findPixelSize(getHitBoxSizeInBlocks().getX(), gameValues.singleSquareX), 
+                        calculator.findPixelSize(getHitBoxSizeInBlocks().getY(), gameValues.singleSquareY));
+        }
+
     }
 
     @Override

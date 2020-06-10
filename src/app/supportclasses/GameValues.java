@@ -32,6 +32,8 @@ public class GameValues {
     public GameState gameState = GameState.NOTSTARTED;
     public DisplayScreen currentScreen;
 
+    public boolean debugMode = true;
+
     //TitleScreen values
     public final String MAIN_MENU_FILE = "res//emptyMainMenu.jpg";
     public final String MAIN_MENU_BUTTONS = "res//MenuButtonsSpriteSheet.png";

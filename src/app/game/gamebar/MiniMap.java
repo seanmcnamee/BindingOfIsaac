@@ -55,7 +55,7 @@ public class MiniMap {
         Color borderOfRoom = Color.BLACK;
 
         for (Room room : this.floor.getRooms()) {
-            if (room.isSeen() || room.isExplored()) {
+            if (gameValues.debugMode || room.isSeen() || room.isExplored()) {
                 int xPos = calculator.findPixelLocation(room.getLocation().getX(), singleRoomSize.getX(), miniMapStart.getX(), blockSize.getX());
                 int yPos = calculator.findPixelLocation(room.getLocation().getY(), singleRoomSize.getY(), miniMapStart.getY(), blockSize.getY());
                 int xSize = calculator.findPixelSize(singleRoomSize.getX(), blockSize.getX());
@@ -79,7 +79,7 @@ public class MiniMap {
 
         
         for (Room room : this.floor.getRooms()) {
-            if ((room.isSeen() || room.isExplored()) && (room.getClass()!=RegularRoom.class && room.getClass()!=SpawnRoom.class)) {
+            if ((gameValues.debugMode || room.isSeen() || room.isExplored()) && (room.getClass()!=RegularRoom.class && room.getClass()!=SpawnRoom.class)) {
                 Point2D.Double iconSize = new Point2D.Double(generalIconSize.getX()*(room.getIcon().getWidth()/(double)gameValues.ICON_SPRITE_SHEET_BOX_SIZE),
                                                             generalIconSize.getY()*(room.getIcon().getHeight()/(double)gameValues.ICON_SPRITE_SHEET_BOX_SIZE));
 

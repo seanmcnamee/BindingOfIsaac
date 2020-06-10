@@ -67,9 +67,11 @@ public class Level {
         setRoomAtLocationInMatrixAndQueue(SpawnRoom.class, spawnLocation, rooms, locationsToExtend);
         decreaseCountOf(SpawnRoom.class, roomCounts);
 
+        //System.out.println("spawn count: " + roomCount.get);
+
         System.out.println("Spawn was just made at + " + spawnLocation);
 
-        while (!locationsToExtend.isEmpty() && (getSpecialtyLeftToAdd(roomCounts)+getRegularLeftToAdd(roomCounts)) > 0) {
+        while (!locationsToExtend.isEmpty() && (totalLeftToAdd(roomCounts) > 0)) {
             //Choose a certain amount to add
             System.out.println("Enter while loop... Queue: " + locationsToExtend.size());
             int specialtyLeft = getSpecialtyLeftToAdd(roomCounts);
@@ -101,9 +103,17 @@ public class Level {
                     totalAvailable--;
                 }
             }
+            if (locationsToExtend.isEmpty() && (totalLeftToAdd(roomCounts) > 0)) {
+                requeueAllNonSpecialty(rooms, locationsToExtend);
+                //throw new ExceptionInInitializerError("Re-Add all items to the queue SKIP over this to test if it works!");
+            }
         }
 
         return rooms;
+    }
+
+    private int totalLeftToAdd(Map<Class<?>, Integer> roomCounts) {
+        return (getSpecialtyLeftToAdd(roomCounts)+getRegularLeftToAdd(roomCounts));
     }
 
     private int getSpecialtyLeftToAdd(Map<Class<?>, Integer> roomCounts) {
@@ -115,6 +125,16 @@ public class Level {
 
     private int getRegularLeftToAdd(Map<Class<?>, Integer> roomCounts) {
         return roomCounts.get(RegularRoom.class);
+    }
+
+    private void requeueAllNonSpecialty(Class<?>[][] rooms, Queue<Point> locationsToExtend) {
+        for (int x = 0; x < rooms.length; x++) {
+            for (int y = 0; y < rooms[x].length; y++) {
+                if (rooms[x][y] != null && (rooms[x][y].equals(RegularRoom.class) || rooms[x][y].equals(SpawnRoom.class))) {
+                    locationsToExtend.add(new Point(x, y));
+                }
+            }
+        }
     }
 
     private void setRoomAtLocationInMatrixAndQueue(Class<?> type, Point location, Class<?>[][] matrix, Queue<Point> locationsToExtend) {

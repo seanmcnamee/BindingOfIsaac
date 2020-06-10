@@ -57,10 +57,13 @@ public class GameField {
 
         house.getCurrentFloor().getCurrentRoom().render(g);
 
-        g.setColor(Color.WHITE);
-        g.setFont(new Font("TimesRoman", Font.BOLD, 20));
-        DecimalFormat df = new DecimalFormat("#,###,##0.00");
-        g.drawString("(" + df.format(player.getX()) + ", " + df.format(player.getY()) + ")", (int)(gameValues.fieldXStart), (int)(gameValues.fieldYStart+.5*gameValues.singleSquareX));
+        if (gameValues.debugMode) {
+            g.setColor(Color.WHITE);
+            g.setFont(new Font("TimesRoman", Font.BOLD, 20));
+            DecimalFormat df = new DecimalFormat("#,###,##0.00");
+            g.drawString("(" + df.format(player.getX()) + ", " + df.format(player.getY()) + ")", (int)(gameValues.fieldXStart), (int)(gameValues.fieldYStart+.5*gameValues.singleSquareX));
+        }
+        
     }
 
     public void keyPressed(KeyEvent e) {
