@@ -1,4 +1,4 @@
-package app;
+package app.screens;
 
 import java.awt.Graphics;
 import javax.swing.JFrame;

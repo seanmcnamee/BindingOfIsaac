@@ -3,8 +3,8 @@ package app.game.gamefield.elements.immovables;
 import java.awt.geom.Point2D;
 
 import app.game.gamefield.elements.Destructible;
-import app.game.gamefield.elements.rendering.HitBox;
-import app.game.gamefield.elements.rendering.InterchangeableImage;
+import app.game.gamefield.elements.rendering.drawableSupport.HitBox;
+import app.game.gamefield.elements.rendering.drawableSupport.InterchangeableImage;
 import app.supportclasses.GameValues;
 import app.supportclasses.SpriteSheet;
 

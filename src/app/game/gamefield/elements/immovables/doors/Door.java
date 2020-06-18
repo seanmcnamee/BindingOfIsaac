@@ -1,8 +1,8 @@
 package app.game.gamefield.elements.immovables.doors;
 
 import app.game.gamefield.elements.rendering.Drawable;
-import app.game.gamefield.elements.rendering.HitBox;
-import app.game.gamefield.elements.rendering.InterchangeableImage;
+import app.game.gamefield.elements.rendering.drawableSupport.HitBox;
+import app.game.gamefield.elements.rendering.drawableSupport.InterchangeableImage;
 import app.game.gamefield.house.rooms.Room;
 import app.supportclasses.GameValues;
 import app.supportclasses.SpriteSheet;
@@ -32,7 +32,7 @@ public class Door extends Drawable {
     }
 
     public Door(GameValues gameValues, Point2D.Double location, Room room, DoorPosition position) {
-        super(gameValues, location, gameValues.DOOR_Z);
+        super(gameValues, location, gameValues.DOOR_Z, false);
         this.position = position;
         setDoorSizeAndHitBox();
         setDoorImages(room);

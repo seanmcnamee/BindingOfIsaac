@@ -1,5 +1,7 @@
 package app.game.gamefield.elements.rendering;
 
+import app.game.gamefield.elements.rendering.drawableSupport.DrawingCalculator;
+import app.game.gamefield.elements.rendering.drawableSupport.HitBox;
 import app.game.gamefield.elements.rendering.structure.Node;
 import app.supportclasses.Button;
 import app.supportclasses.GameValues;
@@ -20,17 +22,29 @@ public class Drawable extends Node {
     protected Point2D.Double sizeInBlocks;
     protected HitBox hitbox;
     protected GameValues gameValues;
-    private DrawingCalculator calculator;
+    protected DrawingCalculator calculator;
+    protected boolean drawShadow;
 
-    public Drawable(GameValues gameValues, Point2D.Double location, int zValue) {
+    public Drawable(GameValues gameValues, Point2D.Double location, int zValue, boolean drawShadow) {
         super();
         this.gameValues = gameValues;
         this.location = location;
         this.zValue = zValue;
+        this.drawShadow = drawShadow;
         this.calculator = new DrawingCalculator();
     }
 
     public void render(Graphics g) {
+        if (shouldDrawShadow()) {
+            g.setColor(gameValues.SHADOW_COLOR);
+            //Shadows are drawn at the bottom of the image
+            double yLocation = getLocation().getY()+((1-gameValues.SHADOW_Y*gameValues.SHADOW_Y_UNDER)*getSizeInBlocks().getY());
+            g.fillOval(calculator.findPixelLocation(getLocation().getX(), getSizeInBlocks().getX(), gameValues.fieldXZero, gameValues.singleSquareX), 
+                        calculator.findPixelLocation(yLocation, getSizeInBlocks().getY(), gameValues.fieldYZero, gameValues.singleSquareY), 
+                        calculator.findPixelSize(getSizeInBlocks().getX()*gameValues.SHADOW_X, gameValues.singleSquareX), 
+                        calculator.findPixelSize(getSizeInBlocks().getY()*gameValues.SHADOW_Y, gameValues.singleSquareY));
+        }
+
         g.drawImage(getImage(), calculator.findPixelLocation(getLocation().getX(), getSizeInBlocks().getX(), gameValues.fieldXZero, gameValues.singleSquareX), 
                                 calculator.findPixelLocation(getLocation().getY(), getSizeInBlocks().getY(), gameValues.fieldYZero, gameValues.singleSquareY), 
                                 calculator.findPixelSize(getSizeInBlocks().getX(), gameValues.singleSquareX), 
@@ -44,6 +58,10 @@ public class Drawable extends Node {
                         calculator.findPixelSize(getHitBoxSizeInBlocks().getY(), gameValues.singleSquareY));
         }
 
+    }
+
+    protected boolean shouldDrawShadow() {
+        return this.drawShadow;
     }
 
     @Override

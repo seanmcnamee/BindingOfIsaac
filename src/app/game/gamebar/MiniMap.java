@@ -1,6 +1,6 @@
 package app.game.gamebar;
 
-import app.game.gamefield.elements.rendering.DrawingCalculator;
+import app.game.gamefield.elements.rendering.drawableSupport.DrawingCalculator;
 import app.game.gamefield.house.Floor;
 import app.game.gamefield.house.rooms.Room;
 import app.game.gamefield.house.rooms.types.RegularRoom;

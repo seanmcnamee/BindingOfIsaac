@@ -1,6 +1,6 @@
 package app.game.gamefield.elements.immovables.doors;
 
-import app.game.gamefield.elements.rendering.HitBox;
+import app.game.gamefield.elements.rendering.drawableSupport.HitBox;
 import app.game.gamefield.house.rooms.Room;
 import app.supportclasses.GameValues;
 

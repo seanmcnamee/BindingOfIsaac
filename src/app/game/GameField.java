@@ -49,8 +49,7 @@ public class GameField {
         this.gameValues.fieldXStart = excessWidth/2.0;//gameValues.WIDTH_SCALE_1*(gameValues.gameScale-gameValues.GAME_BAR_WIDTH)*.5;
         this.gameValues.fieldYStart = gameValues.barYSize + excessHeight/2.0;
 
-        //TODO add wall space accountability
-        //TODO fix this adjustment when walls are added
+        //The 0,0 is at the center of the top left tile (accounting for wall thickness and half the tile size)
         final double halfABlock = .5;
         this.gameValues.fieldXZero = gameValues.fieldXStart+(gameValues.singleSquareX*(gameValues.WALL_THICKNESS+halfABlock));
         this.gameValues.fieldYZero = gameValues.fieldYStart+(gameValues.singleSquareY*(gameValues.WALL_THICKNESS+halfABlock));

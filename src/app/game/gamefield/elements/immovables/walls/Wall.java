@@ -3,7 +3,7 @@ package app.game.gamefield.elements.immovables.walls;
 import java.awt.geom.Point2D.Double;
 
 import app.game.gamefield.elements.rendering.Drawable;
-import app.game.gamefield.elements.rendering.HitBox;
+import app.game.gamefield.elements.rendering.drawableSupport.HitBox;
 import app.supportclasses.GameValues;
 import app.supportclasses.SpriteSheet;
 
@@ -17,7 +17,7 @@ public class Wall extends Drawable {
     }
 
     public Wall(GameValues gameValues, WallType wallType) {
-        super(gameValues, Wall.loadWallLocation(gameValues, wallType), gameValues.TOP_BOTTOM_WALL_Z);
+        super(gameValues, Wall.loadWallLocation(gameValues, wallType), gameValues.TOP_BOTTOM_WALL_Z, false);
         loadWallPictureAndSize(wallType);
         this.hitbox = new HitBox();
     }

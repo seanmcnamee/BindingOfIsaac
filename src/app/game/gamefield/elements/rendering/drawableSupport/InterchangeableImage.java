@@ -1,4 +1,4 @@
-package app.game.gamefield.elements.rendering;
+package app.game.gamefield.elements.rendering.drawableSupport;
 
 import java.awt.image.BufferedImage;
 /**

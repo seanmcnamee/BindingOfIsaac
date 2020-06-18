@@ -2,6 +2,7 @@ package app.supportclasses;
 
 import app.game.gamefield.elements.mobiles.players.Player;
 import java.awt.Point;
+import java.awt.Color;
 
 import java.awt.event.KeyEvent;
 
@@ -91,7 +92,7 @@ public class GameValues {
     private final int DOOR_HEIGHT_SECRET = 121;
     private final int DOOR_HEIGHT_ARCADE = 108;
 
-    //Default blocksize and hitbox size
+    //Default blocksize and hitbox size for doors
     public final double DOOR_DEPTH = .75;
     public final double DOOR_WIDTH = 2;
     public final double DOOR_HITBOX_DEPTH = 1;
@@ -111,12 +112,19 @@ public class GameValues {
     public final double DOOR_BOSS_OPEN_HITBOX_DEPTH = DOOR_HITBOX_DEPTH*(DOOR_DEPTH/DOOR_BOSS_OPEN_DEPTH);
     public final double DOOR_BOSS_OPEN_HITBOX_DEPTH_OFFSET = DOOR_BOSS_OPEN_DEPTH_OFFSET/DOOR_BOSS_OPEN_DEPTH;
 
+    //Z values
     public final int TOP_BOTTOM_WALL_Z = -50;
     public final int SIDE_WALL_Z = -100;
     public final int DOOR_Z = -10;
     public final int DESTRUCTIBLE_Z = 0;
     public final int MOBILE_Z = 5;
     public final int FLYING_Z = 100;
+
+    //Shadow Diameter Size
+    public final double SHADOW_X = 1;
+    public final double SHADOW_Y = .3;
+    public final double SHADOW_Y_UNDER = 2.0/3.0;
+    public final Color SHADOW_COLOR = new Color(0, 0, 0, 40); //Black transparent
 
     
     //GameBar

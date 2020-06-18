@@ -6,9 +6,9 @@ import app.game.gamefield.elements.immovables.doors.Door;
 import app.game.gamefield.elements.immovables.walls.Wall;
 import app.game.gamefield.elements.mobiles.Mobile;
 import app.game.gamefield.elements.rendering.Drawable;
-import app.game.gamefield.elements.rendering.HitBox;
-import app.game.gamefield.elements.rendering.InterchangeableImage;
-import app.game.gamefield.elements.rendering.LoopingPictures;
+import app.game.gamefield.elements.rendering.drawableSupport.HitBox;
+import app.game.gamefield.elements.rendering.drawableSupport.InterchangeableImage;
+import app.game.gamefield.elements.rendering.drawableSupport.LoopingPictures;
 import app.game.gamefield.house.Floor;
 import app.game.gamefield.house.rooms.Room;
 import app.supportclasses.GameValues;
@@ -150,6 +150,12 @@ public class Player extends Mobile {
 
         isPrintingHead = true;
         super.render(g);
+    }
+
+    @Override
+    //Only draw the shadow when the feet are being drawn
+    protected boolean shouldDrawShadow() {
+        return !this.isPrintingHead;
     }
 
     @Override

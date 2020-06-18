@@ -5,16 +5,14 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import app.game.gamefield.elements.immovables.doors.BossDoor;
 import app.game.gamefield.elements.immovables.doors.Door;
 import app.game.gamefield.elements.immovables.doors.Door.DoorPosition;
 import app.game.gamefield.elements.immovables.walls.Wall;
 import app.game.gamefield.elements.mobiles.Mobile;
 import app.game.gamefield.elements.rendering.structure.BST;
-import app.game.gamefield.house.rooms.types.BossRoom;
 import app.game.gamefield.elements.rendering.Drawable;
-import app.game.gamefield.elements.rendering.HitBox;
-import app.game.gamefield.elements.rendering.InterchangeableImage;
+import app.game.gamefield.elements.rendering.drawableSupport.HitBox;
+import app.game.gamefield.elements.rendering.drawableSupport.InterchangeableImage;
 import app.supportclasses.GameValues;
 import app.supportclasses.SpriteSheet;
 
