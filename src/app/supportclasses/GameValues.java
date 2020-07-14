@@ -34,7 +34,7 @@ public class GameValues {
     public DisplayScreen currentScreen;
 
     public boolean debugMode = true;
-    public boolean generationDebugMode = true;
+    public boolean generationDebugMode = false;
 
     //TitleScreen values
     public final String MAIN_MENU_FILE = "res//emptyMainMenu.jpg";

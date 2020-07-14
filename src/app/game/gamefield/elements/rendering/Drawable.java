@@ -141,4 +141,10 @@ public class Drawable extends Node {
         }
     }
 
+    protected void printDebug(String toPrint) {
+        if (gameValues.debugMode) {
+            System.out.println(toPrint);
+        }
+    }
+
 }

@@ -76,7 +76,7 @@ public class Player extends Mobile {
 
     @Override
     protected Point2D.Double onCollision(Double newLocation, Drawable collidingElement, Floor floor) {
-        System.out.println("Collision with element " + collidingElement + " with priority: " + collidingElement.getPriority());
+        printDebug("Collision with element " + collidingElement + " with priority: " + collidingElement.getPriority());
 
         if (collidingElement.getClass() == Degradable.class || collidingElement.getClass() == Wall.class) {
             return regularCollision(newLocation, collidingElement, floor.getCurrentRoom());
@@ -111,7 +111,7 @@ public class Player extends Mobile {
     }
 
     private Point2D.Double doorCollision(Double newLocation, Door door, Floor floor) {
-        System.out.println("DOOR COLLISION: " + this.location);
+        printDebug("DOOR COLLISION: " + this.location);
         double halfABlock = .5;
         if (door.isOpen()) {
             floor.setCurrentRoom(door.getRoomFromDoorPosition(floor.getCurrentRoom()));
@@ -124,7 +124,7 @@ public class Player extends Mobile {
                     newY = -this.sizeInBlocks.getY() + sizeInBlocks.getY()*this.getHitBox().getHitBoxSize(sizeInBlocks).getY();
                 }
                 newY += velocityPercent.getY()*(this.maxSpeed/gameValues.goalTicksPerSecond);
-                System.out.println("\t Going to " + (new Double(newLocation.getX(), newY)));
+                printDebug("\t Going to " + (new Double(newLocation.getX(), newY)));
                 return new Double(newLocation.getX(), newY);
             }   else {
                 double newX;
@@ -135,7 +135,7 @@ public class Player extends Mobile {
                     newX = -widthChangeFromFeet/2.0;
                 }
                 newX += velocityPercent.getX()*(this.maxSpeed/gameValues.goalTicksPerSecond);
-                System.out.println("\t Going to " + (new Double(newX, newLocation.getY())));
+                printDebug("\t Going to " + (new Double(newX, newLocation.getY())));
                 return new Double(newX, newLocation.getY());
             }
         }
