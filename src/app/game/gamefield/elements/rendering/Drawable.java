@@ -135,4 +135,10 @@ public class Drawable extends Node {
         return image;
     }
 
+    protected void printGenerationDebug(String toPrint) {
+        if (gameValues.generationDebugMode) {
+            System.out.println(toPrint);
+        }
+    }
+
 }

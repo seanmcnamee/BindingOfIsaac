@@ -44,25 +44,25 @@ public abstract class Traversable {
 
     public void setExplored() {
         this.roomStatus = Status.EXPLORED;
-        System.out.println("Setting surrounding rooms as seen");
+        //System.out.println("Setting surrounding rooms as seen");
         setSurroundingSeen();
     }
 
     private void setSurroundingSeen() {
         if (above!=null) {
-            System.out.println("\tAbove");
+            //System.out.println("\tAbove");
             above.setSeen();
         }
         if (right!=null) {
-            System.out.println("\tRight");
+            //System.out.println("\tRight");
             right.setSeen();
         }
         if (below!=null) {
-            System.out.println("\tBelow");
+            //System.out.println("\tBelow");
             below.setSeen();
         }
         if (left!=null) {
-            System.out.println("\tLeft");
+            //System.out.println("\tLeft");
             left.setSeen();
         }
     }

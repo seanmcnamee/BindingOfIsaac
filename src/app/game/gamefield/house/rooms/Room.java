@@ -61,16 +61,19 @@ public abstract class Room extends Traversable{
     }
 
     private void createWalls() {
-        System.out.println("Creating Walls for " + this.getClass());
+        printGenerationDebug("Creating Walls for " + this.getClass());
         Drawable wallTop, wallBottom, wallLeft, wallRight;
         wallTop = new Wall(gameValues, Wall.WallType.Top);
         wallBottom = new Wall(gameValues, Wall.WallType.Bottom);
         wallLeft = new Wall(gameValues, Wall.WallType.Left);
         wallRight = new Wall(gameValues, Wall.WallType.Right);
-        System.out.println("Elements: " + wallTop + "- " + "- " + wallRight + "- " + wallBottom + "- " + wallLeft);
-        System.out.println("Elements Heap: " + elements);
 
-        System.out.println("Adding elements to room");
+        if (gameValues.generationDebugMode) {
+            System.out.println("Elements: " + wallTop + "- " + "- " + wallRight + "- " + wallBottom + "- " + wallLeft);
+            System.out.println("Elements Heap: " + elements);
+    
+            System.out.println("Adding elements to room");
+        }
         this.elements.add(wallTop);
         this.elements.add(wallBottom);
         this.elements.add(wallLeft);
@@ -85,22 +88,21 @@ public abstract class Room extends Traversable{
      * Called once the surrounding rooms are set
      */
     protected void createDoors() {
-
         if (getAbove()!=null) {
-            System.out.println("Creating door above");
+            printGenerationDebug("Creating door above");
             elements.add(((Room)getAbove()).makeDoor(DoorPosition.Top));
         }
         if (getRight()!=null) {
-            System.out.println("Creating door right");
+            printGenerationDebug("Creating door right");
             elements.add(((Room)getRight()).makeDoor(DoorPosition.Right));
         }
         if (getBelow()!=null) {
-            System.out.println("Creating door below");
+            printGenerationDebug("Creating door below");
             elements.add(((Room)getBelow()).makeDoor(DoorPosition.Below));
         }
         
         if (getLeft()!=null) {
-            System.out.println("Creating door left");
+            printGenerationDebug("Creating door left");
             elements.add(((Room)getLeft()).makeDoor(DoorPosition.Left));
         }
         
@@ -139,40 +141,6 @@ public abstract class Room extends Traversable{
         }
         elements = tempHeap;
     }
-
-    /*
-    public Drawable checkCollisions(Drawable main, Point2D.Double testLocation) {
-        Drawable foundItem = null;
-        BST tempHeap = new BST();
-        while(elements.getRoot()!=null) {
-            Drawable temp = (Drawable)elements.deQueue();
-            if (main != temp && main.contains(testLocation, temp)) {
-                foundItem = temp;
-            }
-            tempHeap.add(temp.resetConnections());
-        }
-        elements = tempHeap;
-        return foundItem;
-    }
-    */
-
-    /*
-    public Drawable recursiveCollisionCheck(Drawable main, Point2D.Double testLocation, Drawable currentNode) {
-        if (currentNode == null) {
-            return null;
-        }   else if (main != currentNode && main.contains(testLocation, currentNode)) {
-            return currentNode;
-        }   else {
-            Drawable left = recursiveCollisionCheck(main, testLocation, (Drawable)currentNode.getLeft());
-            Drawable right = recursiveCollisionCheck(main, testLocation, (Drawable)currentNode.getRight());
-            if (left!=null) {
-                return left;
-            }   else {
-                return right;
-            }
-        }
-    }
-    */
 
     /**
      * MUST do regular to ensure that things ontop of other things (doors on walls) will be checked for collision first
@@ -247,4 +215,15 @@ public abstract class Room extends Traversable{
         return movables;
     }
 
+    protected void printGenerationDebug(String toPrint) {
+        if (gameValues.generationDebugMode) {
+            System.out.println(toPrint);
+        }
+    }
+
+    protected void printDebug(String toPrint) {
+        if (gameValues.debugMode) {
+            System.out.println(toPrint);
+        }
+    }
 }

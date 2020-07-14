@@ -39,7 +39,9 @@ public class Floor {
         this.floorName = floorName;
         rooms = generateFloorMap(roomCounts);
         this.changingRoom = false;
-        printRooms();
+        if (gameValues.debugMode) {
+            printRooms();
+        }
     }
 
     private void printRooms() {
@@ -59,12 +61,12 @@ public class Floor {
     private Room[] convertFromEnumMatrixToRoomArray(Class<?>[][] enumMatrix) {
         System.out.println();
         System.out.println();
-        System.out.println("Converting to Room Matrix");
+        printDebug("Converting to Room Matrix");
         Room[][] roomMatrix = convertFromEnumToRoomMatrix(enumMatrix);
         ArrayList<Room> roomArrayList = new ArrayList<Room>();
 
         System.out.println();
-        System.out.println("Converting to arrayList");
+        printDebug("Converting to arrayList");
         for (int x = 0; x < roomMatrix.length; x++) {
             for (int y = 0; y < roomMatrix[x].length; y++) {
                 if (roomMatrix[x][y] != null) {
@@ -77,12 +79,12 @@ public class Floor {
         }
 
         System.out.println();
-        System.out.println("Converting to array");
+        printDebug("Converting to array");
         Room[] convertedRooms = new Room[roomArrayList.size()];
         for (int i = 0; i < convertedRooms.length; i++) {
             convertedRooms[i] = roomArrayList.get(i);
             if (convertedRooms[i].getClass() == SpawnRoom.class) {
-                System.out.println("Setting current room...");
+                printGenerationDebug("Setting spawn room to current room...");
                 setCurrentRoom(convertedRooms[i]);
             }
         }
@@ -106,7 +108,7 @@ public class Floor {
                 if (enumMatrix[x][y] != null) {
                     Point location = new Point(x, y);
                     roomMatrix[x][y] = makeDisconnectedRoom(enumMatrix[x][y], location);
-                    System.out.println("Room object: " + roomMatrix[x][y]);
+                    printGenerationDebug("Room object: " + roomMatrix[x][y]);
                 }
             }
         }
@@ -115,7 +117,7 @@ public class Floor {
     }
 
     private Room makeDisconnectedRoom(Class<?> type, Point location) {
-        System.out.println("\nMaking a new " + type + " room");
+        printGenerationDebug("\nMaking a new " + type + " room");
         if (type.equals(SpawnRoom.class)) {
             return new SpawnRoom(this.gameValues, this.player, (this.floorName == FloorName.Basement1), location);
         } else if (type.equals(BossRoom.class)) {
@@ -177,6 +179,18 @@ public class Floor {
                 return;
             }
             mobiles.get(m).tick(this);
+        }
+    }
+
+    private void printGenerationDebug(String toPrint) {
+        if (gameValues.generationDebugMode) {
+            System.out.println(toPrint);
+        }
+    }
+
+    private void printDebug(String toPrint) {
+        if (gameValues.debugMode) {
+            System.out.println(toPrint);
         }
     }
 }

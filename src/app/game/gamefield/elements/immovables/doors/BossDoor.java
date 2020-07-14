@@ -18,7 +18,7 @@ public class BossDoor extends Door {
 
     @Override
     protected void setDoorSizeAndHitBox() {
-        System.out.println("Setting size/hitbox for " + this.position);
+        printGenerationDebug("Setting size/hitbox for " + this.position);
         double blockDepth, hitBoxDepth, hitBoxDepthOffset;
         if (this.doorState == DoorState.Open) {
             blockDepth = gameValues.DOOR_BOSS_OPEN_DEPTH;

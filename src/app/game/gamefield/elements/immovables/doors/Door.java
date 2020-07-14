@@ -40,7 +40,9 @@ public class Door extends Drawable {
     }
 
     public static Point2D.Double calculateLocation(DoorPosition position, GameValues gameValues, double depthOffsetInBlocks) {
-        System.out.println("Door position: " + position);
+        if (gameValues.generationDebugMode) {
+            System.out.println("Door position: " + position);
+        }
         double x, y;
         double halfBlock = .5;
 
@@ -74,12 +76,14 @@ public class Door extends Drawable {
 
         y-=halfBlock;
 
-        System.out.println("\tCreating at " + x + ", " + y);
+        if (gameValues.generationDebugMode) {
+            System.out.println("\tCreating at " + x + ", " + y);
+        }
         return new Point2D.Double(x, y);
     }
 
     protected void setDoorSizeAndHitBox() {
-        System.out.println("Setting size/hitbox for " + this.position);
+        printGenerationDebug("Setting size/hitbox for " + this.position);
         switch(this.position) {
             case Top:
                 this.sizeInBlocks = new Point2D.Double(gameValues.DOOR_WIDTH, gameValues.DOOR_DEPTH);
@@ -107,7 +111,7 @@ public class Door extends Drawable {
     }
 
     public static BufferedImage flipImagesOnPosition(BufferedImage imageToTransform, Door.DoorPosition position) {
-        System.out.println("Flipping door at " + position);
+        //System.out.println("Flipping door at " + position);
         switch(position) {
             case Top:
                 return imageToTransform;
@@ -181,5 +185,4 @@ public class Door extends Drawable {
     public boolean isLeft() {
         return position==DoorPosition.Left;
     }
-    
 }

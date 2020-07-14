@@ -32,16 +32,16 @@ public class Direction {
         int rawDirection = rndInRange(new Point(0, total-1));
         int properDirection = rawDirection;
         
-        System.out.println("RawDir: " + rawDirection);
+        //System.out.println("RawDir: " + rawDirection);
 
         boolean[] directions = {up.getBoolean(), right.getBoolean(), down.getBoolean(), left.getBoolean()};
         for (int i = 0; i <= properDirection; i++) {
-            System.out.println("i = " + i + ", " + directions[i]);
+            //System.out.println("i = " + i + ", " + directions[i]);
             if (!directions[i]) {
                 properDirection++;
             }
         }
-        System.out.println("Fixed Dir: " + properDirection);
+        //System.out.println("Fixed Dir: " + properDirection);
 
         switch(properDirection) {
             case 0:

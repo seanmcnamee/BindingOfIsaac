@@ -21,29 +21,18 @@ public class Level {
     
     private Class<?>[][] roomMap;
     private Point mapSize;
+    private GameValues gameValues;
 
     public Level(Map<Class<?>, Integer> roomCounts, GameValues gameValues) {
         this.mapSize = gameValues.MAPSIZE;
+        this.gameValues = gameValues;
+        printDebug("Starting map making");
         roomMap = generateRooms(roomCounts);
-        System.out.println("done making map");
-        
+        printDebug("done making map");
     }
 
     public Class<?>[][] getRoomMap() {
         return this.roomMap;
-    }
-
-    public void print() {
-        for (Class<?>[] roomArr : roomMap) {
-            for (Class<?> r : roomArr) {
-                System.out.print("-");
-                if (r!=null) {
-                    System.out.print(r);
-                }
-            }
-            System.out.println();
-        }
-        System.out.println("Yaaa");
     }
 
     private void quickPrint(Class<?>[][] rooms) {
@@ -56,7 +45,6 @@ public class Level {
             }
             System.out.println();
         }
-        System.out.println("Yaaa");
     }
 
     private Class<?>[][] generateRooms(Map<Class<?>, Integer> roomCounts) {
@@ -68,12 +56,11 @@ public class Level {
         decreaseCountOf(SpawnRoom.class, roomCounts);
 
         //System.out.println("spawn count: " + roomCount.get);
-
-        System.out.println("Spawn was just made at + " + spawnLocation);
+        printGenerationDebug("Spawn was just made at + " + spawnLocation);
 
         while (!locationsToExtend.isEmpty() && (totalLeftToAdd(roomCounts) > 0)) {
             //Choose a certain amount to add
-            System.out.println("Enter while loop... Queue: " + locationsToExtend.size());
+            printGenerationDebug("Enter while loop... Queue: " + locationsToExtend.size());
             int specialtyLeft = getSpecialtyLeftToAdd(roomCounts);
             int regularLeftToExtend = locationsToExtend.size() + roomCounts.get(RegularRoom.class);
             Direction roomCurrentlyExtending = new Direction(locationsToExtend.remove());
@@ -86,15 +73,18 @@ public class Level {
 
             Point rangeToAdd = new Point((int)Math.ceil((double)specialtyLeft/(double)regularLeftToExtend),
                                             Math.min(totalAvailable, specialtyLeft));
-            System.out.println("Range to add: " + rangeToAdd);
+            printGenerationDebug("Range to add: " + rangeToAdd);
             int amountToAdd = Math.max(Direction.rndInRange(rangeToAdd), Direction.rndInRange(rangeToAdd));
-            System.out.println("Making " + amountToAdd + " rooms for " + rooms[(int)roomCurrentlyExtending.getLocation().getX()][(int)roomCurrentlyExtending.getLocation().getY()] + " at " + roomCurrentlyExtending.getLocation());
+            printGenerationDebug("Making " + amountToAdd + " rooms for " + rooms[(int)roomCurrentlyExtending.getLocation().getX()][(int)roomCurrentlyExtending.getLocation().getY()] + " at " + roomCurrentlyExtending.getLocation());
 
             for (int i = 0 ; i < amountToAdd; i++) {
-                quickPrint(rooms);
-                System.out.println("Room num: " + i);
-                System.out.println("Available num: " + totalAvailable);
-                System.out.println("Available bool: " + upAvail.getBoolean() + "-" + rightAvail.getBoolean() +"-" + downAvail.getBoolean() + "-" + leftAvail.getBoolean());
+                if (gameValues.generationDebugMode) {
+                    quickPrint(rooms);
+                    System.out.println("Room num: " + i);
+                    System.out.println("Available num: " + totalAvailable);
+                    System.out.println("Available bool: " + upAvail.getBoolean() + "-" + rightAvail.getBoolean() +"-" + downAvail.getBoolean() + "-" + leftAvail.getBoolean());
+
+                }
                 if (roomCurrentlyExtending.oneAvailable(upAvail, rightAvail, downAvail, leftAvail)) {
                     Point newPoint = roomCurrentlyExtending.getRandomAdjacentFromAvailableAndUpdateBooleans(upAvail, rightAvail, downAvail, leftAvail);
                     Class<?> newRoomType = getNextRoomType(roomCounts);
@@ -161,7 +151,7 @@ public class Level {
 
     private boolean isSpotAvailable(Direction locationToTestAdjacents, Class<?>[][] rooms) {
         //Make sure the count around that spot is <=1
-        System.out.println("Checking if " + locationToTestAdjacents.getLocation() + " is available through its surroundings");
+        printGenerationDebug("Checking if " + locationToTestAdjacents.getLocation() + " is available through its surroundings");
         Point roomLoc = locationToTestAdjacents.getLocation();
         if (isSpotInRange(roomLoc) && rooms[(int)roomLoc.getX()][(int)roomLoc.getY()]==null) {
             int adjacentCount = 0;
@@ -199,7 +189,7 @@ public class Level {
 
         int specialty = getSpecialtyLeftToAdd(roomCounts);
         int regular = getRegularLeftToAdd(roomCounts);
-        System.out.println("Specialty: " + specialty + ", regular: " + regular);
+        printGenerationDebug("Specialty: " + specialty + ", regular: " + regular);
         if (specialty > regular) {
             return getSpecialtyType(roomCounts);
         }   else {
@@ -220,11 +210,23 @@ public class Level {
         }
 
         for(int i = 0; i < choices.length; i++) {
-            System.out.println("Choice " + i + ": " + choices[i]);
+            printGenerationDebug("Choice " + i + ": " + choices[i]);
         }
         Class<?> choice = choices[Direction.rndInRange(new Point(0, choices.length-1))];
-        System.out.println("Returning specialty type: " + choice);
+        printGenerationDebug("Returning specialty type: " + choice);
         return choice;
+    }
+
+    private void printGenerationDebug(String toPrint) {
+        if (gameValues.generationDebugMode) {
+            System.out.println(toPrint);
+        }
+    }
+
+    private void printDebug(String toPrint) {
+        if (gameValues.debugMode) {
+            System.out.println(toPrint);
+        }
     }
 
     
