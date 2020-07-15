@@ -19,7 +19,12 @@ public abstract class Destructible extends Drawable {
 
     public boolean damage(int damage) {
         health -= damage;
-        return isDead();
+        if (isDead()) {
+            health = 0;
+            return true;
+        }   else {
+            return false;
+        }
     }
 
     public boolean isDead() {
@@ -28,5 +33,21 @@ public abstract class Destructible extends Drawable {
 
     public void setFullHealth() {
         health = maxHealth;
+    }
+
+    public int getCurrentHealth() {
+        return health;
+    }
+
+    public int getMaxHealth() {
+        return maxHealth;
+    }
+
+    public void addHealth(int healthToAdd) {
+        if (healthToAdd+this.health > this.maxHealth) {
+            this.health = this.maxHealth;
+        }   else {
+            this.health += healthToAdd;
+        }
     }
 }

@@ -53,7 +53,7 @@ public class GameValues {
     public DisplayScreen currentScreen;
 
     public boolean debugMode = true;
-    public boolean generationDebugMode = false;
+    public boolean generationDebugMode = true;
 
     //TitleScreen values
     public final String MAIN_MENU_FILE = "res//emptyMainMenu.jpg";
@@ -89,6 +89,7 @@ public class GameValues {
     public final String DOOR_SPRITE_SHEET = "res//doorSpriteSheet.png";
     public final int DOOR_SPRITE_SHEET_BOX_SIZE = 185;
     public final Point MAPSIZE = new Point(7, 5);
+    public double fontSize = 0;
 
     public final int FIELD_X_SPACES = 13;
     public final int FIELD_Y_SPACES = 7;
@@ -175,6 +176,8 @@ public class GameValues {
     public final double LEGS_Y_SIZE_PERCENT = tempLegsYPercent + HEAD_LEG_PERCENT_OVERLAPPING/2.0;
     public final double HEAD_X_SIZE_PERCENT = 1;
     public final double LEGS_X_SIZE_PERCENT = .6;
+
+    public final int MAX_POSSIBLE_PLAYER_HEALTH = 24; //Should be divisible by 4 (2 to make it full hearts, 2 more for equal rows for display)
 
     public final double HEAD_Y_OFFSET_PERCENT = -(1-HEAD_Y_SIZE_PERCENT)/2.0;
     public final double LEGS_Y_OFFSET_PERCENT = (1-LEGS_Y_SIZE_PERCENT)/2.0;

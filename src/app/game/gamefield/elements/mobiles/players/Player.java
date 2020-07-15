@@ -48,7 +48,7 @@ public class Player extends Mobile {
         case Isaac:
             this.accelerationRate = 10.0;
             this.maxSpeed = 6.0;
-            this.maxHealth = 6;
+            this.maxHealth = 18;
             loadImages(gameValues.ISSAC_FILE);
             break;
         default:
@@ -249,6 +249,10 @@ public class Player extends Mobile {
             this.moveRight = false;
         } else if (e.getKeyCode() == KeyEvent.VK_Q) { //TODO Remove this free money feature
             this.money++;
+        } else if (e.getKeyCode() == KeyEvent.VK_U) { //TODO Remove this lose health feature
+            damage(1);
+        } else if (e.getKeyCode() == KeyEvent.VK_Y) { //TODO Remove this free health feature
+            addHealth(1);
         }
     }
 

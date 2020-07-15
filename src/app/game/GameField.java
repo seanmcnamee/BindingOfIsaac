@@ -56,11 +56,13 @@ public class GameField {
 
         house.getCurrentFloor().getCurrentRoom().render(g);
 
+        this.gameValues.fontSize = 15.1522*gameValues.gameScale - .4976;
+
         if (gameValues.debugMode) {
             g.setColor(Color.WHITE);
-            g.setFont(new Font("TimesRoman", Font.BOLD, 20));
+            g.setFont(new Font("TimesRoman", Font.BOLD, (int)gameValues.fontSize));
             DecimalFormat df = new DecimalFormat("#,###,##0.00");
-            g.drawString("(" + df.format(player.getX()) + ", " + df.format(player.getY()) + ")", (int)(gameValues.fieldXStart), (int)(gameValues.fieldYStart+.5*gameValues.singleSquareX));
+            g.drawString("(" + df.format(player.getX()) + ", " + df.format(player.getY()) + ")", (int)(gameValues.fieldXStart), (int)(gameValues.fieldYStart+.25*gameValues.singleSquareX));
         }
 
         g.setColor(Color.BLACK);
