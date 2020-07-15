@@ -247,6 +247,8 @@ public class Player extends Mobile {
             this.moveLeft = false;
         } else if (e.getKeyCode() == gameValues.moveRightKey) {
             this.moveRight = false;
+        } else if (e.getKeyCode() == KeyEvent.VK_Q) { //TODO Remove this free money feature
+            this.money++;
         }
     }
 
@@ -319,4 +321,17 @@ public class Player extends Mobile {
     public double getY() {
         return location.getY();
     }
+
+    public int getMoney() {
+        return money;
+    }
+
+    public int getBombs() {
+        return bombs;
+    }
+
+    public int getKeys() {
+        return keys;
+    }
+
 }

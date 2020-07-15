@@ -23,7 +23,7 @@ public class TitleScreen extends DisplayScreen {
     private final BufferedImageLoader background;
     private Button btnStart, btnCredits, btnExit, btnStats, btnOptions, btnCollection;
     private GameValues gameValues;
-    private DisplayScreen game;
+    private DisplayScreen game, credits, stats, options, collection;
     // private Font font;
 
     public TitleScreen(JFrame frame, GameValues gameValues, Input gameInputs, DisplayScreen game) {
@@ -76,15 +76,17 @@ public class TitleScreen extends DisplayScreen {
 
     public void mouseClicked(MouseEvent e){
         if (btnStart.contains(e.getPoint())) {
-            //TODO possibly create the game here so that settings chosen are applied game here.
-            System.out.println("Starting Game");
-            System.out.println("Setting currentScreen to 'game'");
-            System.out.println("Game: " + game);
-            ((Game)game).initialize();
-            gameValues.currentScreen = game;
+            startGame();
+        }   else if (btnCredits.contains(e.getPoint())) {
+            gotoCredits();
+        }   else if (btnStats.contains(e.getPoint())) {
+            gotoStats();
+        }   else if (btnOptions.contains(e.getPoint())) {
+            gotoOptions();
+        }   else if (btnCollection.contains(e.getPoint())) {
+            gotoCollection();
         }   else if (btnExit.contains(e.getPoint())) {
-            gameValues.gameState = GameValues.GameState.QUIT;
-            System.exit(0);
+            exitGame();
         }
         System.out.println("Mouse clicked at: " +e.getPoint());
         
@@ -125,5 +127,39 @@ public class TitleScreen extends DisplayScreen {
         }
         
     }
+
+    private void startGame() {
+        System.out.println("Starting Game");
+        System.out.println("Setting currentScreen to 'game'");
+        System.out.println("Game: " + game);
+        ((Game)game).initialize();
+        gameValues.currentScreen = game;
+    }
+
+    private void gotoCredits() {
+
+    }
+
+    private void gotoStats() {
+
+    }
+
+    private void gotoOptions() {
+
+    }
+
+    private void gotoCollection() {
+
+    }
+
+    private void exitGame() {
+        gameValues.gameState = GameValues.GameState.QUIT;
+        System.exit(0);
+    }
+
+
+
+
+
     
 }

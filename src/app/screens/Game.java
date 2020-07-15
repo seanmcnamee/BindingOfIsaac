@@ -18,9 +18,9 @@ import app.supportclasses.GameValues;
  */
 public class Game extends DisplayScreen{
     
-    GameValues gameValues;
-    GameField gameField;
-    GameBar gameBar;
+    private GameValues gameValues;
+    private GameField gameField;
+    private GameBar gameBar;
 
     public Game(JFrame frame, GameValues gameValues) {
         super(frame);

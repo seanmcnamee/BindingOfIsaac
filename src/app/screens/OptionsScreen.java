@@ -16,28 +16,17 @@ import app.supportclasses.GameValues;
  */
 public class OptionsScreen extends DisplayScreen {
 
-    public OptionsScreen(JFrame frame) {
+    private GameValues gameValues;
+
+    public OptionsScreen(JFrame frame, GameValues gameValues) {
         super(frame);
-        // TODO Auto-generated constructor stub
+        this.gameValues = gameValues;
     }
 
     @Override
     public void render(Graphics g) {
         // TODO Auto-generated method stub
 
-    }
-
-    private Font setFont(GameValues gameValues) {
-        Font returningFont = null;
-        try {
-            InputStream myStream = new BufferedInputStream(new FileInputStream(gameValues.GAME_FONT_FILE));
-            Font temp = Font.createFont(Font.TRUETYPE_FONT, myStream);
-            returningFont = temp.deriveFont(Font.PLAIN, 50);          
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            System.err.println("Font not loaded.");
-        }
-        return returningFont;
     }
     
 }

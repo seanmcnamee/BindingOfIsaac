@@ -14,34 +14,18 @@ import app.supportclasses.SpriteSheet;
  */
 public class GameBar {
     private GameValues gameValues;
-    private GameField gameField;
-    private BufferedImage coins, bombs, keys, emptyHearts, halfHearts, fullHearts;
+
     private MiniMap minimap;
     private PlayerStatsPrinter playerStatsPrinter;
 
-
     public GameBar(GameValues gameValues, GameField gameField) {
         this.gameValues = gameValues;
-        this.gameField = gameField;
         this.minimap = new MiniMap(gameField.getHouse().getCurrentFloor(), gameValues);
-        //this.playerStatsPrinter = new PlayerStatsPrinter(gameField.getPlayer()); //TODO add this
-        loadImages();
-    }
-
-    private void loadImages() {
-        SpriteSheet generalPictures = new SpriteSheet(gameValues.GENERAL_GAMEBAR_SPRITE_SHEET);
-        this.fullHearts = generalPictures.shrink(generalPictures.grabImage(2,
-                        0, 1, 1, gameValues.GENERAL_GAMEBAR_SPRITE_SHEET_BOX_SIZE));
-        this.coins = generalPictures.shrink(generalPictures.grabImage(0,
-                        1, 1, 1, gameValues.GENERAL_GAMEBAR_SPRITE_SHEET_BOX_SIZE));
-        this.bombs = generalPictures.shrink(generalPictures.grabImage(1,
-                        1, 1, 1, gameValues.GENERAL_GAMEBAR_SPRITE_SHEET_BOX_SIZE));
-        this.keys = generalPictures.shrink(generalPictures.grabImage(2,
-                        1, 1, 1, gameValues.GENERAL_GAMEBAR_SPRITE_SHEET_BOX_SIZE));
+        this.playerStatsPrinter = new PlayerStatsPrinter(gameField.getPlayer(), gameValues);
     }
 
     public void render(Graphics g) {
-        //Use these values to figure out everyting else
+        //Use these values to figure out everything else
         this.gameValues.barXSize = gameValues.WIDTH_SCALE_1*gameValues.gameScale*gameValues.GAME_BAR_WIDTH;
         this.gameValues.barYSize = gameValues.HEIGHT_SCALE_1*gameValues.gameScale*gameValues.GAME_BAR_HEIGHT;
 
@@ -53,7 +37,7 @@ public class GameBar {
 
         drawBackgroundAndBorder(g);
         minimap.render(g);
-        //playerStatsPrinter.render(g);
+        playerStatsPrinter.render(g);
     }
 
     private void drawBackgroundAndBorder(Graphics g) {
@@ -65,7 +49,7 @@ public class GameBar {
 
         final double thickness = .1;
         g.setColor(border);
-        g.fillRect((int)gameValues.barXStart, (int)(gameValues.barYSize*(1-thickness)), (int)gameValues.barXSize, (int)(gameValues.barYSize*(thickness)));
+        g.fillRect((int)gameValues.barXStart, (int)(gameValues.barYStart+gameValues.barYSize*(1-thickness)), (int)gameValues.barXSize, (int)(gameValues.barYSize*(thickness)));
     }
 
 }

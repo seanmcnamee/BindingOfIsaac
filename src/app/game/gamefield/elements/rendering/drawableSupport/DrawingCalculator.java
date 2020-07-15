@@ -1,7 +1,5 @@
 package app.game.gamefield.elements.rendering.drawableSupport;
 
-import app.supportclasses.GameValues;
-
 import java.awt.geom.Point2D;
 
 /**

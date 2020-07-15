@@ -58,7 +58,7 @@ public class Input extends MouseInputAdapter implements KeyListener, ComponentLi
     }
 
     /**
-     * Just set the SCALE to the proper fucking number
+     * Just set the SCALE to the proper number
      */
     public void componentResized(ComponentEvent e) {
         double scaleX = 1.0*frame.getContentPane().getWidth()/gameValues.WIDTH_SCALE_1;

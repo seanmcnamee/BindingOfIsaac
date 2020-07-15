@@ -62,6 +62,10 @@ public class GameField {
             DecimalFormat df = new DecimalFormat("#,###,##0.00");
             g.drawString("(" + df.format(player.getX()) + ", " + df.format(player.getY()) + ")", (int)(gameValues.fieldXStart), (int)(gameValues.fieldYStart+.5*gameValues.singleSquareX));
         }
+
+        g.setColor(Color.BLACK);
+        //g.fillRect(100, 10, 500, 500);
+        g.fillRect(0, (int)(gameValues.fieldYZero+gameValues.fieldYSize-gameValues.barYSize), (int)(gameValues.fieldXSize), (int)(excessHeight));
         
     }
 
@@ -75,5 +79,9 @@ public class GameField {
 
     public House getHouse() {
         return this.house;
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 }

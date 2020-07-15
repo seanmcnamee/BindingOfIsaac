@@ -20,7 +20,7 @@ public class MiniMap {
     private DrawingCalculator calculator;
 
     private Point2D.Double adjustedMapSize;
-    private Point2D.Double singleRoomSize = new Point2D.Double(1.0, 1.0);
+    private final Point2D.Double singleRoomSize = new Point2D.Double(1.0, 1.0);
     private final Point2D.Double generalIconSize = new Point2D.Double(1, 2.5);
     private final double outsideEdge = .5;
     
@@ -85,8 +85,8 @@ public class MiniMap {
 
                 int xPos = calculator.findPixelLocation(room.getLocation().getX(), iconSize.getX(), miniMapStart.getX(), blockSize.getX());
                 int yPos = calculator.findPixelLocation(room.getLocation().getY(), iconSize.getY(), miniMapStart.getY(), blockSize.getY());
-                
-                
+
+
                 int xSize = calculator.findPixelSize(iconSize.getX(), blockSize.getX());
                 int ySize = calculator.findPixelSize(iconSize.getY(), blockSize.getY());
                 g.drawImage(room.getIcon(), xPos, yPos, xSize, ySize, null);  

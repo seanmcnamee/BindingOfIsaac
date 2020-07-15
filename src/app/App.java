@@ -37,8 +37,7 @@ public class App extends Canvas implements Runnable {
     private Input gameInputs;
 
     //Screen specific variables
-    private DisplayScreen game;
-    private DisplayScreen titleScreen;
+    private DisplayScreen titleScreen, game, credits, stats, options, collection;
     
     /**
      * Creates all the main components of the Application
@@ -52,6 +51,7 @@ public class App extends Canvas implements Runnable {
         
         //Different Screens setup
         game = new Game(frame, gameValues);
+        options = new OptionsScreen(frame, gameValues);
         titleScreen = new TitleScreen(frame, gameValues, gameInputs, game);
 
         //Start displaying/updating everything
@@ -145,7 +145,8 @@ public class App extends Canvas implements Runnable {
             //Once a second, show the fps and tps of application loop
             long currentMillis = System.currentTimeMillis();
             if (currentMillis - previousMillis >= gameValues.ONE_SEC_IN_MILLIS) {
-                System.out.println("FPS: " + gameValues.framesPerSecond + ", TPS: " + gameValues.ticksPerSeconds);
+                System.out.println("FPS: " + gameValues.framesPerSecond + ", TPS: " + gameValues.ticksPerSeconds +
+                    ((gameValues.debugMode)? ", ScreenScale: " + gameValues.gameScale:""));
                 previousMillis = currentMillis;
                 gameValues.framesPerSecond = gameValues.ticksPerSeconds = 0;
             }

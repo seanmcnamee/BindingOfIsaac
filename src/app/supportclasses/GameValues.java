@@ -3,8 +3,12 @@ package app.supportclasses;
 import app.game.gamefield.elements.mobiles.players.Player;
 import java.awt.Point;
 import java.awt.Color;
+import java.awt.Font;
 
 import java.awt.event.KeyEvent;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.InputStream;
 
 /**
  * GameValues for the game
@@ -13,6 +17,20 @@ public class GameValues {
 
     public enum GameState {
         NOTSTARTED, RUNNING, WON, LOST, QUIT;
+    }
+
+    public static Font getFont() {
+        String GAME_FONT_FILE = "res//MainScreenFont.ttf";
+        Font returningFont = null;
+        try {
+            InputStream myStream = new BufferedInputStream(new FileInputStream(GAME_FONT_FILE));
+            Font temp = Font.createFont(Font.TRUETYPE_FONT, myStream);
+            returningFont = temp.deriveFont(Font.PLAIN, 50);          
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            System.err.println("Font not loaded.");
+        }
+        return returningFont;
     }
 
     //Overall Application Values
@@ -29,7 +47,8 @@ public class GameValues {
     public int framesPerSecond = 0;
 
     public final String NAME = "Binding of Isaac - Sean McNamee";
-    public final String GAME_FONT_FILE = "res//MainScreenFont.ttf";
+    public final Font gameFont = getFont();
+
     public GameState gameState = GameState.NOTSTARTED;
     public DisplayScreen currentScreen;
 
@@ -129,7 +148,7 @@ public class GameValues {
 
     
     //GameBar
-    public final String GENERAL_GAMEBAR_SPRITE_SHEET = "res//GeneralGameBarShpriteSheet.png";
+    public final String GENERAL_GAMEBAR_SPRITE_SHEET = "res//GeneralGameBarSpriteSheet.png";
     public final int GENERAL_GAMEBAR_SPRITE_SHEET_BOX_SIZE = 64;
     public final String ICON_SPRITE_SHEET = "res//RoomIconSpriteSheet.png";
     public final int ICON_SPRITE_SHEET_BOX_SIZE = 69;
@@ -141,6 +160,8 @@ public class GameValues {
     public double barYSize = 0;
     public final double MINIMAP_X_SIZE = .4;
     public final double MINIMAP_Y_SIZE = 1;
+    public final double PLAYERSTATS_X_SIZE = 1-MINIMAP_X_SIZE;
+    public final double PLAYERSTATS_Y_SIZE = 1;
     
 
     
